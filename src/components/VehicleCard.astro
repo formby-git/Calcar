@@ -3,86 +3,98 @@
 ---
 
 <div id="vehicle-card" class="relative hidden mb-8">
-  <!-- Breakout Container -->
   <div
-    class="-mx-6 md:-mx-12 lg:-mx-20 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transform transition-all duration-300"
+    class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden p-6 md:p-8"
   >
-    <!-- Dynamic Vehicle Image -->
+    <!-- Header: Make, Model & Registration -->
     <div
-      id="image-wrapper"
-      class="relative h-48 md:h-72 bg-slate-200 hidden group"
+      class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
     >
-      <img
-        id="vehicle-image"
-        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        src=""
-        alt="Vehicle Preview"
-      />
+      <div>
+        <div class="text-3xl font-extrabold text-slate-900 leading-tight">
+          <span id="val-make"></span>
+          <span id="val-model" class="text-blue-600"></span>
+        </div>
+      </div>
+
+      <!-- Registration Plate -->
       <div
-        class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"
+        class="bg-[#FCD116] border-2 border-black rounded px-4 py-1 shadow-sm inline-block"
       >
+        <span
+          id="val-reg"
+          class="font-mono text-xl md:text-2xl font-bold text-black tracking-widest uppercase"
+        ></span>
       </div>
     </div>
 
-    <div class="grid md:grid-cols-2">
-      <!-- Col 1: Identity -->
-      <div class="p-8 md:p-10 flex flex-col justify-center">
-        <div class="mb-6">
-          <h3
-            class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1"
-          >
-            Make & Model
-          </h3>
-          <div class="text-3xl font-extrabold text-slate-900 leading-tight">
-            <span id="val-make" class="block"></span>
-            <span id="val-model" class="className text-blue-600"></span>
-          </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Col 1: Image (Takes up 2/3) -->
+      <div class="md:col-span-2">
+        <div
+          id="image-wrapper"
+          class="bg-slate-100 rounded-lg overflow-hidden hidden"
+        >
+          <img
+            id="vehicle-image"
+            class="w-full h-auto object-contain"
+            src=""
+            alt="Vehicle Preview"
+          />
         </div>
-
-        <div class="grid grid-cols-2 gap-6">
-          <div>
-            <p
-              class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
-            >
-              Year
-            </p>
-            <p class="font-medium text-lg text-slate-700" id="val-year">-</p>
-          </div>
-          <div>
-            <p
-              class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
-            >
-              Colour
-            </p>
-            <p class="font-medium text-lg text-slate-700" id="val-colour">-</p>
-          </div>
+        <!-- Fallback/Loading state for image area -->
+        <div
+          id="image-placeholder"
+          class="h-64 md:h-80 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex items-center justify-center"
+        >
+          <p class="text-slate-400">Loading image...</p>
         </div>
       </div>
 
-      <!-- Col 2: Efficiency (Darker/Contrast) -->
-      <div
-        class="bg-slate-50 p-8 md:p-10 border-t md:border-t-0 md:border-l border-slate-100 flex flex-col justify-center"
-      >
-        <h3
-          class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-6"
-        >
-          Efficiency Specs
-        </h3>
+      <!-- Col 2: Specs List -->
+      <div class="md:col-span-1 flex flex-col justify-center space-y-6">
+        <div>
+          <p
+            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+          >
+            Year
+          </p>
+          <p class="font-medium text-lg text-slate-700" id="val-year">-</p>
+        </div>
+        <div class="w-full h-px bg-slate-100"></div>
 
-        <div class="space-y-6">
-          <div>
-            <p class="text-sm text-slate-500 mb-1">Fuel Type</p>
-            <p class="font-medium text-xl text-slate-900" id="val-fuel">-</p>
-          </div>
-          <div>
-            <p class="text-sm text-slate-500 mb-1">CO2 Emissions</p>
-            <div class="flex items-center gap-2">
-              <p class="font-medium text-xl text-slate-900" id="val-co2">-</p>
-              <span
-                class="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-mono"
-                >g/km</span
-              >
-            </div>
+        <div>
+          <p
+            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+          >
+            Colour
+          </p>
+          <p class="font-medium text-lg text-slate-700" id="val-colour">-</p>
+        </div>
+        <div class="w-full h-px bg-slate-100"></div>
+
+        <div>
+          <p
+            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+          >
+            Fuel Type
+          </p>
+          <p class="font-medium text-lg text-slate-700" id="val-fuel">-</p>
+        </div>
+        <div class="w-full h-px bg-slate-100"></div>
+
+        <div>
+          <p
+            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+          >
+            CO2 Emissions
+          </p>
+          <div class="flex items-center gap-2">
+            <p class="font-medium text-lg text-slate-700" id="val-co2">-</p>
+            <span
+              class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-mono"
+              >g/km</span
+            >
           </div>
         </div>
       </div>
@@ -96,6 +108,7 @@
 
   const card = document.getElementById("vehicle-card");
   const imageWrapper = document.getElementById("image-wrapper");
+  const imagePlaceholder = document.getElementById("image-placeholder");
   const vehicleImage = document.getElementById(
     "vehicle-image",
   ) as HTMLImageElement;
@@ -105,8 +118,9 @@
     if (!card) return;
 
     // Update fields
-    setText("val-make", car.make);
+    setText("val-make", car.make + " ");
     setText("val-model", car.model);
+    setText("val-reg", car.registration);
     setText("val-fuel", car.fuelType);
     setText("val-year", car.yearOfManufacture.toString());
     setText("val-co2", car.co2Emissions.toString());
@@ -116,13 +130,20 @@
 
     // Reset image state
     if (imageWrapper) imageWrapper.classList.add("hidden");
+    if (imagePlaceholder) imagePlaceholder.classList.remove("hidden");
 
     // Fetch Image
     if (imageWrapper && vehicleImage) {
       const imageUrl = await fetchCarImage(car.make, car.model);
       if (imageUrl) {
         vehicleImage.src = imageUrl;
+        if (imagePlaceholder) imagePlaceholder.classList.add("hidden");
         imageWrapper.classList.remove("hidden");
+      } else {
+        if (imagePlaceholder) {
+          const tempP = imagePlaceholder.querySelector("p");
+          if (tempP) tempP.textContent = "No image found";
+        }
       }
     }
   }) as unknown as EventListener);
