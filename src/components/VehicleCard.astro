@@ -1,9 +1,15 @@
 ---
+
 ---
 
-<div id="vehicle-card" class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6 hidden">
-  <h2 class="text-lg font-semibold text-slate-900 mb-4 border-b pb-2">Vehicle Details</h2>
-  
+<div
+  id="vehicle-card"
+  class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6 hidden"
+>
+  <h2 class="text-lg font-semibold text-slate-900 mb-4 border-b pb-2">
+    Vehicle Details
+  </h2>
+
   <div class="grid grid-cols-2 gap-4 text-sm">
     <div>
       <p class="text-slate-500">Make</p>
@@ -22,33 +28,33 @@
       <p class="font-medium" id="val-co2">-</p>
     </div>
     <div class="col-span-2">
-        <p class="text-slate-500">Colour</p>
-        <p class="font-medium" id="val-colour">-</p>
+      <p class="text-slate-500">Colour</p>
+      <p class="font-medium" id="val-colour">-</p>
     </div>
   </div>
 </div>
 
 <script>
-    import type { DVLAMockData } from '../utils/dvlaMock';
+  import type { Car } from "../utils/carService";
 
-    const card = document.getElementById('vehicle-card');
-    
-    window.addEventListener('car-loaded', ((e: CustomEvent<DVLAMockData>) => {
-        const car = e.detail;
-        if (!card) return;
+  const card = document.getElementById("vehicle-card");
 
-        // Update fields
-        setText('val-make', car.make);
-        setText('val-fuel', car.fuelType);
-        setText('val-year', car.yearOfManufacture.toString());
-        setText('val-co2', `${car.co2Emissions} g/km`);
-        setText('val-colour', car.colour);
+  window.addEventListener("car-loaded", ((e: CustomEvent<Car>) => {
+    const car = e.detail;
+    if (!card) return;
 
-        card.classList.remove('hidden');
-    }) as EventListener);
+    // Update fields
+    setText("val-make", car.make);
+    setText("val-fuel", car.fuelType);
+    setText("val-year", car.yearOfManufacture.toString());
+    setText("val-co2", `${car.co2Emissions} g/km`);
+    setText("val-colour", car.colour);
 
-    function setText(id: string, text: string) {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-    }
+    card.classList.remove("hidden");
+  }) as EventListener);
+
+  function setText(id: string, text: string) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
 </script>

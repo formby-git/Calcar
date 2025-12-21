@@ -1,11 +1,11 @@
-import type { DVLAMockData } from './dvlaMock';
+import type { Car } from './carService';
 
 /**
  * Simplified VED (Road Tax) Calculator.
  * NOTE: This is a rough approximation for prototype purposes.
  * UK VED rules are complex and depend on registration year, fuel type, and list price.
  */
-export function calculateAnnualTax(car: DVLAMockData): number {
+export function calculateAnnualTax(car: Car): number {
     const fuel = car.fuelType.toUpperCase();
     const co2 = car.co2Emissions;
 

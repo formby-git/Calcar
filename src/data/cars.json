@@ -1,0 +1,32 @@
+[
+    {
+        "registration": "AB12 CDE",
+        "make": "Tesla",
+        "model": "Model 3 Long Range",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "White",
+        "basicPrice": 50000
+    },
+    {
+        "registration": "XY55 ZZZ",
+        "make": "Ford",
+        "model": "Fiesta Titanium",
+        "yearOfManufacture": 2019,
+        "fuelType": "Petrol",
+        "co2Emissions": 110,
+        "colour": "Blue",
+        "basicPrice": 18000
+    },
+    {
+        "registration": "BM23 WX",
+        "make": "BMW",
+        "model": "320d M Sport",
+        "yearOfManufacture": 2023,
+        "fuelType": "Diesel",
+        "co2Emissions": 125,
+        "colour": "Grey",
+        "basicPrice": 42000
+    }
+]
