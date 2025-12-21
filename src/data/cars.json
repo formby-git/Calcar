@@ -1,32 +1,962 @@
 [
     {
-        "registration": "AB12 CDE",
-        "make": "Tesla",
-        "model": "Model 3 Long Range",
+        "registration": "LN68 JKL",
+        "make": "Volkswagen",
+        "model": "Golf GTI",
+        "yearOfManufacture": 2018,
+        "fuelType": "Petrol",
+        "co2Emissions": 139,
+        "colour": "Red",
+        "basicPrice": 28000
+    },
+    {
+        "registration": "KS21 MNO",
+        "make": "Kia",
+        "model": "Sportage",
+        "yearOfManufacture": 2021,
+        "fuelType": "Hybrid",
+        "co2Emissions": 132,
+        "colour": "Silver",
+        "basicPrice": 26000
+    },
+    {
+        "registration": "EF70 QRS",
+        "make": "Nissan",
+        "model": "Qashqai",
+        "yearOfManufacture": 2020,
+        "fuelType": "Petrol",
+        "co2Emissions": 145,
+        "colour": "Black",
+        "basicPrice": 24000
+    },
+    {
+        "registration": "GH15 TUV",
+        "make": "Vauxhall",
+        "model": "Corsa",
+        "yearOfManufacture": 2015,
+        "fuelType": "Petrol",
+        "co2Emissions": 120,
+        "colour": "White",
+        "basicPrice": 10000
+    },
+    {
+        "registration": "IJ66 WXY",
+        "make": "Mercedes-Benz",
+        "model": "A-Class",
+        "yearOfManufacture": 2016,
+        "fuelType": "Diesel",
+        "co2Emissions": 105,
+        "colour": "Grey",
+        "basicPrice": 22000
+    },
+    {
+        "registration": "CD22 EFG",
+        "make": "Audi",
+        "model": "A3 S Line",
+        "yearOfManufacture": 2022,
+        "fuelType": "Petrol",
+        "co2Emissions": 130,
+        "colour": "Black",
+        "basicPrice": 32000
+    },
+    {
+        "registration": "KL73 HIJ",
+        "make": "Polestar",
+        "model": "2",
         "yearOfManufacture": 2023,
         "fuelType": "Electric",
         "co2Emissions": 0,
-        "colour": "White",
-        "basicPrice": 50000
+        "colour": "Midnight",
+        "basicPrice": 45000
     },
     {
-        "registration": "XY55 ZZZ",
-        "make": "Ford",
-        "model": "Fiesta Titanium",
+        "registration": "MN18 OPQ",
+        "make": "Toyota",
+        "model": "Yaris Hybrid",
+        "yearOfManufacture": 2018,
+        "fuelType": "Hybrid",
+        "co2Emissions": 85,
+        "colour": "Red",
+        "basicPrice": 16000
+    },
+    {
+        "registration": "OP67 RST",
+        "make": "Land Rover",
+        "model": "Discovery Sport",
+        "yearOfManufacture": 2017,
+        "fuelType": "Diesel",
+        "co2Emissions": 170,
+        "colour": "Green",
+        "basicPrice": 35000
+    },
+    {
+        "registration": "QR24 UVW",
+        "make": "MG",
+        "model": "4 EV",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Orange",
+        "basicPrice": 27000
+    },
+    {
+        "registration": "ST14 XYZ",
+        "make": "Honda",
+        "model": "Civic",
+        "yearOfManufacture": 2014,
+        "fuelType": "Petrol",
+        "co2Emissions": 135,
+        "colour": "Silver",
+        "basicPrice": 8000
+    },
+    {
+        "registration": "UV59 ABC",
+        "make": "Mini",
+        "model": "Cooper",
+        "yearOfManufacture": 2009,
+        "fuelType": "Petrol",
+        "co2Emissions": 129,
+        "colour": "Cream",
+        "basicPrice": 5000
+    },
+    {
+        "registration": "WX65 DEF",
+        "make": "Skoda",
+        "model": "Octavia vRS",
+        "yearOfManufacture": 2015,
+        "fuelType": "Diesel",
+        "co2Emissions": 119,
+        "colour": "Blue",
+        "basicPrice": 15000
+    },
+    {
+        "registration": "YZ20 GHI",
+        "make": "Volvo",
+        "model": "XC40",
+        "yearOfManufacture": 2020,
+        "fuelType": "Hybrid",
+        "co2Emissions": 45,
+        "colour": "White",
+        "basicPrice": 38000
+    },
+    {
+        "registration": "AB69 JKL",
+        "make": "Renault",
+        "model": "Zoe",
+        "yearOfManufacture": 2019,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Purple",
+        "basicPrice": 22000
+    },
+    {
+        "registration": "CD17 MNO",
+        "make": "Peugeot",
+        "model": "3008",
+        "yearOfManufacture": 2017,
+        "fuelType": "Diesel",
+        "co2Emissions": 110,
+        "colour": "Gold",
+        "basicPrice": 18500
+    },
+    {
+        "registration": "EF23 PQR",
+        "make": "Hyundai",
+        "model": "Ioniq 5",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Matte Grey",
+        "basicPrice": 48000
+    },
+    {
+        "registration": "GH64 STU",
+        "make": "Fiat",
+        "model": "500",
+        "yearOfManufacture": 2014,
+        "fuelType": "Petrol",
+        "co2Emissions": 115,
+        "colour": "Mint Green",
+        "basicPrice": 6000
+    },
+    {
+        "registration": "IJ21 VWX",
+        "make": "Porsche",
+        "model": "Taycan",
+        "yearOfManufacture": 2021,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Crayon",
+        "basicPrice": 85000
+    },
+    {
+        "registration": "KL16 YZA",
+        "make": "Jaguar",
+        "model": "F-Pace",
+        "yearOfManufacture": 2016,
+        "fuelType": "Diesel",
+        "co2Emissions": 139,
+        "colour": "Black",
+        "basicPrice": 28000
+    },
+    {
+        "registration": "MN72 BCD",
+        "make": "Kia",
+        "model": "EV6",
+        "yearOfManufacture": 2022,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Red",
+        "basicPrice": 44000
+    },
+    {
+        "registration": "OP63 EFG",
+        "make": "Vauxhall",
+        "model": "Insignia",
+        "yearOfManufacture": 2013,
+        "fuelType": "Diesel",
+        "co2Emissions": 140,
+        "colour": "Silver",
+        "basicPrice": 4000
+    },
+    {
+        "registration": "QR19 HIJ",
+        "make": "Seat",
+        "model": "Leon",
         "yearOfManufacture": 2019,
         "fuelType": "Petrol",
-        "co2Emissions": 110,
+        "co2Emissions": 112,
+        "colour": "Blue",
+        "basicPrice": 14000
+    },
+    {
+        "registration": "ST22 KLM",
+        "make": "Dacia",
+        "model": "Sandero",
+        "yearOfManufacture": 2022,
+        "fuelType": "Petrol",
+        "co2Emissions": 120,
+        "colour": "White",
+        "basicPrice": 11000
+    },
+    {
+        "registration": "UV18 NOP",
+        "make": "Mazda",
+        "model": "CX-5",
+        "yearOfManufacture": 2018,
+        "fuelType": "Diesel",
+        "co2Emissions": 135,
+        "colour": "Red",
+        "basicPrice": 19000
+    },
+    {
+        "registration": "WX73 QRS",
+        "make": "BYD",
+        "model": "Atto 3",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Blue",
+        "basicPrice": 36000
+    },
+    {
+        "registration": "YZ15 TUV",
+        "make": "Citroen",
+        "model": "C4 Cactus",
+        "yearOfManufacture": 2015,
+        "fuelType": "Diesel",
+        "co2Emissions": 95,
+        "colour": "Yellow",
+        "basicPrice": 9000
+    },
+    {
+        "registration": "AB68 WXY",
+        "make": "Ford",
+        "model": "Focus",
+        "yearOfManufacture": 2018,
+        "fuelType": "Petrol",
+        "co2Emissions": 108,
+        "colour": "Grey",
+        "basicPrice": 16000
+    },
+    {
+        "registration": "CD20 ZAB",
+        "make": "Audi",
+        "model": "Q4 e-tron",
+        "yearOfManufacture": 2020,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Purple",
+        "basicPrice": 52000
+    },
+    {
+        "registration": "EF17 CDE",
+        "make": "BMW",
+        "model": "5 Series",
+        "yearOfManufacture": 2017,
+        "fuelType": "Hybrid",
+        "co2Emissions": 49,
+        "colour": "Black",
+        "basicPrice": 30000
+    },
+    {
+        "registration": "GH13 FGH",
+        "make": "Toyota",
+        "model": "Prius",
+        "yearOfManufacture": 2013,
+        "fuelType": "Hybrid",
+        "co2Emissions": 89,
+        "colour": "White",
+        "basicPrice": 10000
+    },
+    {
+        "registration": "IJ70 IJK",
+        "make": "Volkswagen",
+        "model": "ID.3",
+        "yearOfManufacture": 2020,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Turquoise",
+        "basicPrice": 32000
+    },
+    {
+        "registration": "KL66 LMN",
+        "make": "Nissan",
+        "model": "Juke",
+        "yearOfManufacture": 2016,
+        "fuelType": "Petrol",
+        "co2Emissions": 130,
+        "colour": "Red",
+        "basicPrice": 11000
+    },
+    {
+        "registration": "MN23 OPQ",
+        "make": "Tesla",
+        "model": "Model Y",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Black",
+        "basicPrice": 48000
+    },
+    {
+        "registration": "OP68 RST",
+        "make": "Vauxhall",
+        "model": "Mokka X",
+        "yearOfManufacture": 2018,
+        "fuelType": "Petrol",
+        "co2Emissions": 140,
+        "colour": "Orange",
+        "basicPrice": 13000
+    },
+    {
+        "registration": "QR21 UVW",
+        "make": "Ford",
+        "model": "Mustang Mach-E",
+        "yearOfManufacture": 2021,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Rapid Red",
+        "basicPrice": 55000
+    },
+    {
+        "registration": "ST12 XYZ",
+        "make": "Honda",
+        "model": "CR-V",
+        "yearOfManufacture": 2012,
+        "fuelType": "Diesel",
+        "co2Emissions": 160,
+        "colour": "Brown",
+        "basicPrice": 7000
+    },
+    {
+        "registration": "UV24 ABC",
+        "make": "Volvo",
+        "model": "EX30",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Cloud Blue",
+        "basicPrice": 34000
+    },
+    {
+        "registration": "WX69 DEF",
+        "make": "Land Rover",
+        "model": "Range Rover Evoque",
+        "yearOfManufacture": 2019,
+        "fuelType": "Diesel",
+        "co2Emissions": 180,
+        "colour": "White",
+        "basicPrice": 35000
+    },
+    {
+        "registration": "YZ22 GHI",
+        "make": "Cupra",
+        "model": "Born",
+        "yearOfManufacture": 2022,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Vapor Grey",
+        "basicPrice": 34000
+    },
+    {
+        "registration": "AB14 JKL",
+        "make": "Audi",
+        "model": "TT",
+        "yearOfManufacture": 2014,
+        "fuelType": "Petrol",
+        "co2Emissions": 135,
+        "colour": "Silver",
+        "basicPrice": 15000
+    },
+    {
+        "registration": "CD71 MNO",
+        "make": "Hyundai",
+        "model": "Tucson",
+        "yearOfManufacture": 2021,
+        "fuelType": "Hybrid",
+        "co2Emissions": 130,
+        "colour": "Teal",
+        "basicPrice": 30000
+    },
+    {
+        "registration": "EF16 PQR",
+        "make": "Mercedes-Benz",
+        "model": "C-Class",
+        "yearOfManufacture": 2016,
+        "fuelType": "Diesel",
+        "co2Emissions": 109,
+        "colour": "Black",
+        "basicPrice": 20000
+    },
+    {
+        "registration": "GH23 STU",
+        "make": "Tesla",
+        "model": "Model 3 Performance",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Red",
+        "basicPrice": 58000
+    },
+    {
+        "registration": "IJ65 VWX",
+        "make": "Skoda",
+        "model": "Superb",
+        "yearOfManufacture": 2015,
+        "fuelType": "Diesel",
+        "co2Emissions": 125,
+        "colour": "Grey",
+        "basicPrice": 13000
+    },
+    {
+        "registration": "KL20 YZA",
+        "make": "Mini",
+        "model": "Electric",
+        "yearOfManufacture": 2020,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Yellow",
+        "basicPrice": 29000
+    },
+    {
+        "registration": "MN19 BCD",
+        "make": "Volkswagen",
+        "model": "Tiguan",
+        "yearOfManufacture": 2019,
+        "fuelType": "Diesel",
+        "co2Emissions": 145,
+        "colour": "White",
+        "basicPrice": 24000
+    },
+    {
+        "registration": "OP73 EFG",
+        "make": "Fisker",
+        "model": "Ocean",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Blue",
+        "basicPrice": 45000
+    },
+    {
+        "registration": "QR13 HIJ",
+        "make": "Ford",
+        "model": "Fiesta ST",
+        "yearOfManufacture": 2013,
+        "fuelType": "Petrol",
+        "co2Emissions": 138,
+        "colour": "Molten Orange",
+        "basicPrice": 9000
+    },
+    {
+        "registration": "ST24 KLM",
+        "make": "Audi",
+        "model": "Q8 e-tron",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Grey",
+        "basicPrice": 85000
+    },
+    {
+        "registration": "UV15 NOP",
+        "make": "BMW",
+        "model": "1 Series",
+        "yearOfManufacture": 2015,
+        "fuelType": "Diesel",
+        "co2Emissions": 115,
+        "colour": "White",
+        "basicPrice": 12000
+    },
+    {
+        "registration": "WX22 QRS",
+        "make": "Toyota",
+        "model": "bZ4X",
+        "yearOfManufacture": 2022,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Black",
+        "basicPrice": 46000
+    },
+    {
+        "registration": "YZ18 TUV",
+        "make": "Kia",
+        "model": "Niro",
+        "yearOfManufacture": 2018,
+        "fuelType": "Hybrid",
+        "co2Emissions": 95,
         "colour": "Blue",
         "basicPrice": 18000
     },
     {
-        "registration": "BM23 WX",
-        "make": "BMW",
-        "model": "320d M Sport",
+        "registration": "AB67 WXY",
+        "make": "Vauxhall",
+        "model": "Astra",
+        "yearOfManufacture": 2017,
+        "fuelType": "Petrol",
+        "co2Emissions": 128,
+        "colour": "Red",
+        "basicPrice": 12000
+    },
+    {
+        "registration": "CD23 ZAB",
+        "make": "Nissan",
+        "model": "Ariya",
         "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Copper",
+        "basicPrice": 44000
+    },
+    {
+        "registration": "EF12 CDE",
+        "make": "Peugeot",
+        "model": "208",
+        "yearOfManufacture": 2012,
         "fuelType": "Diesel",
+        "co2Emissions": 99,
+        "colour": "Pink",
+        "basicPrice": 4000
+    },
+    {
+        "registration": "GH70 FGH",
+        "make": "Renault",
+        "model": "Captur",
+        "yearOfManufacture": 2020,
+        "fuelType": "Hybrid",
+        "co2Emissions": 115,
+        "colour": "Orange",
+        "basicPrice": 21000
+    },
+    {
+        "registration": "IJ68 IJK",
+        "make": "Jaguar",
+        "model": "I-Pace",
+        "yearOfManufacture": 2018,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Red",
+        "basicPrice": 65000
+    },
+    {
+        "registration": "KL21 LMN",
+        "make": "Ford",
+        "model": "Puma",
+        "yearOfManufacture": 2021,
+        "fuelType": "Hybrid",
         "co2Emissions": 125,
+        "colour": "Green",
+        "basicPrice": 23000
+    },
+    {
+        "registration": "MN16 OPQ",
+        "make": "Audi",
+        "model": "A4",
+        "yearOfManufacture": 2016,
+        "fuelType": "Diesel",
+        "co2Emissions": 109,
+        "colour": "Blue",
+        "basicPrice": 17000
+    },
+    {
+        "registration": "OP23 RST",
+        "make": "Ora",
+        "model": "Funky Cat",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Green",
+        "basicPrice": 32000
+    },
+    {
+        "registration": "QR14 UVW",
+        "make": "Volkswagen",
+        "model": "Polo",
+        "yearOfManufacture": 2014,
+        "fuelType": "Petrol",
+        "co2Emissions": 110,
+        "colour": "White",
+        "basicPrice": 8000
+    },
+    {
+        "registration": "ST67 XYZ",
+        "make": "BMW",
+        "model": "i3",
+        "yearOfManufacture": 2017,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Black",
+        "basicPrice": 19000
+    },
+    {
+        "registration": "UV20 ABC",
+        "make": "Mercedes-Benz",
+        "model": "EQC",
+        "yearOfManufacture": 2020,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Silver",
+        "basicPrice": 60000
+    },
+    {
+        "registration": "WX17 DEF",
+        "make": "Seat",
+        "model": "Ibiza",
+        "yearOfManufacture": 2017,
+        "fuelType": "Petrol",
+        "co2Emissions": 112,
+        "colour": "Red",
+        "basicPrice": 11000
+    },
+    {
+        "registration": "YZ23 GHI",
+        "make": "Ford",
+        "model": "Kuga",
+        "yearOfManufacture": 2023,
+        "fuelType": "Hybrid",
+        "co2Emissions": 130,
         "colour": "Grey",
+        "basicPrice": 35000
+    },
+    {
+        "registration": "AB64 JKL",
+        "make": "Vauxhall",
+        "model": "Corsa",
+        "yearOfManufacture": 2014,
+        "fuelType": "Petrol",
+        "co2Emissions": 120,
+        "colour": "Yellow",
+        "basicPrice": 6000
+    },
+    {
+        "registration": "CD19 MNO",
+        "make": "Tesla",
+        "model": "Model S",
+        "yearOfManufacture": 2019,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Blue",
+        "basicPrice": 75000
+    },
+    {
+        "registration": "EF22 PQR",
+        "make": "Skoda",
+        "model": "Enyaq iV",
+        "yearOfManufacture": 2022,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Silver",
         "basicPrice": 42000
+    },
+    {
+        "registration": "GH15 STU",
+        "make": "Honda",
+        "model": "Jazz",
+        "yearOfManufacture": 2015,
+        "fuelType": "Petrol",
+        "co2Emissions": 115,
+        "colour": "Blue",
+        "basicPrice": 9000
+    },
+    {
+        "registration": "IJ24 VWX",
+        "make": "Smart",
+        "model": "#1",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "White",
+        "basicPrice": 36000
+    },
+    {
+        "registration": "KL69 YZA",
+        "make": "Toyota",
+        "model": "Corolla",
+        "yearOfManufacture": 2019,
+        "fuelType": "Hybrid",
+        "co2Emissions": 90,
+        "colour": "Red",
+        "basicPrice": 20000
+    },
+    {
+        "registration": "MN13 BCD",
+        "make": "Fiat",
+        "model": "Panda",
+        "yearOfManufacture": 2013,
+        "fuelType": "Petrol",
+        "co2Emissions": 125,
+        "colour": "White",
+        "basicPrice": 5000
+    },
+    {
+        "registration": "OP21 EFG",
+        "make": "Audi",
+        "model": "e-tron GT",
+        "yearOfManufacture": 2021,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Black",
+        "basicPrice": 85000
+    },
+    {
+        "registration": "QR16 HIJ",
+        "make": "Land Rover",
+        "model": "Range Rover Sport",
+        "yearOfManufacture": 2016,
+        "fuelType": "Diesel",
+        "co2Emissions": 190,
+        "colour": "Black",
+        "basicPrice": 40000
+    },
+    {
+        "registration": "ST23 KLM",
+        "make": "MG",
+        "model": "ZS EV",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Blue",
+        "basicPrice": 30000
+    },
+    {
+        "registration": "UV65 NOP",
+        "make": "Volkswagen",
+        "model": "Up!",
+        "yearOfManufacture": 2015,
+        "fuelType": "Petrol",
+        "co2Emissions": 105,
+        "colour": "Red",
+        "basicPrice": 7000
+    },
+    {
+        "registration": "WX20 QRS",
+        "make": "Mini",
+        "model": "Countryman",
+        "yearOfManufacture": 2020,
+        "fuelType": "Hybrid",
+        "co2Emissions": 49,
+        "colour": "Green",
+        "basicPrice": 32000
+    },
+    {
+        "registration": "YZ14 TUV",
+        "make": "BMW",
+        "model": "X5",
+        "yearOfManufacture": 2014,
+        "fuelType": "Diesel",
+        "co2Emissions": 150,
+        "colour": "Grey",
+        "basicPrice": 25000
+    },
+    {
+        "registration": "AB72 WXY",
+        "make": "Genesis",
+        "model": "GV60",
+        "yearOfManufacture": 2022,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Lime",
+        "basicPrice": 50000
+    },
+    {
+        "registration": "CD18 ZAB",
+        "make": "Nissan",
+        "model": "Leaf",
+        "yearOfManufacture": 2018,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "White",
+        "basicPrice": 18000
+    },
+    {
+        "registration": "EF24 CDE",
+        "make": "Lotus",
+        "model": "Eletre",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Yellow",
+        "basicPrice": 95000
+    },
+    {
+        "registration": "GH66 FGH",
+        "make": "Volvo",
+        "model": "XC90",
+        "yearOfManufacture": 2016,
+        "fuelType": "Hybrid",
+        "co2Emissions": 49,
+        "colour": "Black",
+        "basicPrice": 40000
+    },
+    {
+        "registration": "IJ22 IJK",
+        "make": "Citroen",
+        "model": "e-C4",
+        "yearOfManufacture": 2022,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Orange",
+        "basicPrice": 29000
+    },
+    {
+        "registration": "KL17 LMN",
+        "make": "Ford",
+        "model": "S-Max",
+        "yearOfManufacture": 2017,
+        "fuelType": "Diesel",
+        "co2Emissions": 139,
+        "colour": "Silver",
+        "basicPrice": 18000
+    },
+    {
+        "registration": "MN21 OPQ",
+        "make": "Porsche",
+        "model": "Macan",
+        "yearOfManufacture": 2021,
+        "fuelType": "Petrol",
+        "co2Emissions": 195,
+        "colour": "Blue",
+        "basicPrice": 55000
+    },
+    {
+        "registration": "OP65 RST",
+        "make": "Suzuki",
+        "model": "Swift",
+        "yearOfManufacture": 2015,
+        "fuelType": "Petrol",
+        "co2Emissions": 115,
+        "colour": "Red",
+        "basicPrice": 8000
+    },
+    {
+        "registration": "QR23 UVW",
+        "make": "Jeep",
+        "model": "Avenger",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Yellow",
+        "basicPrice": 35000
+    },
+    {
+        "registration": "ST19 XYZ",
+        "make": "Mercedes-Benz",
+        "model": "E-Class",
+        "yearOfManufacture": 2019,
+        "fuelType": "Diesel",
+        "co2Emissions": 120,
+        "colour": "Silver",
+        "basicPrice": 30000
+    },
+    {
+        "registration": "UV70 ABC",
+        "make": "Peugeot",
+        "model": "e-208",
+        "yearOfManufacture": 2020,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Blue",
+        "basicPrice": 26000
+    },
+    {
+        "registration": "WX15 DEF",
+        "make": "Mazda",
+        "model": "MX-5",
+        "yearOfManufacture": 2015,
+        "fuelType": "Petrol",
+        "co2Emissions": 139,
+        "colour": "Red",
+        "basicPrice": 14000
+    },
+    {
+        "registration": "YZ24 GHI",
+        "make": "Polestar",
+        "model": "3",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Space",
+        "basicPrice": 79000
+    },
+    {
+        "registration": "AB12 JKL",
+        "make": "Volkswagen",
+        "model": "ID.4",
+        "yearOfManufacture": 2021,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "White",
+        "basicPrice": 38000
+    },
+    {
+        "registration": "CD23 MNO",
+        "make": "Vauxhall",
+        "model": "Astra Electric",
+        "yearOfManufacture": 2023,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Yellow",
+        "basicPrice": 34000
+    },
+    {
+        "registration": "EF18 PQR",
+        "make": "Toyota",
+        "model": "C-HR",
+        "yearOfManufacture": 2018,
+        "fuelType": "Hybrid",
+        "co2Emissions": 86,
+        "colour": "Grey",
+        "basicPrice": 19000
+    },
+    {
+        "registration": "GH24 STU",
+        "make": "Kia",
+        "model": "EV9",
+        "yearOfManufacture": 2024,
+        "fuelType": "Electric",
+        "co2Emissions": 0,
+        "colour": "Blue",
+        "basicPrice": 65000
     }
 ]

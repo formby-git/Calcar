@@ -2,34 +2,73 @@
 
 ---
 
-<div
-  id="vehicle-card"
-  class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6 hidden"
->
-  <h2 class="text-lg font-semibold text-slate-900 mb-4 border-b pb-2">
-    Vehicle Details
-  </h2>
+<div id="vehicle-card" class="relative hidden mb-8">
+  <!-- Breakout Container -->
+  <div
+    class="-mx-6 md:-mx-12 lg:-mx-20 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transform transition-all duration-300"
+  >
+    <div class="grid md:grid-cols-2">
+      <!-- Col 1: Identity -->
+      <div class="p-8 md:p-10 flex flex-col justify-center">
+        <div class="mb-6">
+          <h3
+            class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1"
+          >
+            Make & Model
+          </h3>
+          <div class="text-3xl font-extrabold text-slate-900 leading-tight">
+            <span id="val-make" class="block"></span>
+            <span id="val-model" class="className text-blue-600"></span>
+          </div>
+        </div>
 
-  <div class="grid grid-cols-2 gap-4 text-sm">
-    <div>
-      <p class="text-slate-500">Make</p>
-      <p class="font-medium" id="val-make">-</p>
-    </div>
-    <div>
-      <p class="text-slate-500">Fuel Type</p>
-      <p class="font-medium" id="val-fuel">-</p>
-    </div>
-    <div>
-      <p class="text-slate-500">Year</p>
-      <p class="font-medium" id="val-year">-</p>
-    </div>
-    <div>
-      <p class="text-slate-500">CO2 Emissions</p>
-      <p class="font-medium" id="val-co2">-</p>
-    </div>
-    <div class="col-span-2">
-      <p class="text-slate-500">Colour</p>
-      <p class="font-medium" id="val-colour">-</p>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <p
+              class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+            >
+              Year
+            </p>
+            <p class="font-medium text-lg text-slate-700" id="val-year">-</p>
+          </div>
+          <div>
+            <p
+              class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+            >
+              Colour
+            </p>
+            <p class="font-medium text-lg text-slate-700" id="val-colour">-</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: Efficiency (Darker/Contrast) -->
+      <div
+        class="bg-slate-50 p-8 md:p-10 border-t md:border-t-0 md:border-l border-slate-100 flex flex-col justify-center"
+      >
+        <h3
+          class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-6"
+        >
+          Efficiency Specs
+        </h3>
+
+        <div class="space-y-6">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Fuel Type</p>
+            <p class="font-medium text-xl text-slate-900" id="val-fuel">-</p>
+          </div>
+          <div>
+            <p class="text-sm text-slate-500 mb-1">CO2 Emissions</p>
+            <div class="flex items-center gap-2">
+              <p class="font-medium text-xl text-slate-900" id="val-co2">-</p>
+              <span
+                class="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-mono"
+                >g/km</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -45,9 +84,10 @@
 
     // Update fields
     setText("val-make", car.make);
+    setText("val-model", car.model);
     setText("val-fuel", car.fuelType);
     setText("val-year", car.yearOfManufacture.toString());
-    setText("val-co2", `${car.co2Emissions} g/km`);
+    setText("val-co2", car.co2Emissions.toString());
     setText("val-colour", car.colour);
 
     card.classList.remove("hidden");
