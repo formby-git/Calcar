@@ -7,6 +7,23 @@
   <div
     class="-mx-6 md:-mx-12 lg:-mx-20 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transform transition-all duration-300"
   >
+    <!-- Dynamic Vehicle Image -->
+    <div
+      id="image-wrapper"
+      class="relative h-48 md:h-72 bg-slate-200 hidden group"
+    >
+      <img
+        id="vehicle-image"
+        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        src=""
+        alt="Vehicle Preview"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"
+      >
+      </div>
+    </div>
+
     <div class="grid md:grid-cols-2">
       <!-- Col 1: Identity -->
       <div class="p-8 md:p-10 flex flex-col justify-center">
@@ -75,10 +92,15 @@
 
 <script>
   import type { Car } from "../utils/carService";
+  import { fetchCarImage } from "../utils/wikiImageService";
 
   const card = document.getElementById("vehicle-card");
+  const imageWrapper = document.getElementById("image-wrapper");
+  const vehicleImage = document.getElementById(
+    "vehicle-image",
+  ) as HTMLImageElement;
 
-  window.addEventListener("car-loaded", ((e: CustomEvent<Car>) => {
+  window.addEventListener("car-loaded", (async (e: CustomEvent<Car>) => {
     const car = e.detail;
     if (!card) return;
 
@@ -91,7 +113,19 @@
     setText("val-colour", car.colour);
 
     card.classList.remove("hidden");
-  }) as EventListener);
+
+    // Reset image state
+    if (imageWrapper) imageWrapper.classList.add("hidden");
+
+    // Fetch Image
+    if (imageWrapper && vehicleImage) {
+      const imageUrl = await fetchCarImage(car.make, car.model);
+      if (imageUrl) {
+        vehicleImage.src = imageUrl;
+        imageWrapper.classList.remove("hidden");
+      }
+    }
+  }) as unknown as EventListener);
 
   function setText(id: string, text: string) {
     const el = document.getElementById(id);
