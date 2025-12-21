@@ -1,0 +1,60 @@
+---
+---
+
+<div class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6">
+  <label for="reg-input" class="block text-sm font-medium text-slate-700 mb-2">Registration Number</label>
+  <div class="flex gap-2">
+    <input 
+      type="text" 
+      id="reg-input" 
+      placeholder="ENTER REG" 
+      class="flex-1 px-4 py-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase tracking-wider font-mono"
+      maxlength="8"
+      value="ABC1234"
+    />
+    <button 
+      id="lookup-btn"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
+    >
+      Lookup
+    </button>
+  </div>
+  <p id="error-msg" class="text-red-500 text-sm mt-2 hidden"></p>
+</div>
+
+<script>
+  import { fetchMockCarDetails } from '../utils/dvlaMock';
+
+  const input = document.getElementById('reg-input') as HTMLInputElement;
+  const btn = document.getElementById('lookup-btn');
+  const errorMsg = document.getElementById('error-msg');
+
+  btn?.addEventListener('click', async () => {
+    const reg = input.value.trim();
+    if (!reg) return;
+
+    if (btn) btn.textContent = 'Loading...';
+    if (errorMsg) errorMsg.classList.add('hidden');
+
+    try {
+      const car = await fetchMockCarDetails(reg);
+      
+      if (car) {
+        // Dispatch event with car data
+        window.dispatchEvent(new CustomEvent('car-loaded', { detail: car }));
+      } else {
+        if (errorMsg) {
+          errorMsg.textContent = 'Vehicle not found';
+          errorMsg.classList.remove('hidden');
+        }
+      }
+    } catch (e) {
+      if (errorMsg) {
+        errorMsg.textContent = 'Error fetching details';
+        errorMsg.classList.remove('hidden');
+      }
+    } finally {
+      if (btn) btn.textContent = 'Lookup';
+    }
+  });
+</script>

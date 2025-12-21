@@ -1,0 +1,54 @@
+---
+---
+
+<div id="vehicle-card" class="bg-white p-6 rounded-lg shadow-sm border border-slate-200 mb-6 hidden">
+  <h2 class="text-lg font-semibold text-slate-900 mb-4 border-b pb-2">Vehicle Details</h2>
+  
+  <div class="grid grid-cols-2 gap-4 text-sm">
+    <div>
+      <p class="text-slate-500">Make</p>
+      <p class="font-medium" id="val-make">-</p>
+    </div>
+    <div>
+      <p class="text-slate-500">Fuel Type</p>
+      <p class="font-medium" id="val-fuel">-</p>
+    </div>
+    <div>
+      <p class="text-slate-500">Year</p>
+      <p class="font-medium" id="val-year">-</p>
+    </div>
+    <div>
+      <p class="text-slate-500">CO2 Emissions</p>
+      <p class="font-medium" id="val-co2">-</p>
+    </div>
+    <div class="col-span-2">
+        <p class="text-slate-500">Colour</p>
+        <p class="font-medium" id="val-colour">-</p>
+    </div>
+  </div>
+</div>
+
+<script>
+    import type { DVLAMockData } from '../utils/dvlaMock';
+
+    const card = document.getElementById('vehicle-card');
+    
+    window.addEventListener('car-loaded', ((e: CustomEvent<DVLAMockData>) => {
+        const car = e.detail;
+        if (!card) return;
+
+        // Update fields
+        setText('val-make', car.make);
+        setText('val-fuel', car.fuelType);
+        setText('val-year', car.yearOfManufacture.toString());
+        setText('val-co2', `${car.co2Emissions} g/km`);
+        setText('val-colour', car.colour);
+
+        card.classList.remove('hidden');
+    }) as EventListener);
+
+    function setText(id: string, text: string) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    }
+</script>
