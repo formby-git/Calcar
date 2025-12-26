@@ -7,7 +7,9 @@
   class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200 hidden"
 >
   <div class="flex items-center justify-between mb-4 border-b pb-2">
-    <h2 class="text-lg font-semibold text-slate-900">Cost Calculator</h2>
+    <h2 id="calculator-title" class="text-lg font-semibold text-slate-900">
+      Cost Calculator
+    </h2>
 
     <!-- Model Toggle -->
     <div
@@ -110,6 +112,17 @@
           placeholder="e.g. 2000"
         />
       </div>
+
+      <!-- Reset Button -->
+      <div class="pt-1">
+        <button
+          id="btn-reset-prices"
+          type="button"
+          class="text-xs text-slate-400 hover:text-slate-600 underline-offset-2 hover:underline transition-colors"
+        >
+          ↻ Reset to original price
+        </button>
+      </div>
     </div>
 
     <!-- Results -->
@@ -142,7 +155,13 @@
   </div>
 
   <!-- Pro Model Modifiers (only visible when Pro is selected) -->
-  <div id="modifier-badges" class="hidden">
+  <!-- Pro Model Modifiers (only visible when Pro is selected) -->
+  <div id="modifier-badges" class="mt-8 pt-6 border-t border-amber-200 hidden">
+    <h3
+      class="text-sm font-semibold text-amber-900 mb-3 flex items-center gap-2"
+    >
+      <span class="text-amber-600">✨</span> Pro Insights
+    </h3>
     <div class="flex flex-wrap gap-2" id="modifier-list"></div>
   </div>
 </div>
@@ -177,6 +196,8 @@
   const modifierBadges = document.getElementById("modifier-badges");
   const modifierList = document.getElementById("modifier-list");
 
+  const calculatorTitle = document.getElementById("calculator-title");
+
   // Model toggle handlers
   btnBasic?.addEventListener("click", () => setModel("basic"));
   btnPro?.addEventListener("click", () => setModel("pro"));
@@ -184,14 +205,46 @@
   function setModel(model: DepreciationModel) {
     currentModel = model;
 
-    // Update button styles
-    if (btnBasic && btnPro) {
+    // Update button styles and branding
+    if (btnBasic && btnPro && section && calculatorTitle) {
       if (model === "basic") {
+        // Basic Mode
         btnBasic.className = "px-3 py-1 bg-blue-600 text-white";
         btnPro.className = "px-3 py-1 bg-white text-slate-600";
+
+        // Reset Section Styling (removing hidden class if it was there is handled by car-loaded event,
+        // but here we assume it's visible so we just set the base classes)
+        // We need to preserve the hidden state if it hasn't been shown yet, but setModel is usually called after interaction.
+        // However, let's just use classList for safety on the container to avoid overwriting 'hidden' if called early,
+        // though logically the buttons shouldn't be clickable if hidden.
+        // Actually, just setting the specific brand classes is safer.
+
+        section.classList.remove(
+          "bg-gradient-to-br",
+          "from-white",
+          "to-amber-50",
+          "border-amber-200",
+          "shadow-xl",
+        );
+        section.classList.add("bg-white", "border-slate-200", "shadow-lg");
+
+        calculatorTitle.textContent = "Cost Calculator";
       } else {
+        // Pro Mode
         btnBasic.className = "px-3 py-1 bg-white text-slate-600";
-        btnPro.className = "px-3 py-1 bg-blue-600 text-white";
+        btnPro.className =
+          "px-3 py-1 bg-amber-100 text-amber-900 border border-amber-200 font-medium shadow-sm";
+
+        // Premium Section Styling
+        section.classList.remove("border-slate-200", "shadow-lg");
+        section.classList.add("bg-white", "border-amber-200", "shadow-xl");
+        section.classList.remove(
+          "bg-gradient-to-br",
+          "from-white",
+          "to-amber-50",
+        );
+
+        calculatorTitle.textContent = "Cost Calculator Pro";
       }
     }
 
@@ -276,6 +329,19 @@
   });
 
   inputResale?.addEventListener("input", calculate);
+
+  // Reset button handler
+  const btnReset = document.getElementById("btn-reset-prices");
+  btnReset?.addEventListener("click", () => {
+    if (!currentCar || !inputPrice) return;
+
+    // Reset purchase price to original value from database
+    inputPrice.value = currentCar.basicPrice.toString();
+
+    // Recalculate resale estimate with original price
+    updateResaleEstimate();
+    calculate();
+  });
 
   function updateModifierBadges() {
     if (!modifierBadges || !modifierList || !currentCar) return;
