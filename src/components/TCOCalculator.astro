@@ -207,7 +207,7 @@
 
 <script>
   import type { Car } from "../utils/carService";
-  import { calculateAnnualTax } from "../utils/taxCalculator";
+  import { calculateTotalVED } from "../utils/taxCalculator";
   import {
     calculateResaleValue,
     getActiveModifiers,
@@ -354,8 +354,18 @@
 
         termSelectorPro?.classList.add("hidden");
         termSelectorStandard?.classList.remove("hidden");
-        resaleContainer?.classList.add("hidden");
+        resaleContainer?.classList.remove("hidden");
         resetContainer?.classList.add("hidden");
+
+        // Resale is read-only in Standard mode
+        if (inputResale) {
+          inputResale.readOnly = true;
+          inputResale.classList.add(
+            "bg-slate-100",
+            "text-slate-500",
+            "cursor-not-allowed",
+          );
+        }
 
         // Sync price to default incase it was changed in Pro
         if (currentCar) inputPrice.value = currentCar.basicPrice.toString();
@@ -383,6 +393,16 @@
         termSelectorStandard?.classList.add("hidden");
         resaleContainer?.classList.remove("hidden");
         resetContainer?.classList.remove("hidden");
+
+        // Resale is editable in Pro mode
+        if (inputResale) {
+          inputResale.readOnly = false;
+          inputResale.classList.remove(
+            "bg-slate-100",
+            "text-slate-500",
+            "cursor-not-allowed",
+          );
+        }
       }
     }
 
@@ -431,9 +451,9 @@
     // Depreciation
     const depreciation = Math.max(0, price - resale);
 
-    // Tax
-    const annualTax = calculateAnnualTax(currentCar);
-    const totalTax = annualTax * (termMonths / 12);
+    // Tax (using total VED for ownership period, assuming used car purchase)
+    const termYears = Math.ceil(termMonths / 12);
+    const totalTax = calculateTotalVED(currentCar, termYears, false);
 
     // Total
     const totalCost = depreciation + totalTax;

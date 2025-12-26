@@ -91,3 +91,16 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - **Pro Insights:** Dedicated animated section for depreciation modifiers.
   - **Cost Display:** Promoted "Monthly Cost" to primary view (`text-xl`).
   - **Animations:** Smooth transitions for mode switching and section expansion.
+
+### 2025-12-26: Accurate UK VED Calculator
+**Request:** Implement accurate UK VED 2024/25 rules including first-year rates, standard rates, and expensive car supplement.
+
+**Changes made:**
+- Added `originalListPrice` field to Car interface and all car data.
+- Updated `VehicleCard.astro` to display Original List Price.
+- Rewrote `taxCalculator.ts` with:
+  - **First-Year Rates:** CO₂-based banding (£10-£5,490) for new vehicles.
+  - **Standard Rate:** £195/year for post-2017 cars.
+  - **Expensive Car Supplement:** +£425/year for years 2-6 if list price > £40k.
+  - **Pre-2017 Logic:** Different CO₂ bands for older vehicles.
+- Updated `TCOCalculator.astro` to use `calculateTotalVED()` for accurate multi-year calculations.

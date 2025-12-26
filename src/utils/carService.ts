@@ -9,6 +9,7 @@ export interface Car {
     co2Emissions: number;
     colour: string;
     basicPrice: number;
+    originalListPrice: number;
 }
 
 export const getCarByRegistration = async (registration: string): Promise<Car | null> => {
