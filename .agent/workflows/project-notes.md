@@ -9,6 +9,7 @@ description: Project context and change history for Calcar - UK Car TCO Calculat
 > 2. Follow the design preferences listed below
 > 3. Update the "Change History" section AFTER completing any significant changes
 > 4. Add new considerations to "Future Considerations" when relevant issues are discussed
+> 5. **Calculator Parity**: When modifying the TCO Calculator, ALWAYS confirm if changes should apply to both Standard and Pro modes. Limit divergence to UX/Input methods only; keep core logic unified.
 
 ---
 
@@ -62,6 +63,7 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 ## Future Considerations
 - Consider replacing Wikipedia image source before going public
 - May need to add image attribution if keeping Wikipedia approach
+- **Calculator Maintenance**: Maintain strict parity between Standard and Pro logic. Divergence should be deliberate and limited *only* to user experience (Entry-Level vs Pro features). Always verify intent before splitting logic.
 
 ### 2025-12-26: Pro Depreciation Model
 **Request:** Implement more accurate depreciation with age curve, fuel type, and brand adjustments.
@@ -73,3 +75,18 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - Brand adjustments: Porsche/Toyota/Honda/Land Rover -3%, DS/Polestar/Mitsubishi/Renault/Fiat +3%
 - Added Basic/Pro toggle to Cost Calculator
 - Extended ownership terms from 1-15 years
+
+### 2025-12-26: Branding, Modes & UI Refinements
+**Request:** Differentiate Standard/Pro modes, apply "Calcar" branding, and refine UI.
+
+**Changes made:**
+- **Branding:** Renamed site to "Calcar", created `Header` (non-sticky) and `Footer` (neutral). Added "More Smiles, Less Miles of Costs" tagline.
+- **TCO Calculator Modes:**
+  - **Standard (Default):** Simplified view. Read-only price, fixed 2-5 year button selector, hidden resale input.
+  - **Pro:** Full control. Editable price/resale, 1-15 year dropdown.
+  - **Default:** Always defaults to 3-year term.
+- **UI Polish:**
+  - **Pro Styling:** Amber border/shadow and "Cost Calculator Pro" title when active.
+  - **Pro Insights:** Dedicated animated section for depreciation modifiers.
+  - **Cost Display:** Promoted "Monthly Cost" to primary view (`text-xl`).
+  - **Animations:** Smooth transitions for mode switching and section expansion.
