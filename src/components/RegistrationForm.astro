@@ -35,8 +35,19 @@
   const errorMsg = document.getElementById("error-msg");
 
   btn?.addEventListener("click", async () => {
-    const reg = input.value.trim();
+    const reg = input.value.trim().toUpperCase();
     if (!reg) return;
+
+    // Validation: Alphanumeric and spaces only
+    const regPattern = /^[A-Z0-9 ]+$/;
+    if (!regPattern.test(reg)) {
+      if (errorMsg) {
+        errorMsg.textContent =
+          "Invalid registration format (Alphanumeric only)";
+        errorMsg.classList.remove("hidden");
+      }
+      return;
+    }
 
     if (btn) btn.textContent = "Loading...";
     if (errorMsg) errorMsg.classList.add("hidden");

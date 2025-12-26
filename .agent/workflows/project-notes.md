@@ -64,6 +64,7 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - Consider replacing Wikipedia image source before going public
 - May need to add image attribution if keeping Wikipedia approach
 - **Calculator Maintenance**: Maintain strict parity between Standard and Pro logic. Divergence should be deliberate and limited *only* to user experience (Entry-Level vs Pro features). Always verify intent before splitting logic.
+- **Security Validation**: Current validation is client-side only. Future server-side validation MUST be implemented when a backend is added.
 
 ### 2025-12-26: Pro Depreciation Model
 **Request:** Implement more accurate depreciation with age curve, fuel type, and brand adjustments.
