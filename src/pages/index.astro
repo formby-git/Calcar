@@ -1,18 +1,22 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import RegistrationForm from '../components/RegistrationForm.astro';
-import VehicleCard from '../components/VehicleCard.astro';
-import TCOCalculator from '../components/TCOCalculator.astro';
+import Layout from "../layouts/Layout.astro";
+import RegistrationForm from "../components/RegistrationForm.astro";
+import VehicleCard from "../components/VehicleCard.astro";
+import TCOCalculator from "../components/TCOCalculator.astro";
 ---
 
-<Layout title="UK Car TCO Calculator">
-	<header class="mb-8 text-center">
-		<h1 class="text-3xl font-bold text-slate-900">Car TCO Calculator</h1>
-		<p class="text-slate-600 mt-2">Calculate the Total Cost of Ownership for your vehicle.</p>
-	</header>
+<Layout title="Calcar - Smart Car Ownership">
+	<div class="mb-10 text-center">
+		<h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">
+			More Smiles, Less Miles of Costs 🚗
+		</h1>
+		<p class="text-lg text-slate-600 mt-3 max-w-xl mx-auto">
+			Discover the true cost of your dream car before you buy. No hidden
+			surprises, just smart decisions.
+		</p>
+	</div>
 
 	<RegistrationForm />
 	<VehicleCard />
 	<TCOCalculator />
-
 </Layout>

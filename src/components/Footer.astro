@@ -1,0 +1,35 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white border-t border-slate-200 text-slate-500 py-12">
+    <div class="max-w-4xl mx-auto px-4">
+        <div class="mb-8">
+            <!-- Brand -->
+            <div class="max-w-md">
+                <h3 class="text-slate-900 font-bold text-lg mb-4">Calcar</h3>
+                <p class="text-sm leading-relaxed">
+                    The UK's smartest car TCO calculator. Helping you make
+                    better buying decisions.
+                </p>
+            </div>
+        </div>
+
+        <div
+            class="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-sm gap-4"
+        >
+            <p>&copy; {currentYear} Calcar Ltd. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-slate-900 transition-colors"
+                    >Twitter</a
+                >
+                <a href="#" class="hover:text-slate-900 transition-colors"
+                    >GitHub</a
+                >
+                <a href="#" class="hover:text-slate-900 transition-colors"
+                    >LinkedIn</a
+                >
+            </div>
+        </div>
+    </div>
+</footer>
