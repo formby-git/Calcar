@@ -104,3 +104,13 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - **Expensive Car Supplement:** +£425/year for years 2-6 if list price > £40k.
   - **Pre-2017 Logic:** Different CO₂ bands for older vehicles.
 - Updated `TCOCalculator.astro` to use `calculateTotalVED()` for accurate multi-year calculations.
+
+### 2025-12-26: Calculator UI Refactor
+**Request:** Simplify calculator by unifying Standard/Pro modes into a single UI.
+
+**Changes made:**
+- **Unified UI**: All inputs always visible and editable.
+- **Simple/Complex Toggle**: Clean toggle switch that only changes depreciation model (no UI changes).
+- **Term Selector**: Quick buttons (2-5 years) + "Custom" option that reveals full dropdown.
+- **Removed**: Separate Standard/Pro mode styling, visibility toggling, read-only states.
+- **Kept**: Depreciation Factors section (appears when Complex mode is active).
