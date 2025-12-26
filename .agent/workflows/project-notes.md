@@ -62,3 +62,14 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 ## Future Considerations
 - Consider replacing Wikipedia image source before going public
 - May need to add image attribution if keeping Wikipedia approach
+
+### 2025-12-26: Pro Depreciation Model
+**Request:** Implement more accurate depreciation with age curve, fuel type, and brand adjustments.
+
+**Changes made:**
+- Created `depreciationCalculator.ts` with Basic (15%/year) and Pro models
+- Pro model: 25% year 1, 15% year 2, 10% thereafter
+- Fuel adjustments: Electric +5%, Diesel +3%, Hybrid -2%
+- Brand adjustments: Porsche/Toyota/Honda/Land Rover -3%, DS/Polestar/Mitsubishi/Renault/Fiat +3%
+- Added Basic/Pro toggle to Cost Calculator
+- Extended ownership terms from 1-15 years
