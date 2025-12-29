@@ -6,17 +6,99 @@ import TCOCalculator from "../components/TCOCalculator.astro";
 ---
 
 <Layout title="Calcar - Smart Car Ownership">
-	<div class="mb-10 text-center">
-		<h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">
-			Don't Get Taken for a Ride 🚗
-		</h1>
-		<p class="text-lg text-slate-600 mt-3 max-w-xl mx-auto">
-			Calculate the real cost of any UK car—depreciation, tax, and all.
-			Because surprises are only fun at parties.
-		</p>
+	<div
+		id="landing-background"
+		class="fixed inset-0 z-[-1] transition-opacity duration-700"
+	>
+		<div
+			class="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm scale-105"
+			style="background-image: url('/car-ownership-bg.png');"
+		>
+		</div>
+		<!-- Dark overlay for neon background -->
+		<div class="absolute inset-0 bg-slate-900/50"></div>
 	</div>
 
-	<RegistrationForm />
-	<VehicleCard />
-	<TCOCalculator />
+	<div
+		id="landing-wrapper"
+		class="min-h-[80vh] flex flex-col justify-center transition-all duration-700 ease-in-out"
+		data-state="initial"
+	>
+		<!-- Added text-white to initial state, removed specific slate colors from children -->
+		<div
+			id="hero-content"
+			class="mb-10 text-center transition-all duration-500 delay-100 text-white"
+		>
+			<h1
+				class="text-5xl font-extrabold tracking-tight drop-shadow-md mb-4"
+			>
+				Don't Get Taken for a Ride 🚗
+			</h1>
+			<p class="text-xl font-medium max-w-xl mx-auto drop-shadow-md">
+				Calculate the real cost of any UK car—depreciation, tax, and
+				all. Because surprises are only fun at parties.
+			</p>
+		</div>
+
+		<div class="w-full max-w-md mx-auto transition-transform duration-700">
+			<RegistrationForm />
+		</div>
+	</div>
+
+	<div
+		id="results-container"
+		class="opacity-0 translate-y-20 transition-all duration-700 delay-300 hidden"
+	>
+		<VehicleCard />
+		<TCOCalculator />
+	</div>
 </Layout>
+
+<script>
+	const wrapper = document.getElementById("landing-wrapper");
+	const background = document.getElementById("landing-background");
+	const resultsContainer = document.getElementById("results-container");
+	const heroContent = document.getElementById("hero-content");
+
+	// Listen for the custom event from RegistrationForm
+	window.addEventListener("car-loaded", () => {
+		// Transition state
+		wrapper?.setAttribute("data-state", "results");
+
+		// 1. Fade out background
+		if (background) {
+			background.style.opacity = "0";
+			setTimeout(() => {
+				background.style.display = "none";
+			}, 700);
+		}
+
+		// 2. Move wrapper to top
+		if (wrapper) {
+			wrapper.classList.remove("min-h-[80vh]", "justify-center");
+			wrapper.classList.add("mt-8", "mb-8");
+		}
+
+		// 3. Fade out hero content slightly or adjust it
+		if (heroContent) {
+			heroContent.classList.remove("mb-10");
+			heroContent.classList.add("mb-6");
+
+			// Switch text color to dark matching the light body
+			heroContent.classList.remove("text-white");
+			heroContent.classList.add("text-slate-900");
+		}
+
+		// 4. Show results
+		if (resultsContainer) {
+			resultsContainer.classList.remove("hidden");
+			// Small delay to allow layout to settle before fading in results
+			requestAnimationFrame(() => {
+				resultsContainer.classList.remove(
+					"opacity-0",
+					"translate-y-20",
+				);
+			});
+		}
+	});
+</script>
