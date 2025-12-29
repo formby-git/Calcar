@@ -114,3 +114,18 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - **Term Selector**: Quick buttons (2-5 years) + "Custom" option that reveals full dropdown.
 - **Removed**: Separate Standard/Pro mode styling, visibility toggling, read-only states.
 - **Kept**: Depreciation Factors section (appears when Complex mode is active).
+
+### 2025-12-29: Enhanced Landing Page
+**Request**: Improve landing experience with abstract background, centered registration form, and smooth transition to content.
+
+**Changes made:**
+- **Landing Layout**:
+  - Implemented initial full-screen centered view for the registration form.
+  - Added "Neon Gradient Mesh Fusion" abstract background with dark overlay.
+  - Implemented smooth transition animation: background fades out, content moves to top, and calculator reveals on lookup.
+- **Visuals**:
+  - Hero text starts white (for dark background) and transitions to dark slate (for light calculator view).
+  - Background image combines neon light trails with fluid gradient mesh.
+- **Refinement**:
+  - Removed static margins from `RegistrationForm` to allow layout flexibility.
+  - Added `data-state` attributes to `index.astro` to manage transitions.
