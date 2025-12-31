@@ -105,6 +105,15 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - **Pre-2017 Logic:** Different CO₂ bands for older vehicles.
 - Updated `TCOCalculator.astro` to use `calculateTotalVED()` for accurate multi-year calculations.
 
+### 2025-12-31: VED Refactor & 2025 Rules
+**Request:** Refactor VED calculation to fully support 2025 Budget rules (specifically EV supplement threshold) and correct vehicle age tracking.
+
+**Changes made:**
+- **Vehicle Age Logic**: Fixed bug where supplement relied on ownership duration. Now correctly calculates supplement based on the vehicle's actual age (Years 2-6 of its life).
+- **EV Supplement Threshold**: Implemented new £50,000 threshold for Expensive Car Supplement for EVs registered on/after 1 April 2025 (Standard threshold remains £40,000).
+- **Refactoring**: Simplified `calculateTotalVED` signature, removing `isNewPurchase` argument in favor of inferring age from `yearOfManufacture`.
+
+
 ### 2025-12-26: Calculator UI Refactor
 **Request:** Simplify calculator by unifying Standard/Pro modes into a single UI.
 

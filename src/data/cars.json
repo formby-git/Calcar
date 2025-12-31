@@ -1054,5 +1054,16 @@
         "colour": "Blue",
         "basicPrice": 65000,
         "originalListPrice": 68000
+    },
+    {
+        "registration": "FD21 AXW",
+        "make": "Audi",
+        "model": "TT S",
+        "yearOfManufacture": 2021,
+        "fuelType": "Petrol",
+        "co2Emissions": 161,
+        "colour": "Red",
+        "basicPrice": 29900,
+        "originalListPrice": 42000
     }
 ]

@@ -2,10 +2,10 @@ import type { Car } from './carService';
 
 /**
  * UK VED (Vehicle Excise Duty) Calculator
- * Implements accurate 2024/2025 UK tax rules including:
+ * Implements accurate rules (2024/2025 + future Budget 2025 changes) including:
  * - CO₂-based first-year rates (for new vehicles)
  * - Standard flat rate (for subsequent years)
- * - Expensive car supplement (£40k+ list price)
+ * - Expensive car supplement (£40k/£50k threshold depending on fuel/year)
  * - Registration era logic (pre-2017 vs post-2017)
  */
 
@@ -63,9 +63,9 @@ const PRE_2017_RATES: [number, number][] = [
 
 // Constants
 const STANDARD_RATE = 195;              // Annual rate for post-2017 cars (year 2+)
-const EXPENSIVE_CAR_SUPPLEMENT = 425;   // Extra annual charge for £40k+ cars (years 2-6)
-const EXPENSIVE_CAR_THRESHOLD = 40000;  // List price threshold
-const SUPPLEMENT_YEARS = 5;             // Years the supplement applies
+const EXPENSIVE_CAR_SUPPLEMENT = 425;   // Extra annual charge
+const EXPENSIVE_CAR_THRESHOLD = 40000;  // Standard list price threshold
+const EXPENSIVE_EV_THRESHOLD = 50000;   // New EV threshold (from April 2025)
 
 /**
  * Get the rate from a banded table based on CO₂ emissions
@@ -103,7 +103,6 @@ export function getFirstYearRate(car: Car): number {
  */
 export function getStandardRate(car: Car): number {
     const year = car.yearOfManufacture;
-    const fuel = car.fuelType.toUpperCase();
     const co2 = car.co2Emissions;
 
     // Pre-April 2017 cars use CO₂ bands even for subsequent years
@@ -116,17 +115,27 @@ export function getStandardRate(car: Car): number {
 }
 
 /**
- * Calculate expensive car supplement for a given year of ownership
- * Returns £425 for years 2-6 if original list price > £40,000
+ * Calculate expensive car supplement for a given vehicle age (NOT ownership year)
+ * Returns £425 if applicable for that specific year of the vehicle's life
  */
-export function getExpensiveCarSupplement(car: Car, yearOfOwnership: number): number {
-    // Supplement applies from year 2 to year 6 (5 years total)
-    if (yearOfOwnership < 2 || yearOfOwnership > 6) {
+export function getExpensiveCarSupplement(car: Car, vehicleAge: number): number {
+    // Supplement applies from vehicle year 2 to year 6 (5 years total)
+    if (vehicleAge < 2 || vehicleAge > 6) {
         return 0;
     }
 
-    // Check if car exceeds expensive threshold
-    if (car.originalListPrice > EXPENSIVE_CAR_THRESHOLD) {
+    const fuel = car.fuelType.toUpperCase();
+
+    // Determine the threshold based on Fuel and Registration Year
+    // EVs registered on/after 2025 get the £50k threshold
+    let threshold = EXPENSIVE_CAR_THRESHOLD;
+
+    if (fuel === 'ELECTRIC' && car.yearOfManufacture >= 2025) {
+        threshold = EXPENSIVE_EV_THRESHOLD;
+    }
+
+    // Check if car exceeds calculated threshold
+    if (car.originalListPrice > threshold) {
         return EXPENSIVE_CAR_SUPPLEMENT;
     }
 
@@ -137,25 +146,32 @@ export function getExpensiveCarSupplement(car: Car, yearOfOwnership: number): nu
  * Calculate total VED for a given ownership period
  * @param car - The car object
  * @param ownershipYears - Total years of ownership
- * @param isNewPurchase - If true, applies first-year rates; if false, uses standard rates throughout
  * @returns Total VED for the ownership period
  */
-export function calculateTotalVED(car: Car, ownershipYears: number, isNewPurchase: boolean = false): number {
+export function calculateTotalVED(car: Car, ownershipYears: number): number {
+    const currentYear = new Date().getFullYear(); // Assume calculation is happening 'now'
+
     let totalVED = 0;
 
-    for (let year = 1; year <= ownershipYears; year++) {
+    // Determine the vehicle's age at the start of ownership
+    // If manufactured in 2021 and it's now 2025, it's starting its 5th year (approx)
+    // 2021 (Year 1), 2022 (2), 2023 (3), 2024 (4), 2025 (Year 5)
+    const vehicleAgeAtPurchase = Math.max(1, (currentYear - car.yearOfManufacture) + 1);
+
+    for (let i = 0; i < ownershipYears; i++) {
+        const currentVehicleAge = vehicleAgeAtPurchase + i;
         let annualVED: number;
 
-        if (year === 1 && isNewPurchase) {
-            // First year of a new car gets first-year rate
+        if (currentVehicleAge === 1) {
+            // Brand new car (Year 1 of life)
             annualVED = getFirstYearRate(car);
         } else {
-            // Subsequent years or used cars get standard rate
+            // Subsequent years
             annualVED = getStandardRate(car);
         }
 
-        // Add expensive car supplement if applicable
-        annualVED += getExpensiveCarSupplement(car, year);
+        // Add expensive car supplement if applicable for this specific vehicle age
+        annualVED += getExpensiveCarSupplement(car, currentVehicleAge);
 
         totalVED += annualVED;
     }
@@ -165,11 +181,8 @@ export function calculateTotalVED(car: Car, ownershipYears: number, isNewPurchas
 
 /**
  * Legacy function for backwards compatibility
- * Returns annual tax (standard rate only, no first-year calculation)
- * @deprecated Use calculateTotalVED for accurate multi-year calculations
+ * @deprecated Use calculateTotalVED
  */
 export function calculateAnnualTax(car: Car): number {
-    const standardRate = getStandardRate(car);
-    const supplement = getExpensiveCarSupplement(car, 2); // Assume year 2 for supplement check
-    return standardRate + supplement;
+    return calculateTotalVED(car, 1);
 }

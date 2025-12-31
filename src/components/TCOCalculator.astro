@@ -363,7 +363,7 @@
 
     // Tax (using total VED for ownership period)
     const termYears = Math.ceil(termMonths / 12);
-    const totalTax = calculateTotalVED(currentCar, termYears, false);
+    const totalTax = calculateTotalVED(currentCar, termYears);
 
     // Total
     const totalCost = depreciation + totalTax;
