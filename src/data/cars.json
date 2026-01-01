@@ -1065,5 +1065,16 @@
         "colour": "Red",
         "basicPrice": 29900,
         "originalListPrice": 42000
+    },
+    {
+        "registration": "KS74 YZP",
+        "make": "Peugeot",
+        "model": "508 Sport Engineered",
+        "yearOfManufacture": 2024,
+        "fuelType": "Hybrid",
+        "co2Emissions": 99,
+        "colour": "White",
+        "basicPrice": 28867,
+        "originalListPrice": 42000
     }
 ]

@@ -9,7 +9,6 @@ description: Project context and change history for Calcar - UK Car TCO Calculat
 > 2. Follow the design preferences listed below
 > 3. Update the "Change History" section AFTER completing any significant changes
 > 4. Add new considerations to "Future Considerations" when relevant issues are discussed
-> 5. **Calculator Parity**: When modifying the TCO Calculator, ALWAYS confirm if changes should apply to both Standard and Pro modes. Limit divergence to UX/Input methods only; keep core logic unified.
 
 ---
 
