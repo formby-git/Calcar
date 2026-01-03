@@ -1,5 +1,5 @@
 ---
-
+import MarketMetadata from "./MarketMetadata.astro";
 ---
 
 <div
@@ -17,6 +17,8 @@
     <p class="text-xs text-slate-400 mt-4 text-center">
         * Estimated value based on average annual mileage and condition.
     </p>
+
+    <MarketMetadata />
 </div>
 
 <script>
@@ -48,8 +50,9 @@
     const marketData = marketStats as MarketData;
 
     let currentCar: Car | null = null;
+    let currentTermMonths: number = 36;
 
-    const renderChart = (car: Car, price: number) => {
+    const renderChart = (car: Car, price: number, termMonths: number) => {
         if (!container || !ctx) return;
         container.classList.remove("hidden");
 
@@ -58,6 +61,9 @@
         const currentAge = currentYear - carYear;
         const SNAPSHOT_YEAR = 2022;
         const maxAge = currentAge + 15;
+
+        // Target age for highlighting
+        const targetAge = currentAge + Math.floor(termMonths / 12);
 
         // --- Find Matching Market Data ---
         const makeKey = car.make.toLowerCase().trim();
@@ -120,6 +126,20 @@
             chartInstance.data.labels = labels.map((age) => `Age ${age}`);
             chartInstance.data.datasets[0].data = projectedData;
             chartInstance.data.datasets[1].data = historicalData;
+
+            // Re-apply dynamic logic to highlighted points
+            // Note: Chart.js allows functions for these properties
+            const dataset = chartInstance.data.datasets[0] as any;
+            dataset.pointRadius = projectedData.map((_, i) =>
+                labels[i] === targetAge ? 8 : 4,
+            );
+            dataset.pointBackgroundColor = projectedData.map((_, i) =>
+                labels[i] === targetAge ? "#F59E0B" : "#ffffff",
+            ); // Amber-500 for highlight
+            dataset.pointBorderColor = projectedData.map((_, i) =>
+                labels[i] === targetAge ? "#D97706" : "#4F46E5",
+            );
+
             chartInstance.update();
         } else {
             chartInstance = new Chart(ctx, {
@@ -154,11 +174,25 @@
                             fill: true,
                             // Request: "not overly smoothed" -> lower tension
                             tension: 0.2,
-                            pointBackgroundColor: "#ffffff",
-                            pointBorderColor: "#4F46E5",
+                            // Highlighting dynamic logic
+                            pointRadius: (ctx) => {
+                                const idx = ctx.dataIndex;
+                                return labels[idx] === targetAge ? 8 : 4;
+                            },
+                            pointBackgroundColor: (ctx) => {
+                                const idx = ctx.dataIndex;
+                                return labels[idx] === targetAge
+                                    ? "#F59E0B"
+                                    : "#ffffff";
+                            },
+                            pointBorderColor: (ctx) => {
+                                const idx = ctx.dataIndex;
+                                return labels[idx] === targetAge
+                                    ? "#D97706"
+                                    : "#4F46E5";
+                            },
                             pointBorderWidth: 2,
-                            pointRadius: 4,
-                            pointHoverRadius: 6,
+                            pointHoverRadius: 10,
                         },
                         {
                             label: "Historical Market Average (2022)",
@@ -194,11 +228,20 @@
                                     const val = context.parsed.y;
                                     if (val === null || val === undefined)
                                         return "";
-                                    return new Intl.NumberFormat("en-GB", {
-                                        style: "currency",
-                                        currency: "GBP",
-                                        maximumFractionDigits: 0,
-                                    }).format(val);
+                                    const age = labels[context.dataIndex];
+                                    const label =
+                                        age === targetAge
+                                            ? "Value @ Selected Term"
+                                            : context.dataset.label;
+
+                                    return `${label}: ${new Intl.NumberFormat(
+                                        "en-GB",
+                                        {
+                                            style: "currency",
+                                            currency: "GBP",
+                                            maximumFractionDigits: 0,
+                                        },
+                                    ).format(val)}`;
                                 },
                             },
                         },
@@ -247,15 +290,15 @@
     window.addEventListener("car-loaded", ((e: CustomEvent<Car>) => {
         const car = e.detail;
         currentCar = car;
-        renderChart(currentCar, currentCar.basicPrice);
+        renderChart(currentCar, currentCar.basicPrice, currentTermMonths);
     }) as unknown as EventListener);
 
-    window.addEventListener("price-updated", ((
-        e: CustomEvent<{ price: number }>,
+    window.addEventListener("calculator-updated", ((
+        e: CustomEvent<{ price: number; termMonths: number }>,
     ) => {
         if (currentCar) {
-            renderChart(currentCar, e.detail.price);
+            currentTermMonths = e.detail.termMonths;
+            renderChart(currentCar, e.detail.price, currentTermMonths);
         }
     }) as unknown as EventListener);
 </script>
-```

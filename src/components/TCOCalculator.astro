@@ -222,6 +222,7 @@ import DepreciationChart from "./DepreciationChart.astro";
           currentTermMonths = parseInt(inputTerm.value);
           updateResaleEstimate();
           calculate();
+          notifyCalculatorUpdate();
         }
 
         // Update button styling
@@ -236,6 +237,7 @@ import DepreciationChart from "./DepreciationChart.astro";
         updateTermButtonStyles(target);
         updateResaleEstimate();
         calculate();
+        notifyCalculatorUpdate();
       }
     });
   });
@@ -274,6 +276,7 @@ import DepreciationChart from "./DepreciationChart.astro";
     currentTermMonths = parseInt(inputTerm.value);
     updateResaleEstimate();
     calculate();
+    notifyCalculatorUpdate();
   });
 
   // Listen for car load
@@ -289,6 +292,7 @@ import DepreciationChart from "./DepreciationChart.astro";
     updateModifierBadges();
     updateResaleEstimate();
     calculate();
+    notifyCalculatorUpdate();
   }) as EventListener);
 
   function updateResaleEstimate() {
@@ -339,15 +343,23 @@ import DepreciationChart from "./DepreciationChart.astro";
   inputPrice?.addEventListener("input", () => {
     updateResaleEstimate();
     calculate();
+    notifyCalculatorUpdate();
+  });
 
-    // Notify chart
-    const newPrice = parseFloat(inputPrice.value);
-    if (!isNaN(newPrice)) {
+  function notifyCalculatorUpdate() {
+    if (!inputPrice) return;
+    const price = parseFloat(inputPrice.value);
+    if (!isNaN(price)) {
       window.dispatchEvent(
-        new CustomEvent("price-updated", { detail: { price: newPrice } }),
+        new CustomEvent("calculator-updated", {
+          detail: {
+            price: price,
+            termMonths: currentTermMonths,
+          },
+        }),
       );
     }
-  });
+  }
 
   inputResale?.addEventListener("input", calculate);
 
