@@ -22,15 +22,31 @@
       Lookup
     </button>
   </div>
-  <p id="error-msg" class="text-red-500 text-sm mt-2 hidden"></p>
+  <div id="error-msg" class="text-red-500 text-sm mt-2 hidden"></div>
+
+  <div class="mt-4 flex justify-center">
+    <button
+      id="lucky-btn"
+      class="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors border-b border-transparent hover:border-blue-700"
+    >
+      I'm Feeling Lucky
+    </button>
+  </div>
 </div>
 
 <script>
-  import { getCarByRegistration } from "../utils/carService";
+  import { getCarByRegistration, getRandomCar } from "../utils/carService";
 
   const input = document.getElementById("reg-input") as HTMLInputElement;
   const btn = document.getElementById("lookup-btn");
+  const luckyBtn = document.getElementById("lucky-btn");
   const errorMsg = document.getElementById("error-msg");
+
+  const loadCar = (car: any) => {
+    if (car) {
+      window.dispatchEvent(new CustomEvent("car-loaded", { detail: car }));
+    }
+  };
 
   btn?.addEventListener("click", async () => {
     const reg = input.value.trim().toUpperCase();
@@ -52,10 +68,8 @@
 
     try {
       const car = await getCarByRegistration(reg);
-
       if (car) {
-        // Dispatch event with car data
-        window.dispatchEvent(new CustomEvent("car-loaded", { detail: car }));
+        loadCar(car);
       } else {
         if (errorMsg) {
           errorMsg.textContent = "Vehicle not found";
@@ -69,6 +83,23 @@
       }
     } finally {
       if (btn) btn.textContent = "Lookup";
+    }
+  });
+
+  luckyBtn?.addEventListener("click", async () => {
+    if (luckyBtn) luckyBtn.textContent = "Finding...";
+    if (errorMsg) errorMsg.classList.add("hidden");
+
+    try {
+      const car = await getRandomCar();
+      loadCar(car);
+    } catch (e) {
+      if (errorMsg) {
+        errorMsg.textContent = "Error picking random car";
+        errorMsg.classList.remove("hidden");
+      }
+    } finally {
+      if (luckyBtn) luckyBtn.textContent = "I'm Feeling Lucky";
     }
   });
 </script>

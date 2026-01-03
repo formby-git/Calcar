@@ -25,3 +25,11 @@ export const getCarByRegistration = async (registration: string): Promise<Car | 
 export const getAllCars = async (): Promise<Car[]> => {
     return carsData;
 }
+
+export const getRandomCar = async (): Promise<Car> => {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const randomIndex = Math.floor(Math.random() * carsData.length);
+    return carsData[randomIndex];
+};
+
