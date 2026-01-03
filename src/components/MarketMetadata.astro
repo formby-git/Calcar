@@ -43,6 +43,66 @@
 </div>
 
 <script>
+    /**
+     * ================================================================================
+     * DEPRECIATION ACCURACY CHECK - MarketMetadata.astro
+     * ================================================================================
+     *
+     * PURPOSE:
+     * This component validates our depreciation calculator against real 2022 market data.
+     * It acts as a "lab test" to show users whether our predictions are accurate for
+     * cars of their car's current age.
+     *
+     * ================================================================================
+     * KEY CONCEPT: FORWARD-LOOKING COMPARISON
+     * ================================================================================
+     *
+     * The goal is to test the depreciation the user is ABOUT TO EXPERIENCE, not
+     * the depreciation that already happened.
+     *
+     * Example: User has a 2018 car. Today is 2026. The car is 8 years old.
+     *
+     *   WRONG APPROACH (Testing the past):
+     *   - Find 2018 & 2019 models from 2022 data (ages 4 and 3).
+     *   - Test Year 3 → 4 transition.
+     *   - This tells us nothing about an 8-year-old car!
+     *
+     *   CORRECT APPROACH (Testing the future):
+     *   - Car is 8 years old now. After 1 year of ownership, it will be 9.
+     *   - Find cars that were 8 and 9 years old in 2022 (2014 & 2013 models).
+     *   - Test Year 8 → 9 transition.
+     *   - This validates the exact curve segment the user is about to ride.
+     *
+     * ================================================================================
+     * ⚠️  WARNINGS FOR FUTURE MAINTAINERS ⚠️
+     * ================================================================================
+     *
+     * 1. AGE vs YEAR CONFUSION:
+     *    - "historicalNewerYear" = the manufacture year of the YOUNGER car (e.g., 2014).
+     *    - "historicalOlderYear" = the manufacture year of the OLDER car (e.g., 2013).
+     *    - "ageNewer" = the age in years of the younger car (e.g., 8).
+     *    - "ageOlder" = the age in years of the older car (e.g., 9).
+     *    - NEVER compare a car at age X in the market data against our model's
+     *      prediction for a different age Y. They must match exactly.
+     *
+     * 2. DIRECTION OF COMPARISON:
+     *    - We are testing what happens when a car goes from currentAge → currentAge+1.
+     *    - Do NOT accidentally test currentAge-1 → currentAge (that's the past).
+     *
+     * 3. SNAPSHOT YEAR IS FIXED:
+     *    - The market_stats.json was generated from 2022 data.
+     *    - SNAPSHOT_YEAR must always be 2022 unless data is regenerated.
+     *
+     * 4. FUEL TYPE MAPPING:
+     *    - The raw data uses specific fuel types like "petrol hybrid", "diesel hybrid".
+     *    - User cars may have generic "Hybrid". We try multiple variants to find a match.
+     *
+     * 5. MIN_SAMPLES THRESHOLD:
+     *    - We require at least 3 samples per year to avoid unreliable comparisons.
+     *
+     * ================================================================================
+     */
+
     import type { Car } from "../utils/carService";
     import { calculateResidualFactor } from "../utils/depreciationCalculator";
     import marketStats from "../data/market_stats.json";
@@ -51,68 +111,109 @@
     const content = document.getElementById("market-data-content");
     const missing = document.getElementById("market-data-missing");
 
-    const SNAPSHOT_YEAR = 2022;
+    const SNAPSHOT_YEAR = 2022; // Year when market_stats.json data was collected
+    const CURRENT_YEAR = new Date().getFullYear();
 
     window.addEventListener("car-loaded", ((e: CustomEvent<Car>) => {
         if (!card || !content || !missing) return;
 
         const car = e.detail;
 
-        // Normalize keys for lookup
-        const make = car.make.toLowerCase().trim();
-        const model = car.model.toLowerCase().trim();
-        const fuel = car.fuelType.toLowerCase().trim();
-        const targetYear = car.yearOfManufacture;
+        // --- 1. FIND CAR DATA (Exact Match) ---
+        const makeKey = car.make.toLowerCase().trim();
+        const modelKey = car.model.toLowerCase().trim();
 
-        // Strategy: Year-over-Year Decay
-        // We compare the price of the Target Year (N) vs the Newer Year (N+1)
-        // This gives us the depreciation "drop" for that specific year of age.
-        const newerYear = targetYear + 1;
-
-        const statTarget = (marketStats as any)[make]?.[model]?.[fuel]?.[
-            targetYear.toString()
-        ];
-        const statNewer = (marketStats as any)[make]?.[model]?.[fuel]?.[
-            newerYear.toString()
-        ];
-
-        if (!statTarget || !statNewer) {
-            // We need BOTH years to calculate a curve
+        const modelData = (marketStats as any)[makeKey]?.[modelKey];
+        if (!modelData) {
             card.classList.remove("hidden");
             content.classList.add("hidden");
             missing.classList.remove("hidden");
             return;
         }
 
-        // 1. Calculate Real Market Drop
-        // Example: 2018 car (£15k), 2019 car (£18k). Drop = (18-15)/18 = 16.6%
-        const priceTarget = statTarget.avgPrice;
-        const priceNewer = statNewer.avgPrice;
-        const marketDropRate = (priceNewer - priceTarget) / priceNewer;
+        // --- 2. FUEL MAPPING ---
+        const carFuel = car.fuelType.toLowerCase();
+        let fuelKeysToTry = [carFuel];
+        if (carFuel.includes("hybrid")) {
+            fuelKeysToTry = [
+                "petrol hybrid",
+                "petrol plug-in hybrid",
+                "diesel hybrid",
+                "hybrid",
+            ];
+        }
 
-        // 2. Calculate Model Implied Drop
-        // Age in 2022
-        const ageTarget = SNAPSHOT_YEAR - targetYear;
-        const ageNewer = SNAPSHOT_YEAR - newerYear;
+        let statForFuel: any = null;
+        for (const f of fuelKeysToTry) {
+            if (modelData[f]) {
+                statForFuel = modelData[f];
+                break;
+            }
+        }
 
-        // If car is too new for the snapshot (e.g. 2023 car), we can't verify
-        if (ageTarget <= 0) {
-            card.classList.add("hidden");
+        if (!statForFuel) {
+            card.classList.remove("hidden");
+            content.classList.add("hidden");
+            missing.classList.remove("hidden");
             return;
         }
 
-        const factorTarget = calculateResidualFactor(car, ageTarget);
-        const factorNewer = calculateResidualFactor(car, ageNewer); // ageNewer will be ageTarget - 1
+        // --- 3. FIND EQUIVALENT-AGED CAR FROM 2022 (Forward-Looking) ---
+        // Example: User has a 2018 car, it's 2026. Car is 8 years old NOW.
+        // After 1 year of ownership, it will be 9 years old.
+        // We need to test the Year 8 → 9 transition.
+        // In 2022: a 2014 model was 8 years old, a 2013 model was 9 years old.
 
-        // The model drop is the % lost going from Newer Factor to Target Factor
-        // e.g. Year 3 (0.70) -> Year 4 (0.60). Drop = (0.7-0.6)/0.7 = 14.2%
-        const modelDropRate = (factorNewer - factorTarget) / factorNewer;
+        const currentCarAge = CURRENT_YEAR - car.yearOfManufacture;
 
-        // 3. Compare
-        const diffRate = marketDropRate - modelDropRate; // positive = market dropping FASTER than model
+        // Find historical cars matching current age → current age + 1
+        const historicalNewerYear = SNAPSHOT_YEAR - currentCarAge; // 8 years old in 2022 = 2014
+        const historicalOlderYear = historicalNewerYear - 1; // 9 years old in 2022 = 2013
+
+        const statNewer = statForFuel[historicalNewerYear.toString()];
+        const statOlder = statForFuel[historicalOlderYear.toString()];
+
+        // Validate (Min 3 samples)
+        const MIN_SAMPLES = 3;
+        const isValid =
+            statOlder &&
+            statNewer &&
+            statOlder.count >= MIN_SAMPLES &&
+            statNewer.count >= MIN_SAMPLES;
+
+        if (!isValid) {
+            card.classList.remove("hidden");
+            content.classList.add("hidden");
+            missing.classList.remove("hidden");
+            return;
+        }
+
+        // --- 4. CALCULATE DROPS ---
+        // Market drop: Year currentCarAge → (currentCarAge + 1)
+        const priceOlder = statOlder.avgPrice;
+        const priceNewer = statNewer.avgPrice;
+        const marketDropRate = (priceNewer - priceOlder) / priceNewer;
+
+        // Model drop for the same age transition
+        const ageNewer = currentCarAge; // e.g. 8 (current age)
+        const ageOlder = currentCarAge + 1; // e.g. 9 (age after 1 year)
+
+        // Edge case: If car hasn't been made yet, we can't compare
+        if (currentCarAge < 0) {
+            card.classList.remove("hidden");
+            content.classList.add("hidden");
+            missing.classList.remove("hidden");
+            return;
+        }
+
+        const factorNewer = calculateResidualFactor(car, ageNewer);
+        const factorOlder = calculateResidualFactor(car, ageOlder);
+
+        const modelDropRate = (factorNewer - factorOlder) / factorNewer;
+
+        // --- 5. RENDER ---
+        const diffRate = marketDropRate - modelDropRate;
         const diffPercent = diffRate * 100;
-
-        // Render
         const toPercent = (n: number) => (n * 100).toFixed(1) + "%";
 
         const isPessimistic = modelDropRate > marketDropRate;
@@ -135,15 +236,15 @@
                     <p class="text-xs text-slate-400 uppercase font-semibold mb-1">Market Drop</p>
                      <p class="text-2xl font-bold text-slate-800">${toPercent(marketDropRate)}</p>
                      <p class="text-[10px] text-slate-400">
-                        ${newerYear} vs ${targetYear} models<br>
-                        (Sample size: ${statNewer.count + statTarget.count})
+                        ${historicalNewerYear} vs ${historicalOlderYear} models in 2022<br>
+                        (Year ${ageNewer} → ${ageOlder} transition, ${statNewer.count + statOlder.count} samples)
                      </p>
                 </div>
                 <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
                     <p class="text-xs text-slate-400 uppercase font-semibold mb-1">Our Model</p>
                     <p class="text-2xl font-bold text-slate-800">${toPercent(modelDropRate)}</p>
                      <p class="text-[10px] text-slate-400">
-                        Predicted drop for year ${ageTarget}
+                        Predicted drop for year ${ageNewer} → ${ageOlder}
                      </p>
                 </div>
             </div>
@@ -170,7 +271,7 @@
             </div>
             
             <div class="text-[10px] text-slate-400 text-center mt-2">
-                * Comparison based on 2022 market data independent of original list price.
+                * Testing Year ${ageNewer}→${ageOlder} depreciation against 2022 market data for ${currentCarAge}-year-old ${car.make} ${car.model}.
             </div>
         `;
 

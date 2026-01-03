@@ -137,3 +137,28 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - **Refinement**:
   - Removed static margins from `RegistrationForm` to allow layout flexibility.
   - Added `data-state` attributes to `index.astro` to manage transitions.
+
+### 2026-01-03: Depreciation Model Simplification
+**Request:** Remove the "Simple" depreciation model, leaving only the more accurate "Complex" model as the standard.
+
+**Changes made:**
+- **Removed**: `DepreciationModel` type, `model` parameter from all functions, `calculateBasicResidual`.
+- **Renamed**: `calculateProResidual` → `calculateResidualFactor` (now the sole implementation).
+- **UI**: Removed Simple/Complex toggle from `TCOCalculator.astro`. Depreciation modifiers now always visible.
+- **Consumers**: Updated `MarketMetadata.astro` to use simplified API.
+
+### 2026-01-03: Depreciation Accuracy Check - Logic Fixes
+**Request:** Fix the accuracy check to correctly validate depreciation at the user's car's *current* age, not its manufacture-year age.
+
+**Key Confusion Resolved:**
+- **Wrong**: Testing Year 3→4 depreciation for an 8-year-old car (using 2018/2019 data).
+- **Right**: Testing Year 8→9 depreciation for an 8-year-old car (using 2014/2013 data).
+
+**Changes made to `MarketMetadata.astro`:**
+- **Forward-Looking Logic**: Now finds historical cars matching `currentAge` and `currentAge + 1` from 2022 data.
+- **Fuel Mapping**: Added fallback for "Hybrid" to try "petrol hybrid", "petrol plug-in hybrid", etc.
+- **Min Samples**: Added 3-sample minimum per year for reliable comparisons.
+- **Documentation**: Added extensive inline comments explaining the logic and common pitfalls.
+
+**Future Considerations Added:**
+- **Accuracy Check Integrity**: When modifying `MarketMetadata.astro`, always verify you are comparing the SAME age transition in both market data and our model. A mismatch invalidates the entire test.
