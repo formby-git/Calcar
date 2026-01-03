@@ -12,12 +12,12 @@ import MarketMetadata from "../components/MarketMetadata.astro";
 		class="fixed inset-0 z-[-1] transition-opacity duration-700"
 	>
 		<div
-			class="absolute inset-0 bg-cover bg-center bg-no-repeat blur-sm scale-105"
+			class="absolute inset-0 bg-cover bg-center bg-no-repeat"
 			style="background-image: url('/car-ownership-bg.png');"
 		>
 		</div>
-		<!-- Dark overlay for neon background -->
-		<div class="absolute inset-0 bg-slate-900/50"></div>
+		<!-- Very subtle white tint for a light, clean look -->
+		<div class="absolute inset-0 bg-white/10"></div>
 	</div>
 
 	<div
@@ -28,14 +28,12 @@ import MarketMetadata from "../components/MarketMetadata.astro";
 		<!-- Added text-white to initial state, removed specific slate colors from children -->
 		<div
 			id="hero-content"
-			class="mb-10 text-center transition-all duration-500 delay-100 text-white"
+			class="mb-10 text-center transition-all duration-500 delay-100 text-slate-900"
 		>
-			<h1
-				class="text-5xl font-extrabold tracking-tight drop-shadow-md mb-4"
-			>
+			<h1 class="text-5xl font-extrabold tracking-tight mb-4">
 				Don't Get Taken for a Ride 🚗
 			</h1>
-			<p class="text-xl font-medium max-w-xl mx-auto drop-shadow-md">
+			<p class="text-xl font-medium max-w-xl mx-auto text-slate-600">
 				Calculate the real cost of any UK car—depreciation, tax, and
 				all. Because surprises are only fun at parties.
 			</p>
@@ -85,10 +83,6 @@ import MarketMetadata from "../components/MarketMetadata.astro";
 		if (heroContent) {
 			heroContent.classList.remove("mb-10");
 			heroContent.classList.add("mb-6");
-
-			// Switch text color to dark matching the light body
-			heroContent.classList.remove("text-white");
-			heroContent.classList.add("text-slate-900");
 		}
 
 		// 4. Show results
