@@ -101,8 +101,8 @@
             return;
         }
 
-        const factorTarget = calculateResidualFactor(car, ageTarget, "pro");
-        const factorNewer = calculateResidualFactor(car, ageNewer, "pro"); // ageNewer will be ageTarget - 1
+        const factorTarget = calculateResidualFactor(car, ageTarget);
+        const factorNewer = calculateResidualFactor(car, ageNewer); // ageNewer will be ageTarget - 1
 
         // The model drop is the % lost going from Newer Factor to Target Factor
         // e.g. Year 3 (0.70) -> Year 4 (0.60). Drop = (0.7-0.6)/0.7 = 14.2%

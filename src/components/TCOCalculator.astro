@@ -8,24 +8,6 @@
 >
   <div class="flex items-center justify-between mb-4 border-b pb-2">
     <h2 class="text-lg font-semibold text-slate-900">Cost Calculator</h2>
-
-    <!-- Depreciation Model Toggle -->
-    <div class="flex items-center gap-2 text-sm">
-      <span class="text-slate-500">Simple</span>
-      <button
-        id="depreciation-toggle"
-        type="button"
-        class="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        aria-pressed="false"
-      >
-        <span class="sr-only">Toggle depreciation model</span>
-        <span
-          id="toggle-dot"
-          class="inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform translate-x-1"
-        ></span>
-      </button>
-      <span class="text-slate-500">Complex</span>
-    </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -174,7 +156,7 @@
     </div>
   </div>
 
-  <!-- Depreciation Insights (visible when Complex mode is active) -->
+  <!-- Depreciation Insights (Always visible if applicable) -->
   <div
     id="modifier-badges"
     class="border-t border-slate-200 mt-0 max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out"
@@ -196,11 +178,9 @@
   import {
     calculateResaleValue,
     getActiveModifiers,
-    type DepreciationModel,
   } from "../utils/depreciationCalculator";
 
   let currentCar: Car | null = null;
-  let currentModel: DepreciationModel = "basic"; // "basic" = Simple, "pro" = Complex
   let currentTermMonths: number = 36; // Default to 3 years
 
   // DOM Elements
@@ -210,9 +190,6 @@
   const inputResale = document.getElementById(
     "input-resale",
   ) as HTMLInputElement;
-
-  const depreciationToggle = document.getElementById("depreciation-toggle");
-  const toggleDot = document.getElementById("toggle-dot");
 
   const termButtons = document.querySelectorAll(".term-btn");
   const btnCustomTerm = document.getElementById("btn-custom-term");
@@ -225,31 +202,6 @@
 
   const modifierBadges = document.getElementById("modifier-badges");
   const modifierList = document.getElementById("modifier-list");
-
-  // Depreciation Model Toggle
-  depreciationToggle?.addEventListener("click", () => {
-    currentModel = currentModel === "basic" ? "pro" : "basic";
-    updateToggleUI();
-    updateModifierBadges();
-    updateResaleEstimate();
-    calculate();
-  });
-
-  function updateToggleUI() {
-    if (!depreciationToggle || !toggleDot) return;
-
-    if (currentModel === "pro") {
-      depreciationToggle.classList.remove("bg-slate-200");
-      depreciationToggle.classList.add("bg-blue-600");
-      toggleDot.classList.remove("translate-x-1");
-      toggleDot.classList.add("translate-x-6");
-    } else {
-      depreciationToggle.classList.remove("bg-blue-600");
-      depreciationToggle.classList.add("bg-slate-200");
-      toggleDot.classList.remove("translate-x-6");
-      toggleDot.classList.add("translate-x-1");
-    }
-  }
 
   // Term Button Handlers
   termButtons.forEach((btn) => {
@@ -342,12 +294,7 @@
     const price = parseFloat(inputPrice.value) || currentCar.basicPrice;
     const termYears = currentTermMonths / 12;
 
-    const estimatedResale = calculateResaleValue(
-      price,
-      currentCar,
-      termYears,
-      currentModel,
-    );
+    const estimatedResale = calculateResaleValue(price, currentCar, termYears);
     inputResale.value = estimatedResale.toString();
   }
 
@@ -406,9 +353,9 @@
     if (!modifierBadges || !modifierList || !currentCar) return;
 
     const modifiers = getActiveModifiers(currentCar);
-    const shouldShow = currentModel === "pro" && modifiers.length > 0;
 
-    if (!shouldShow) {
+    // Always show if there are modifiers (deprecated simple model check)
+    if (modifiers.length === 0) {
       modifierBadges.classList.remove("max-h-[500px]", "opacity-100", "mt-8");
       modifierBadges.classList.add("max-h-0", "opacity-0", "mt-0");
       return;

@@ -1,7 +1,5 @@
 import type { Car } from './carService';
 
-export type DepreciationModel = 'basic' | 'pro';
-
 // Brand categories based on UK market research
 const SLOWER_DEPRECIATION_BRANDS = ['Porsche', 'Toyota', 'Honda', 'Land Rover'];
 const FASTER_DEPRECIATION_BRANDS = ['DS', 'Polestar', 'Mitsubishi', 'Renault', 'Fiat'];
@@ -9,31 +7,12 @@ const FASTER_DEPRECIATION_BRANDS = ['DS', 'Polestar', 'Mitsubishi', 'Renault', '
 /**
  * Calculate the residual value of a car after a given number of years.
  * Returns the estimated resale value as a decimal multiplier (e.g., 0.6 = 60% of original value).
- */
-export function calculateResidualFactor(
-    car: Car,
-    years: number,
-    model: DepreciationModel = 'basic'
-): number {
-    if (model === 'basic') {
-        return calculateBasicResidual(years);
-    }
-    return calculateProResidual(car, years);
-}
-
-/**
- * Basic Model: Flat 15% depreciation per year
- */
-function calculateBasicResidual(years: number): number {
-    return Math.pow(0.85, years);
-}
-
-/**
- * Pro Model: Variable depreciation based on age, fuel type, and brand
+ * 
+ * Uses variable depreciation based on age, fuel type, and brand.
  * Takes into account the car's current age - older cars have already passed
  * the steep early depreciation years.
  */
-function calculateProResidual(car: Car, ownershipYears: number): number {
+export function calculateResidualFactor(car: Car, ownershipYears: number): number {
     let residual = 1.0;
 
     // Calculate car's current age
@@ -105,10 +84,9 @@ function getBrandAdjustment(make: string): number {
 export function calculateDepreciation(
     purchasePrice: number,
     car: Car,
-    years: number,
-    model: DepreciationModel = 'basic'
+    years: number
 ): number {
-    const residualFactor = calculateResidualFactor(car, years, model);
+    const residualFactor = calculateResidualFactor(car, years);
     const resaleValue = purchasePrice * residualFactor;
     return Math.max(0, purchasePrice - resaleValue);
 }
@@ -119,10 +97,9 @@ export function calculateDepreciation(
 export function calculateResaleValue(
     purchasePrice: number,
     car: Car,
-    years: number,
-    model: DepreciationModel = 'basic'
+    years: number
 ): number {
-    const residualFactor = calculateResidualFactor(car, years, model);
+    const residualFactor = calculateResidualFactor(car, years);
     return Math.round(purchasePrice * residualFactor);
 }
 
