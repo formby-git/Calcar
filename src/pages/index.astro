@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import RegistrationForm from "../components/RegistrationForm.astro";
 import VehicleCard from "../components/VehicleCard.astro";
 import TCOCalculator from "../components/TCOCalculator.astro";
+import MarketMetadata from "../components/MarketMetadata.astro";
 ---
 
 <Layout title="Calcar - Smart Car Ownership">
@@ -50,6 +51,7 @@ import TCOCalculator from "../components/TCOCalculator.astro";
 		class="opacity-0 translate-y-20 transition-all duration-700 delay-300 hidden"
 	>
 		<VehicleCard />
+		<MarketMetadata />
 		<TCOCalculator />
 	</div>
 </Layout>

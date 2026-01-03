@@ -1,0 +1,181 @@
+---
+
+---
+
+<div
+    id="market-metadata-card"
+    class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 mb-8 hidden"
+>
+    <div class="flex items-center gap-3 mb-4">
+        <div class="p-2 bg-indigo-200 rounded-lg text-indigo-700">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+        </div>
+        <div>
+            <h3 class="text-lg font-bold text-slate-900">
+                Depreciation Accuracy Check
+            </h3>
+            <p class="text-xs text-slate-500">
+                Verifying slope against 2022 Market Data
+            </p>
+        </div>
+    </div>
+
+    <div id="market-data-content" class="space-y-4">
+        <!-- JS will populate this -->
+    </div>
+
+    <div id="market-data-missing" class="hidden text-sm text-slate-500 italic">
+        Insufficient historical data to verify the depreciation curve for this
+        specific car.
+    </div>
+</div>
+
+<script>
+    import type { Car } from "../utils/carService";
+    import { calculateResidualFactor } from "../utils/depreciationCalculator";
+    import marketStats from "../data/market_stats.json";
+
+    const card = document.getElementById("market-metadata-card");
+    const content = document.getElementById("market-data-content");
+    const missing = document.getElementById("market-data-missing");
+
+    const SNAPSHOT_YEAR = 2022;
+
+    window.addEventListener("car-loaded", ((e: CustomEvent<Car>) => {
+        if (!card || !content || !missing) return;
+
+        const car = e.detail;
+
+        // Normalize keys for lookup
+        const make = car.make.toLowerCase().trim();
+        const model = car.model.toLowerCase().trim();
+        const fuel = car.fuelType.toLowerCase().trim();
+        const targetYear = car.yearOfManufacture;
+
+        // Strategy: Year-over-Year Decay
+        // We compare the price of the Target Year (N) vs the Newer Year (N+1)
+        // This gives us the depreciation "drop" for that specific year of age.
+        const newerYear = targetYear + 1;
+
+        const statTarget = (marketStats as any)[make]?.[model]?.[fuel]?.[
+            targetYear.toString()
+        ];
+        const statNewer = (marketStats as any)[make]?.[model]?.[fuel]?.[
+            newerYear.toString()
+        ];
+
+        if (!statTarget || !statNewer) {
+            // We need BOTH years to calculate a curve
+            card.classList.remove("hidden");
+            content.classList.add("hidden");
+            missing.classList.remove("hidden");
+            return;
+        }
+
+        // 1. Calculate Real Market Drop
+        // Example: 2018 car (£15k), 2019 car (£18k). Drop = (18-15)/18 = 16.6%
+        const priceTarget = statTarget.avgPrice;
+        const priceNewer = statNewer.avgPrice;
+        const marketDropRate = (priceNewer - priceTarget) / priceNewer;
+
+        // 2. Calculate Model Implied Drop
+        // Age in 2022
+        const ageTarget = SNAPSHOT_YEAR - targetYear;
+        const ageNewer = SNAPSHOT_YEAR - newerYear;
+
+        // If car is too new for the snapshot (e.g. 2023 car), we can't verify
+        if (ageTarget <= 0) {
+            card.classList.add("hidden");
+            return;
+        }
+
+        const factorTarget = calculateResidualFactor(car, ageTarget, "pro");
+        const factorNewer = calculateResidualFactor(car, ageNewer, "pro"); // ageNewer will be ageTarget - 1
+
+        // The model drop is the % lost going from Newer Factor to Target Factor
+        // e.g. Year 3 (0.70) -> Year 4 (0.60). Drop = (0.7-0.6)/0.7 = 14.2%
+        const modelDropRate = (factorNewer - factorTarget) / factorNewer;
+
+        // 3. Compare
+        const diffRate = marketDropRate - modelDropRate; // positive = market dropping FASTER than model
+        const diffPercent = diffRate * 100;
+
+        // Render
+        const toPercent = (n: number) => (n * 100).toFixed(1) + "%";
+
+        const isPessimistic = modelDropRate > marketDropRate;
+        const statusLabel =
+            Math.abs(diffPercent) < 2
+                ? "Accurate"
+                : isPessimistic
+                  ? "Pessimistic"
+                  : "Optimistic";
+        const statusColor =
+            Math.abs(diffPercent) < 2
+                ? "text-green-600 bg-green-50"
+                : isPessimistic
+                  ? "text-blue-600 bg-blue-50"
+                  : "text-amber-600 bg-amber-50";
+
+        content.innerHTML = `
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
+                    <p class="text-xs text-slate-400 uppercase font-semibold mb-1">Market Drop</p>
+                     <p class="text-2xl font-bold text-slate-800">${toPercent(marketDropRate)}</p>
+                     <p class="text-[10px] text-slate-400">
+                        ${newerYear} vs ${targetYear} models<br>
+                        (Sample size: ${statNewer.count + statTarget.count})
+                     </p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm">
+                    <p class="text-xs text-slate-400 uppercase font-semibold mb-1">Our Model</p>
+                    <p class="text-2xl font-bold text-slate-800">${toPercent(modelDropRate)}</p>
+                     <p class="text-[10px] text-slate-400">
+                        Predicted drop for year ${ageTarget}
+                     </p>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg border border-slate-100 shadow-sm flex items-center justify-between">
+                <div>
+                     <span class="px-2 py-1 rounded text-xs font-bold uppercase tracking-wide ${statusColor}">
+                        ${statusLabel}
+                    </span>
+                     <p class="text-xs text-slate-500 mt-2">
+                        ${
+                            isPessimistic
+                                ? "Our calculator predicts value falls <strong>faster</strong> than reality."
+                                : "Our calculator predicts value holds <strong>better</strong> than reality."
+                        }
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-slate-400">Diff</p>
+                    <p class="font-mono font-bold ${Math.abs(diffPercent) < 2 ? "text-green-600" : "text-slate-900"}">
+                        ${diffPercent > 0 ? "+" : ""}${diffPercent.toFixed(1)} pts
+                    </p>
+                </div>
+            </div>
+            
+            <div class="text-[10px] text-slate-400 text-center mt-2">
+                * Comparison based on 2022 market data independent of original list price.
+            </div>
+        `;
+
+        card.classList.remove("hidden");
+        content.classList.remove("hidden");
+        missing.classList.add("hidden");
+    }) as unknown as EventListener);
+</script>
