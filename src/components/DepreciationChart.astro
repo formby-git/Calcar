@@ -1,0 +1,261 @@
+---
+
+---
+
+<div
+    id="depreciation-chart-container"
+    class="hidden mt-8 pt-8 border-t border-slate-200 animate-in fade-in slide-in-from-bottom-4 duration-700"
+>
+    <h3
+        class="text-sm font-semibold text-slate-700 mb-4 flex items-center gap-2"
+    >
+        <span>📉</span> Value Projection (15 Years)
+    </h3>
+    <div class="relative w-full h-64">
+        <canvas id="depreciationChart"></canvas>
+    </div>
+    <p class="text-xs text-slate-400 mt-4 text-center">
+        * Estimated value based on average annual mileage and condition.
+    </p>
+</div>
+
+<script>
+    import Chart from "chart.js/auto";
+    import type { Car } from "../utils/carService";
+    import { calculateResidualFactor } from "../utils/depreciationCalculator";
+    import marketStats from "../data/market_stats.json";
+
+    let chartInstance: Chart | null = null;
+    const container = document.getElementById("depreciation-chart-container");
+    const ctx = document.getElementById(
+        "depreciationChart",
+    ) as HTMLCanvasElement;
+
+    // Define Market Stats Type (with Fuel level)
+    interface MarketData {
+        [make: string]: {
+            [model: string]: {
+                [fuel: string]: {
+                    [year: string]: {
+                        avgPrice: number;
+                        count: number;
+                    };
+                };
+            };
+        };
+    }
+
+    const marketData = marketStats as MarketData;
+
+    let currentCar: Car | null = null;
+
+    const renderChart = (car: Car, price: number) => {
+        if (!container || !ctx) return;
+        container.classList.remove("hidden");
+
+        const currentYear = new Date().getFullYear();
+        const carYear = car.yearOfManufacture;
+        const currentAge = currentYear - carYear;
+        const SNAPSHOT_YEAR = 2022;
+        const maxAge = currentAge + 15;
+
+        // --- Find Matching Market Data ---
+        const makeKey = car.make.toLowerCase().trim();
+        const modelKey = car.model.toLowerCase().trim();
+        const carFuel = car.fuelType.toLowerCase();
+
+        let bestFuelData: {
+            [year: string]: { avgPrice: number; count: number };
+        } | null = null;
+
+        const makeData = marketData[makeKey];
+        if (makeData) {
+            const modelData = makeData[modelKey];
+            if (modelData) {
+                if (modelData[carFuel]) {
+                    bestFuelData = modelData[carFuel];
+                } else if (carFuel.includes("hybrid")) {
+                    const hybrids = [
+                        "petrol hybrid",
+                        "petrol plug-in hybrid",
+                        "diesel hybrid",
+                        "hybrid",
+                    ];
+                    for (const fuel of hybrids) {
+                        if (modelData[fuel]) {
+                            bestFuelData = modelData[fuel];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        const labels: number[] = [];
+        const projectedData: number[] = [];
+        const historicalData: (number | null)[] = [];
+
+        for (let age = currentAge; age <= maxAge; age++) {
+            labels.push(age);
+            const ownershipDuration = age - currentAge;
+            const factor = calculateResidualFactor(car, ownershipDuration);
+            // Use the specific price passed in (could be default basicPrice or user override)
+            const value = Math.round(price * factor);
+            projectedData.push(value);
+
+            const historicalYear = SNAPSHOT_YEAR - age;
+            let histPrice: number | null = null;
+            if (bestFuelData) {
+                const yearData = bestFuelData[historicalYear.toString()];
+                if (yearData && yearData.count > 0) {
+                    histPrice = yearData.avgPrice;
+                }
+            }
+            historicalData.push(histPrice);
+        }
+
+        // --- Update Existing Chart or Create New ---
+        // If chart exists, we just update the datasets to be efficient
+        if (chartInstance) {
+            chartInstance.data.labels = labels.map((age) => `Age ${age}`);
+            chartInstance.data.datasets[0].data = projectedData;
+            chartInstance.data.datasets[1].data = historicalData;
+            chartInstance.update();
+        } else {
+            chartInstance = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: labels.map((age) => `Age ${age}`),
+
+                    datasets: [
+                        {
+                            label: "Estimated Value",
+                            data: projectedData,
+                            borderColor: "#4F46E5", // Indigo-600
+                            backgroundColor: (context) => {
+                                const ctx = context.chart.ctx;
+                                const gradient = ctx.createLinearGradient(
+                                    0,
+                                    0,
+                                    0,
+                                    300,
+                                );
+                                gradient.addColorStop(
+                                    0,
+                                    "rgba(79, 70, 229, 0.2)",
+                                );
+                                gradient.addColorStop(
+                                    1,
+                                    "rgba(79, 70, 229, 0)",
+                                );
+                                return gradient;
+                            },
+                            borderWidth: 3,
+                            fill: true,
+                            // Request: "not overly smoothed" -> lower tension
+                            tension: 0.2,
+                            pointBackgroundColor: "#ffffff",
+                            pointBorderColor: "#4F46E5",
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                        },
+                        {
+                            label: "Historical Market Average (2022)",
+                            data: historicalData,
+                            borderColor: "#10B981", // Emerald-500
+                            backgroundColor: "rgba(16, 185, 129, 0.1)", // Light Emerald
+                            borderWidth: 2,
+                            borderDash: [5, 5], // Dashed line
+                            fill: false,
+                            tension: 0.1,
+                            spanGaps: true, // Connect lines over null values
+                            pointBackgroundColor: "#ffffff",
+                            pointBorderColor: "#10B981",
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false,
+                        },
+                        tooltip: {
+                            backgroundColor: "#1e293b",
+                            padding: 12,
+                            titleFont: { size: 13 },
+                            bodyFont: { size: 14, weight: "bold" },
+                            callbacks: {
+                                label: (context) => {
+                                    const val = context.parsed.y;
+                                    if (val === null || val === undefined)
+                                        return "";
+                                    return new Intl.NumberFormat("en-GB", {
+                                        style: "currency",
+                                        currency: "GBP",
+                                        maximumFractionDigits: 0,
+                                    }).format(val);
+                                },
+                            },
+                        },
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: "#f1f5f9",
+                            },
+                            ticks: {
+                                callback: (value) => {
+                                    return new Intl.NumberFormat("en-GB", {
+                                        style: "currency",
+                                        currency: "GBP",
+                                        notation: "compact",
+                                    }).format(Number(value));
+                                },
+                                font: {
+                                    size: 11,
+                                },
+                                color: "#94a3b8",
+                            },
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                            },
+                            ticks: {
+                                font: {
+                                    size: 11,
+                                },
+                                color: "#94a3b8",
+                            },
+                        },
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: "index",
+                    },
+                },
+            });
+        }
+    };
+
+    window.addEventListener("car-loaded", ((e: CustomEvent<Car>) => {
+        const car = e.detail;
+        currentCar = car;
+        renderChart(currentCar, currentCar.basicPrice);
+    }) as unknown as EventListener);
+
+    window.addEventListener("price-updated", ((
+        e: CustomEvent<{ price: number }>,
+    ) => {
+        if (currentCar) {
+            renderChart(currentCar, e.detail.price);
+        }
+    }) as unknown as EventListener);
+</script>
+```

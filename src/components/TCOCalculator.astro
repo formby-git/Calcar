@@ -1,5 +1,5 @@
 ---
-
+import DepreciationChart from "./DepreciationChart.astro";
 ---
 
 <div
@@ -170,6 +170,9 @@
       <div class="flex flex-wrap gap-2" id="modifier-list"></div>
     </div>
   </div>
+
+  <!-- Depreciation Chart -->
+  <DepreciationChart />
 </div>
 
 <script>
@@ -336,6 +339,14 @@
   inputPrice?.addEventListener("input", () => {
     updateResaleEstimate();
     calculate();
+
+    // Notify chart
+    const newPrice = parseFloat(inputPrice.value);
+    if (!isNaN(newPrice)) {
+      window.dispatchEvent(
+        new CustomEvent("price-updated", { detail: { price: newPrice } }),
+      );
+    }
   });
 
   inputResale?.addEventListener("input", calculate);

@@ -1,9 +1,21 @@
 @import "tailwindcss";
 
 @layer base {
-  button, 
+
+  button,
   [role="button"],
   select {
     cursor: pointer;
+  }
+
+  /* Remove number input arrows/spinners */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
   }
 }
