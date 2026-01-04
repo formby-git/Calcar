@@ -3,7 +3,7 @@
 ---
 
 <div
-  class="bg-swiss-white p-5 md:p-6 border-2 border-swiss-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+  class="bg-swiss-white p-5 md:p-6 border border-swiss-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
 >
   <label
     for="reg-input"
@@ -13,7 +13,7 @@
     Input Registration
   </label>
 
-  <div class="flex flex-col md:flex-row gap-0 border-2 border-swiss-black">
+  <div class="flex flex-col md:flex-row gap-0 border border-swiss-black">
     <input
       type="text"
       id="reg-input"
@@ -24,7 +24,7 @@
     />
     <button
       id="lookup-btn"
-      class="bg-swiss-black hover:bg-swiss-blue text-white px-6 py-3 font-mono font-bold uppercase tracking-wider text-sm transition-colors duration-200 border-l-0 md:border-l-2 border-t-2 md:border-t-0 border-swiss-black flex items-center justify-center gap-2 rounded-none"
+      class="bg-swiss-black hover:bg-swiss-blue text-white px-6 py-3 font-mono font-bold uppercase tracking-wider text-sm transition-colors duration-200 border-l-0 md:border-l border-t md:border-t-0 border-swiss-black flex items-center justify-center gap-2 rounded-none"
     >
       <span>Analyze</span>
       <span>→</span>
@@ -32,19 +32,17 @@
   </div>
   <div
     id="error-msg"
-    class="text-white bg-red-600 font-mono text-sm mt-4 p-2 hidden border-2 border-swiss-black"
+    class="text-white bg-red-600 font-mono text-sm mt-4 p-2 hidden border border-swiss-black"
   >
   </div>
 
   <div
     class="mt-6 flex justify-between items-center bg-gray-50 border border-gray-200 p-2"
   >
-    <p class="text-xs text-gray-700 font-mono uppercase tracking-tight">
-      System Ready
-    </p>
+    <p class="text-sm text-gray-700 font-sans tracking-tight">System Ready</p>
     <button
       id="lucky-btn"
-      class="text-swiss-blue hover:text-swiss-black hover:underline text-sm font-bold uppercase tracking-wider font-mono"
+      class="text-swiss-black hover:text-swiss-blue hover:underline text-sm font-bold tracking-wider font-sans"
     >
       [Feeling Lucky?]
     </button>

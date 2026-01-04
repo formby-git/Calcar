@@ -14,7 +14,7 @@ import DepreciationChart from "./DepreciationChart.astro";
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
     <!-- Inputs Column (Left) -->
-    <div class="p-6 border-r-0 lg:border-r-2 border-swiss-black space-y-8">
+    <div class="p-6 border-r-0 lg:border-r border-swiss-black space-y-8">
       <!-- Price Input -->
       <div class="relative">
         <label
@@ -25,7 +25,7 @@ import DepreciationChart from "./DepreciationChart.astro";
           type="number"
           id="input-price"
           id="input-price"
-          class="w-full px-4 py-3 border-2 border-swiss-black focus:bg-swiss-blue/5 text-2xl font-mono text-swiss-black text-right bg-transparent transition-colors placeholder:text-gray-400 focus:outline-none rounded-none"
+          class="w-full px-4 py-3 border border-swiss-black focus:bg-swiss-blue/5 text-xl font-mono text-swiss-black text-right bg-transparent transition-colors placeholder:text-gray-400 focus:outline-none rounded-none"
           placeholder="5000"
           min="0"
           max="10000000"
@@ -42,7 +42,7 @@ import DepreciationChart from "./DepreciationChart.astro";
         <!-- Quick Term Buttons -->
         <div
           id="term-buttons"
-          class="grid grid-cols-5 gap-[-1px] border-2 border-swiss-black"
+          class="grid grid-cols-5 gap-[-1px] border border-swiss-black"
         >
           <button
             type="button"
@@ -79,7 +79,7 @@ import DepreciationChart from "./DepreciationChart.astro";
         <!-- Custom Term Dropdown -->
         <div
           id="custom-term-container"
-          class="hidden mt-4 relative border-2 border-swiss-black"
+          class="hidden mt-4 relative border border-swiss-black"
         >
           <select
             id="input-term"
@@ -109,7 +109,7 @@ import DepreciationChart from "./DepreciationChart.astro";
           type="number"
           id="input-resale"
           id="input-resale"
-          class="w-full px-4 py-3 border-2 border-swiss-black focus:bg-swiss-blue/5 text-2xl font-mono text-swiss-black text-right bg-transparent transition-colors placeholder:text-gray-400 focus:outline-none rounded-none"
+          class="w-full px-4 py-3 border border-swiss-black focus:bg-swiss-blue/5 text-xl font-mono text-swiss-black text-right bg-transparent transition-colors placeholder:text-gray-400 focus:outline-none rounded-none"
           placeholder="2000"
           min="0"
           max="10000000"
@@ -119,7 +119,7 @@ import DepreciationChart from "./DepreciationChart.astro";
       <button
         id="btn-reset-prices"
         type="button"
-        class="text-sm text-swiss-black hover:text-swiss-blue uppercase tracking-widest font-bold underline flex items-center gap-1 group"
+        class="text-sm text-swiss-black hover:text-swiss-blue tracking-widest font-bold underline flex items-center gap-1 group font-sans"
       >
         [ Reset Data ]
       </button>
@@ -129,7 +129,7 @@ import DepreciationChart from "./DepreciationChart.astro";
     <div class="bg-gray-50 p-6 flex flex-col justify-between">
       <div class="space-y-6">
         <div
-          class="flex justify-between items-baseline text-sm border-b-2 border-gray-200 pb-4"
+          class="flex justify-between items-baseline text-sm border-b border-gray-200 pb-4"
         >
           <span
             class="text-swiss-black font-bold uppercase tracking-widest font-grotesk"
@@ -140,7 +140,7 @@ import DepreciationChart from "./DepreciationChart.astro";
           >
         </div>
         <div
-          class="flex justify-between items-baseline text-sm border-b-2 border-gray-200 pb-4"
+          class="flex justify-between items-baseline text-sm border-b border-gray-200 pb-4"
         >
           <span
             class="text-swiss-black font-bold uppercase tracking-widest font-grotesk"
@@ -193,7 +193,7 @@ import DepreciationChart from "./DepreciationChart.astro";
         class="text-sm font-bold text-swiss-black mb-6 uppercase tracking-widest flex items-center gap-2"
       >
         <span
-          class="bg-swiss-black text-white w-4 h-4 flex items-center justify-center text-xs rounded-full"
+          class="bg-swiss-black text-white w-4 h-4 flex items-center justify-center text-sm rounded-full"
           >!</span
         >
         Active Depreciation Factors
@@ -412,8 +412,8 @@ import DepreciationChart from "./DepreciationChart.astro";
       const badge = document.createElement("div");
       // Editorial style tags: Minimalist outlines with colored text
       badge.className = mod.isPositive
-        ? "flex items-center gap-2 px-3 py-2 border-l-4 border-l-green-600 bg-gray-100 text-swiss-black rounded-none text-sm font-mono font-bold uppercase shadow-sm"
-        : "flex items-center gap-2 px-3 py-2 border-l-4 border-l-orange-600 bg-gray-100 text-swiss-black rounded-none text-sm font-mono font-bold uppercase shadow-sm";
+        ? "flex items-center gap-2 px-3 py-2 border-l-4 border-l-green-600 bg-gray-100 text-swiss-black rounded-none text-sm font-sans font-bold shadow-sm"
+        : "flex items-center gap-2 px-3 py-2 border-l-4 border-l-orange-600 bg-gray-100 text-swiss-black rounded-none text-sm font-sans font-bold shadow-sm";
 
       const icon = document.createElement("span");
       icon.textContent = mod.isPositive ? "(+)" : "(-)";

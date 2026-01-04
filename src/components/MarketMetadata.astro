@@ -10,9 +10,7 @@
             >
                 Depreciation Accuracy Check
             </h4>
-            <p
-                class="text-xs font-mono uppercase tracking-tight text-swiss-black"
-            >
+            <p class="text-sm font-sans tracking-tight text-swiss-black">
                 Verifying slope against 2022 Market Data
             </p>
         </div>
@@ -24,9 +22,11 @@
 
     <div
         id="market-data-missing"
-        class="hidden text-xs font-mono uppercase text-swiss-black"
+        <div
+        id="market-data-missing"
+        class="hidden text-sm font-sans text-swiss-black"
     >
-        Insufficient historical data to verify the depreciation curve for this
+        > Insufficient historical data to verify the depreciation curve for this
         specific car.
     </div>
 </div>
@@ -220,20 +220,20 @@
                   : "bg-orange-500 text-white";
 
         content.innerHTML = `
-            <div class="border-2 border-swiss-black p-6 bg-swiss-white font-mono text-sm relative">
+            <div class="border border-swiss-black p-6 bg-swiss-white font-sans text-sm relative">
                 <!-- Receipt Jagged Edge Top (CSS Trick or SVG) -->
                 
-                <div class="text-center border-b-2 border-dashed border-swiss-black pb-4 mb-4">
+                <div class="text-center border-b border-dashed border-swiss-black pb-4 mb-4">
                     <h5 class="text-xl font-bold uppercase tracking-widest text-swiss-black">Market Audit</h5>
-                    <p class="text-sm text-swiss-black uppercase mt-1">Ref: ${new Date().getFullYear()}-AUDIT-${car.make.substring(0, 3).toUpperCase()}</p>
+                    <p class="text-sm text-swiss-black mt-1">Ref: ${new Date().getFullYear()}-AUDIT-${car.make.substring(0, 3).toUpperCase()}</p>
                 </div>
 
                 <div class="grid grid-cols-2 gap-8 mb-6">
                     <!-- Market Data -->
                     <div>
                         <h5 class="text-sm font-bold uppercase tracking-widest text-swiss-black mb-1">Reality (2022)</h5>
-                        <p class="text-2xl font-bold text-swiss-black">${toPercent(marketDropRate)} <span class="text-base font-normal">DROP</span></p>
-                        <p class="text-xs text-swiss-black mt-1 leading-tight uppercase">
+                        <p class="text-xl font-bold text-swiss-black">${toPercent(marketDropRate)} <span class="text-base font-normal">DROP</span></p>
+                        <p class="text-sm text-swiss-black mt-1 leading-tight">
                             Samples: ${statNewer.count + statOlder.count}<br>
                             Models: ${historicalNewerYear}/${historicalOlderYear}
                         </p>
@@ -242,22 +242,22 @@
                     <!-- Our Model -->
                     <div class="text-right">
                         <h5 class="text-sm font-bold uppercase tracking-widest text-swiss-black mb-1">Projection</h5>
-                         <p class="text-2xl font-bold text-swiss-black">${toPercent(modelDropRate)} <span class="text-base font-normal">DROP</span></p>
-                        <p class="text-xs text-swiss-black mt-1 leading-tight uppercase">
+                         <p class="text-xl font-bold text-swiss-black">${toPercent(modelDropRate)} <span class="text-base font-normal">DROP</span></p>
+                        <p class="text-sm text-swiss-black mt-1 leading-tight">
                             Year ${ageNewer} > ${ageOlder}<br>
                             Simulated
                         </p>
                     </div>
                 </div>
 
-                <div class="border-t-2 border-dashed border-swiss-black pt-4 flex items-center justify-between">
+                <div class="border-t border-dashed border-swiss-black pt-4 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                          <span class="px-3 py-1 text-sm font-bold tracking-widest ${statusColor} uppercase">
                             ${statusLabel}
                         </span>
                     </div>
                     <div class="text-right">
-                        <p class="text-xs uppercase tracking-widest text-swiss-black mb-0.5">Delta</p>
+                        <p class="text-sm uppercase tracking-widest text-swiss-black mb-0.5">Delta</p>
                         <p class="font-bold text-lg ${Math.abs(diffPercent) < 2 ? "text-green-600" : "text-swiss-black"}">
                             ${diffPercent > 0 ? "+" : ""}${diffPercent.toFixed(1)}%
                         </p>
