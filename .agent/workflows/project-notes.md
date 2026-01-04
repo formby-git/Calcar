@@ -23,13 +23,19 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 
 ### Visual Style
 - **Color scheme:** Slate grays with blue accents (existing Tailwind palette)
-- **Layout:** Clean, professional, minimal
-- **Interactions:** Remove unnecessary hover states; only keep hover effects for important buttons
-- **Typography:** Keep default/existing fonts, no custom typefaces
+- **Layout:** Clean, professional, minimal. Prefer seamless "receipt" flows between related components (e.g., VehicleCard + TCO).
+- **Borders:** "Subtler" style. Use standard `border` (1px) for containers and internal dividers. Avoid `border-2` as it often feels too heavy.
+- **Interactions:** Remove unnecessary hover states; only keep hover effects for important buttons and editable input fields.
+- **Typography:** 
+  - Standardized data values to `text-xl`.
+  - Minimum font size is `text-sm` (avoid `text-xs` for accessibility).
+  - Use `font-sans` (Inter) for body text and descriptive labels.
+  - Sentence case preferred for long labels/body text.
 
 ### Component Guidelines
 - Prefer showing full images without cropping (use `object-contain` over `object-cover`)
 - Registration plates styled as yellow UK plates (`#FCD116` background, black text, mono font)
+- **Currency:** Round whole-pound costs (Price, Resale, Tax, Total) to 0 decimal places. Preserve pence (2 decimals) *only* for the Monthly Cost readout.
 
 ---
 
@@ -147,18 +153,24 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - **UI**: Removed Simple/Complex toggle from `TCOCalculator.astro`. Depreciation modifiers now always visible.
 - **Consumers**: Updated `MarketMetadata.astro` to use simplified API.
 
-### 2026-01-03: Depreciation Accuracy Check - Logic Fixes
-**Request:** Fix the accuracy check to correctly validate depreciation at the user's car's *current* age, not its manufacture-year age.
+### 2026-01-04: Subtler Brutalist Revamp & UI Flow
+**Request:** Align all components to a lighter "subtler" theme and improve the financial analysis flow.
 
-**Key Confusion Resolved:**
-- **Wrong**: Testing Year 3→4 depreciation for an 8-year-old car (using 2018/2019 data).
-- **Right**: Testing Year 8→9 depreciation for an 8-year-old car (using 2014/2013 data).
-
-**Changes made to `MarketMetadata.astro`:**
-- **Forward-Looking Logic**: Now finds historical cars matching `currentAge` and `currentAge + 1` from 2022 data.
-- **Fuel Mapping**: Added fallback for "Hybrid" to try "petrol hybrid", "petrol plug-in hybrid", etc.
-- **Min Samples**: Added 3-sample minimum per year for reliable comparisons.
-- **Documentation**: Added extensive inline comments explaining the logic and common pitfalls.
+**Changes made:**
+- **Theme Standardization:**
+  - Downgraded borders from `2px` to `1px` across all main components.
+  - Standardized data values to `text-xl` (previously mixed `xl`/`2xl`).
+  - Standardized small text to `text-sm` and switched body text to sans-serif (`Inter`) for readability.
+- **TCO & Flow Revamp:**
+  - Merged `VehicleCard` and `TCOCalculator` into a seamless vertical stack (removed gaps and top border).
+  - Visual distinction for inputs: Added `bg-gray-50` and hover effects to indicate editability.
+  - Balanced cost results: Placed Monthly and Total costs in a 2-column grid with equal font weights.
+  - Currency precision: Removed pence from all values except "Monthly Cost".
+- **Visual Polish:**
+  - Softened internal dividers in `VehicleCard` to light grey.
+  - Removed square brackets from "Reset Data" links.
+  - Simplified "Total Ownership Cost" label to "Total Cost".
 
 **Future Considerations Added:**
 - **Accuracy Check Integrity**: When modifying `MarketMetadata.astro`, always verify you are comparing the SAME age transition in both market data and our model. A mismatch invalidates the entire test.
+- **Theme Consistency**: All new components should default to `1px` borders and use `text-xl` for primary data readouts to maintain the established subtler aesthetic.
