@@ -1,6 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import RegistrationForm from "../components/RegistrationForm.astro";
+import cars from "../data/cars.json";
+
+const allFeaturedCars = cars.map((c) => ({
+	model: `${c.make} ${c.model}`,
+	reg: c.registration,
+}));
 ---
 
 <Layout title="Calcar - Smart Car Ownership">
@@ -14,6 +20,7 @@ import RegistrationForm from "../components/RegistrationForm.astro";
 		id="landing-wrapper"
 		class="min-h-[80vh] flex flex-col justify-center transition-all duration-700 ease-in-out"
 		data-state="initial"
+		data-featured-cars={JSON.stringify(allFeaturedCars)}
 	>
 		<div
 			id="hero-content"
@@ -57,17 +64,33 @@ import RegistrationForm from "../components/RegistrationForm.astro";
 	const heroTerm = document.getElementById("hero-term");
 	const regInput = document.getElementById("reg-input") as HTMLInputElement;
 
-	const featuredCars = [
-		{ model: "Volkswagen Golf GTI", reg: "LN68 JKL" },
-		{ model: "Tesla Model 3", reg: "GH23 STU" },
-		{ model: "Ford Fiesta ST", reg: "QR13 HIJ" },
-		{ model: "Mercedes C-Class", reg: "EF16 PQR" },
-		{ model: "Nissan Qashqai", reg: "EF70 QRS" },
-		{ model: "Porsche Taycan", reg: "IJ21 VWX" },
-		{ model: "Land Rover Discovery", reg: "OP67 RST" },
-	];
+	// Load cars from data attribute
+	let featuredCars: { model: string; reg: string }[] = [];
+	try {
+		const data = wrapper?.dataset.featuredCars;
+		if (data) {
+			featuredCars = JSON.parse(data);
+		}
+	} catch (e) {
+		console.error("Failed to parse featured cars", e);
+	}
+
+	// Fallback if parsing fails (though it shouldn't)
+	if (featuredCars.length === 0) {
+		featuredCars = [
+			{ model: "Nissan Qashqai", reg: "EF70 QRS" },
+			{ model: "Vauxhall Corsa", reg: "GH15 TUV" },
+			{ model: "Land Rover Discovery Sport", reg: "OP67 RST" },
+		];
+	}
 
 	const ownershipTerms = [1, 2, 3, 4, 5];
+
+	// Shuffle array for randomness
+	for (let i = featuredCars.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[featuredCars[i], featuredCars[j]] = [featuredCars[j], featuredCars[i]];
+	}
 
 	let currentIndex = 0;
 
