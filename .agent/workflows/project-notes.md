@@ -5,10 +5,10 @@ description: Project context and change history for Calcar - UK Car TCO Calculat
 # Calcar Project Notes
 
 > **Instructions for Antigravity:**
-> 1. Read this file at the START of any task involving code changes
-> 2. Follow the design preferences listed below
-> 3. Update the "Change History" section AFTER completing any significant changes
-> 4. Add new considerations to "Future Considerations" when relevant issues are discussed
+> 1. Read this file at the START of any task involving code changes.
+> 2. Follow the design preferences below and [Best Practices](file:///Users/formby/Documents/Calcar/.agent/workflows/best-practices.md).
+> 3. Update the "Change History" section AFTER completing any significant changes.
+> 4. Record deferred features in [Future Considerations](file:///Users/formby/Documents/Calcar/.agent/workflows/future-considerations.md).
 
 ---
 
@@ -65,13 +65,12 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 
 ---
 
-## Future Considerations
-- Consider replacing Wikipedia image source before going public
-- May need to add image attribution if keeping Wikipedia approach
-- **Calculator Maintenance**: Maintain strict parity between Standard and Pro logic. Divergence should be deliberate and limited *only* to user experience (Entry-Level vs Pro features). Always verify intent before splitting logic.
-- **Security Validation**: Current validation is client-side only. Future server-side validation MUST be implemented when a backend is added.
+## Guidelines & Considerations
 
-### 2025-12-26: Pro Depreciation Model
+> **See [Best Practices](file:///Users/formby/Documents/Calcar/.agent/workflows/best-practices.md) for consistency and maintenance rules.**
+> **See [Future Considerations](file:///Users/formby/Documents/Calcar/.agent/workflows/future-considerations.md) for deferred features.**
+
+- When running the @[/project-notes] workflow, verify if any new guidelines or deferred items need to be added to these files.
 **Request:** Implement more accurate depreciation with age curve, fuel type, and brand adjustments.
 
 **Changes made:**
@@ -124,10 +123,11 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 
 **Changes made:**
 - **Unified UI**: All inputs always visible and editable.
-- **Simple/Complex Toggle**: Clean toggle switch that only changes depreciation model (no UI changes).
+- **Unified UI**: All inputs always visible and editable.
+- **Depreciation Toggle**: Clean toggle switch that only changes depreciation model (no UI changes).
 - **Term Selector**: Quick buttons (2-5 years) + "Custom" option that reveals full dropdown.
-- **Removed**: Separate Standard/Pro mode styling, visibility toggling, read-only states.
-- **Kept**: Depreciation Factors section (appears when Complex mode is active).
+- **Removed**: Separate depreciation mode styling, visibility toggling, read-only states.
+- **Kept**: Depreciation Factors section.
 
 ### 2025-12-29: Enhanced Landing Page
 **Request**: Improve landing experience with abstract background, centered registration form, and smooth transition to content.
@@ -144,13 +144,13 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - Removed static margins from `RegistrationForm` to allow layout flexibility.
   - Added `data-state` attributes to `index.astro` to manage transitions.
 
-### 2026-01-03: Depreciation Model Simplification
-**Request:** Remove the "Simple" depreciation model, leaving only the more accurate "Complex" model as the standard.
+### 2026-01-03: Depreciation Model Unification
+**Request:** Unify the depreciation models into a single, more accurate standard.
 
 **Changes made:**
-- **Removed**: `DepreciationModel` type, `model` parameter from all functions, `calculateBasicResidual`.
+- **Removed**: Legacy depreciation models and split calculation functions.
 - **Renamed**: `calculateProResidual` → `calculateResidualFactor` (now the sole implementation).
-- **UI**: Removed Simple/Complex toggle from `TCOCalculator.astro`. Depreciation modifiers now always visible.
+- **UI**: Removed model toggle from `TCOCalculator.astro`. Depreciation modifiers now always visible.
 - **Consumers**: Updated `MarketMetadata.astro` to use simplified API.
 
 ### 2026-01-04: Subtler Brutalist Revamp & UI Flow
@@ -171,6 +171,16 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - Removed square brackets from "Reset Data" links.
   - Simplified "Total Ownership Cost" label to "Total Cost".
 
-**Future Considerations Added:**
-- **Accuracy Check Integrity**: When modifying `MarketMetadata.astro`, always verify you are comparing the SAME age transition in both market data and our model. A mismatch invalidates the entire test.
-- **Theme Consistency**: All new components should default to `1px` borders and use `text-xl` for primary data readouts to maintain the established subtler aesthetic.
+**Guidelines Updated:**
+- Reorganized documentation into [Best Practices](file:///Users/formby/Documents/Calcar/.agent/workflows/best-practices.md) and [Future Considerations](file:///Users/formby/Documents/Calcar/.agent/workflows/future-considerations.md).
+
+### 2026-01-04: Internal Depreciation Curves Page
+**Request:** Add an internal-only page to view all generated depreciation curves, secured by a basic PIN.
+
+**Changes made:**
+- **New Page**: Created `src/pages/curves.astro` to display all 160+ depreciation curves.
+- **Security**: Added client-side PIN protection (PIN: 1234).
+- **Features**:
+  - Filterable table (by make/fuel).
+  - Client-side sorting (A-Z, High-Low, Low-High).
+  - Visualization of "global", "diesel", "petrol", etc. rates.

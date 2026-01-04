@@ -1,0 +1,253 @@
+---
+import Layout from "../layouts/Layout.astro";
+import curveData from "../data/depreciation_curves.json";
+
+const { curves, generatedAt, totalCurves, note } = curveData;
+const curveArray = Object.entries(curves)
+    .map(([key, data]) => ({
+        key,
+        ...data,
+    }))
+    .sort((a, b) => a.key.localeCompare(b.key));
+---
+
+<Layout title="Internal: Depreciation Curves">
+    <div
+        id="auth-screen"
+        class="flex flex-col items-center justify-center min-h-[50vh] space-y-6"
+    >
+        <div
+            class="border-2 border-swiss-black p-8 max-w-md w-full text-center"
+        >
+            <h1 class="text-3xl font-bold mb-6">Restricted Access</h1>
+            <p class="mb-6 text-gray-600 font-mono text-sm">
+                Please enter PIN to view depreciation data.
+            </p>
+            <div class="flex flex-col gap-4">
+                <input
+                    type="password"
+                    id="pin-input"
+                    class="p-3 border-2 border-swiss-black bg-swiss-white text-center text-2xl font-mono focus:outline-none focus:ring-0 focus:border-swiss-blue transition-colors placeholder:text-gray-300"
+                    placeholder="PIN"
+                />
+                <button
+                    id="auth-btn"
+                    class="px-6 py-3 bg-swiss-black text-white hover:bg-swiss-blue transition-colors font-bold uppercase tracking-wide"
+                >
+                    Unlock Data
+                </button>
+            </div>
+            <p
+                id="error-msg"
+                class="text-red-600 font-mono text-sm mt-4 hidden"
+            >
+                ACCESS DENIED: INCORRECT PIN
+            </p>
+        </div>
+    </div>
+
+    <div id="data-screen" class="hidden">
+        <div class="mb-10 border-b-2 border-swiss-black pb-8">
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6"
+            >
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">Depreciation Curves</h1>
+                    <p class="font-mono text-sm text-gray-600">{note}</p>
+                </div>
+                <div
+                    class="bg-gray-100 border border-gray-300 p-4 font-mono text-sm w-full md:w-auto"
+                >
+                    <p class="flex justify-between gap-4">
+                        <strong>Generated:</strong>
+                        <span>{generatedAt}</span>
+                    </p>
+                    <p class="flex justify-between gap-4">
+                        <strong>Total Curves:</strong>
+                        <span>{totalCurves}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-6 flex flex-col md:flex-row gap-4">
+            <input
+                type="text"
+                id="filter-input"
+                placeholder="FILTER BY MAKE, FUEL, TYPE..."
+                class="flex-grow p-4 border-2 border-swiss-black bg-swiss-white font-mono uppercase focus:outline-none focus:border-swiss-blue transition-colors"
+            />
+            <select
+                id="sort-select"
+                class="p-4 border-2 border-swiss-black bg-swiss-white font-mono uppercase focus:outline-none focus:border-swiss-blue transition-colors cursor-pointer min-w-[300px]"
+            >
+                <option value="alpha_asc">Sort: A-Z</option>
+                <option value="rate_desc">Sort: Highest Depreciation</option>
+                <option value="rate_asc">Sort: Lowest Depreciation</option>
+            </select>
+        </div>
+
+        <div class="overflow-x-auto border-2 border-swiss-black">
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-swiss-black text-white">
+                    <tr>
+                        <th class="p-4 border-b-2 border-swiss-black font-mono"
+                            >KEY</th
+                        >
+                        <th
+                            class="p-4 border-b-2 border-swiss-black font-mono text-right"
+                            >RATE (ANNUAL)</th
+                        >
+                        <th
+                            class="p-4 border-b-2 border-swiss-black font-mono text-right"
+                            >DATA POINTS</th
+                        >
+                    </tr>
+                </thead>
+                <tbody id="table-body" class="bg-white">
+                    {
+                        curveArray.map((item) => (
+                            <tr
+                                class="border-b border-gray-200 hover:bg-blue-50 transition-colors curve-row group"
+                                data-key={item.key}
+                                data-rate={item.rate}
+                            >
+                                <td class="p-4 font-mono font-bold group-hover:text-swiss-blue transition-colors">
+                                    {item.key}
+                                </td>
+                                <td class="p-4 text-right font-mono">
+                                    {(item.rate * 100).toFixed(1)}%
+                                </td>
+                                <td class="p-4 text-right font-mono text-gray-600">
+                                    {item.dataPoints.toLocaleString()}
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 text-center font-mono text-xs text-gray-400">
+            END OF DATA STREAM
+        </div>
+    </div>
+</Layout>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const pin = "1234";
+        const authScreen = document.getElementById("auth-screen");
+        const dataScreen = document.getElementById("data-screen");
+        const pinInput = document.getElementById(
+            "pin-input",
+        ) as HTMLInputElement;
+        const authBtn = document.getElementById("auth-btn");
+        const errorMsg = document.getElementById("error-msg");
+        const filterInput = document.getElementById(
+            "filter-input",
+        ) as HTMLInputElement;
+        const sortSelect = document.getElementById(
+            "sort-select",
+        ) as HTMLSelectElement;
+        const tableBody = document.getElementById("table-body");
+
+        console.log("Script loaded, looking for elements...", {
+            authScreen,
+            dataScreen,
+            pinInput,
+            authBtn,
+        });
+
+        function checkPin() {
+            if (!pinInput || !authScreen || !dataScreen || !errorMsg) return;
+
+            const val = pinInput.value;
+            console.log("Checking PIN:", val);
+
+            if (val === pin) {
+                authScreen.classList.add("hidden");
+                dataScreen.classList.remove("hidden");
+            } else {
+                errorMsg.classList.remove("hidden");
+                // Shake animation effect or just clear
+                pinInput.value = "";
+                pinInput.focus();
+            }
+        }
+
+        if (authBtn) {
+            authBtn.addEventListener("click", (e) => {
+                e.preventDefault(); // Just in case
+                checkPin();
+            });
+        }
+
+        if (pinInput) {
+            pinInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    checkPin();
+                }
+            });
+        }
+
+        // Filter logic
+        function filterRows() {
+            const filterInput = document.getElementById(
+                "filter-input",
+            ) as HTMLInputElement;
+            if (!filterInput) return;
+            const term = filterInput.value.toLowerCase();
+            const rows = document.querySelectorAll(".curve-row");
+            rows.forEach((row) => {
+                const key = row.getAttribute("data-key")?.toLowerCase() || "";
+                if (key.includes(term)) {
+                    row.classList.remove("hidden");
+                } else {
+                    row.classList.add("hidden");
+                }
+            });
+        }
+
+        if (filterInput) {
+            filterInput.addEventListener("input", filterRows);
+        }
+
+        // Sort logic
+        if (sortSelect && tableBody) {
+            sortSelect.addEventListener("change", () => {
+                const sortValue = sortSelect.value;
+                const rows = Array.from(
+                    document.querySelectorAll(".curve-row"),
+                );
+
+                rows.sort((a, b) => {
+                    const keyA = a.getAttribute("data-key") || "";
+                    const keyB = b.getAttribute("data-key") || "";
+                    const rateA = parseFloat(
+                        a.getAttribute("data-rate") || "0",
+                    );
+                    const rateB = parseFloat(
+                        b.getAttribute("data-rate") || "0",
+                    );
+
+                    if (sortValue === "alpha_asc") {
+                        return keyA.localeCompare(keyB);
+                    } else if (sortValue === "rate_desc") {
+                        return rateB - rateA;
+                    } else if (sortValue === "rate_asc") {
+                        return rateA - rateB;
+                    }
+                    return 0;
+                });
+
+                // Clear and re-append
+                rows.forEach((row) => tableBody.appendChild(row));
+
+                // Re-apply filter just in case, though sorting shouldn't affect visibility
+                filterRows();
+            });
+        }
+    });
+</script>
