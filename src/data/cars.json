@@ -1001,6 +1001,17 @@
         "originalListPrice": 27500
     },
     {
+        "registration": "HOG",
+        "make": "Swine",
+        "model": "Pig",
+        "yearOfManufacture": 2069,
+        "fuelType": "Trough Fuel",
+        "co2Emissions": 420,
+        "colour": "Pink",
+        "basicPrice": 3100,
+        "originalListPrice": 27500
+    },
+    {
         "registration": "RJ69 XJB",
         "make": "Vauxhall",
         "model": "Corsa",
