@@ -196,7 +196,7 @@ import DepreciationChart from "./DepreciationChart.astro";
     </div>
   </div>
 
-  <!-- Depreciation Insights (Always visible if applicable) -->
+  <!-- Depreciation Data Source -->
   <div
     id="modifier-badges"
     class="border-t border-gray-200 mt-0 max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out bg-swiss-white"
@@ -206,9 +206,9 @@ import DepreciationChart from "./DepreciationChart.astro";
         class="text-sm font-bold text-swiss-black mb-6 uppercase tracking-widest flex items-center gap-2"
       >
         <div class="w-3 h-3 bg-swiss-blue"></div>
-        Active Depreciation Factors
+        Depreciation Data Source
       </h3>
-      <div class="flex flex-wrap gap-4" id="modifier-list"></div>
+      <div id="modifier-list"></div>
     </div>
   </div>
 
@@ -221,7 +221,8 @@ import DepreciationChart from "./DepreciationChart.astro";
   import { calculateTotalVED } from "../utils/taxCalculator";
   import {
     calculateResaleValue,
-    getActiveModifiers,
+    getCurveSource,
+    formatCurveSource,
   } from "../utils/depreciationCalculator";
 
   let currentCar: Car | null = null;
@@ -407,36 +408,65 @@ import DepreciationChart from "./DepreciationChart.astro";
   function updateModifierBadges() {
     if (!modifierBadges || !modifierList || !currentCar) return;
 
-    const modifiers = getActiveModifiers(currentCar);
+    const curveSource = getCurveSource(currentCar);
 
-    // Always show if there are modifiers (deprecated simple model check)
-    if (modifiers.length === 0) {
-      modifierBadges.classList.remove("max-h-[500px]", "opacity-100", "mt-8");
-      modifierBadges.classList.add("max-h-0", "opacity-0", "mt-0");
-      return;
-    }
-
-    // Clear existing badges
+    // Clear existing content
     modifierList.innerHTML = "";
 
-    // Create badges
-    modifiers.forEach((mod) => {
-      const badge = document.createElement("div");
-      // Editorial style tags: Minimalist outlines with colored text
-      badge.className = mod.isPositive
-        ? "flex items-center gap-2 px-3 py-2 border-l-4 border-l-green-600 bg-gray-100 text-swiss-black rounded-none text-sm font-sans font-bold shadow-sm"
-        : "flex items-center gap-2 px-3 py-2 border-l-4 border-l-orange-600 bg-gray-100 text-swiss-black rounded-none text-sm font-sans font-bold shadow-sm";
+    // Create info display
+    const infoDiv = document.createElement("div");
+    infoDiv.className =
+      "flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6";
 
-      const icon = document.createElement("span");
-      icon.textContent = mod.isPositive ? "(+)" : "(-)";
-      badge.appendChild(icon);
+    // Curve source label
+    const sourceDiv = document.createElement("div");
+    sourceDiv.className = "flex items-center gap-2";
 
-      const label = document.createElement("span");
-      label.textContent = mod.label;
-      badge.appendChild(label);
+    const sourceLabel = document.createElement("span");
+    sourceLabel.className = "text-sm text-swiss-black/60 font-sans";
+    sourceLabel.textContent = "Based on:";
+    sourceDiv.appendChild(sourceLabel);
 
-      modifierList.appendChild(badge);
-    });
+    const sourceName = document.createElement("span");
+    sourceName.className = "text-sm font-bold text-swiss-black font-sans";
+    sourceName.textContent = formatCurveSource(curveSource);
+    sourceDiv.appendChild(sourceName);
+
+    infoDiv.appendChild(sourceDiv);
+
+    // Data points
+    const dataDiv = document.createElement("div");
+    dataDiv.className = "flex items-center gap-2";
+
+    const dataLabel = document.createElement("span");
+    dataLabel.className = "text-sm text-swiss-black/60 font-sans";
+    dataLabel.textContent = "Market listings:";
+    dataDiv.appendChild(dataLabel);
+
+    const dataCount = document.createElement("span");
+    dataCount.className = "text-sm font-mono font-bold text-swiss-black";
+    dataCount.textContent = curveSource.dataPoints.toLocaleString();
+    dataDiv.appendChild(dataCount);
+
+    infoDiv.appendChild(dataDiv);
+
+    // Annual rate
+    const rateDiv = document.createElement("div");
+    rateDiv.className = "flex items-center gap-2";
+
+    const rateLabel = document.createElement("span");
+    rateLabel.className = "text-sm text-swiss-black/60 font-sans";
+    rateLabel.textContent = "Avg. depreciation:";
+    rateDiv.appendChild(rateLabel);
+
+    const rateValue = document.createElement("span");
+    rateValue.className = "text-sm font-mono font-bold text-swiss-black";
+    rateValue.textContent = `${(curveSource.rate * 100).toFixed(1)}%/year`;
+    rateDiv.appendChild(rateValue);
+
+    infoDiv.appendChild(rateDiv);
+
+    modifierList.appendChild(infoDiv);
 
     modifierBadges.classList.remove("max-h-0", "opacity-0", "mt-0");
     modifierBadges.classList.add("max-h-[500px]", "opacity-100", "mt-8");
