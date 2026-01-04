@@ -6,7 +6,7 @@
   <div class="bg-swiss-white py-6">
     <!-- Header: Poster Style -->
     <div
-      class="grid grid-cols-1 md:grid-cols-12 gap-0 border-b border-gray-200 pb-8 mb-8"
+      class="grid grid-cols-1 md:grid-cols-12 gap-0 border-b border-gray-200 pb-8 mb-8 px-6 md:px-8"
     >
       <div class="md:col-span-8">
         <h2
@@ -31,9 +31,9 @@
       </div>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
       <!-- Image Area -->
-      <div class="relative">
+      <div class="p-6 md:p-8 relative">
         <div
           class="absolute top-0 left-0 w-full h-full border-2 border-swiss-black translate-x-3 translate-y-3 -z-10 bg-gray-100"
         >
@@ -59,115 +59,124 @@
       </div>
 
       <!-- Specs List (Helvetica Table) -->
-      <div class="flex flex-col border-t border-gray-200">
-        <div
-          class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
-        >
-          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
-            >Year</span
+      <div class="p-6 md:p-8 flex flex-col bg-gray-50/50">
+        <div class="flex flex-col border-t border-gray-200">
+          <div
+            class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
           >
-          <span class="font-mono text-xl text-right" id="val-year">-</span>
-        </div>
+            <span
+              class="text-sm font-bold font-grotesk uppercase tracking-widest"
+              >Year</span
+            >
+            <span class="font-mono text-xl text-right" id="val-year">-</span>
+          </div>
 
-        <div
-          class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
-        >
-          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
-            >Colour</span
+          <div
+            class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
           >
-          <span class="font-mono text-xl text-right uppercase" id="val-colour"
-            >-</span
-          >
-        </div>
+            <span
+              class="text-sm font-bold font-grotesk uppercase tracking-widest"
+              >Colour</span
+            >
+            <span class="font-mono text-xl text-right uppercase" id="val-colour"
+              >-</span
+            >
+          </div>
 
-        <div
-          class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
-        >
-          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
-            >Fuel Source</span
+          <div
+            class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
           >
-          <span class="font-mono text-xl text-right uppercase" id="val-fuel"
-            >-</span
-          >
-        </div>
+            <span
+              class="text-sm font-bold font-grotesk uppercase tracking-widest"
+              >Fuel Source</span
+            >
+            <span class="font-mono text-xl text-right uppercase" id="val-fuel"
+              >-</span
+            >
+          </div>
 
-        <div
-          class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
-        >
-          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
-            >CO2 Output</span
+          <div
+            class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
           >
-          <span class="font-mono text-xl text-right" id="val-co2">-</span>
-        </div>
+            <span
+              class="text-sm font-bold font-grotesk uppercase tracking-widest"
+              >CO2 Output</span
+            >
+            <span class="font-mono text-xl text-right" id="val-co2">-</span>
+          </div>
 
-        <div
-          class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
-        >
-          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
-            >List Price</span
+          <div
+            class="grid grid-cols-2 py-4 border-b border-gray-200 items-center px-2"
           >
-          <span class="font-mono text-xl text-right" id="val-listprice">-</span>
+            <span
+              class="text-sm font-bold font-grotesk uppercase tracking-widest"
+              >List Price</span
+            >
+            <span class="font-mono text-xl text-right" id="val-listprice"
+              >-</span
+            >
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-  import type { Car } from "../utils/carService";
-  import { fetchCarImage } from "../utils/wikiImageService";
+  <script>
+    import type { Car } from "../utils/carService";
+    import { fetchCarImage } from "../utils/wikiImageService";
 
-  const card = document.getElementById("vehicle-card");
-  const imageWrapper = document.getElementById("image-wrapper");
-  const imagePlaceholder = document.getElementById("image-placeholder");
-  const vehicleImage = document.getElementById(
-    "vehicle-image",
-  ) as HTMLImageElement;
+    const card = document.getElementById("vehicle-card");
+    const imageWrapper = document.getElementById("image-wrapper");
+    const imagePlaceholder = document.getElementById("image-placeholder");
+    const vehicleImage = document.getElementById(
+      "vehicle-image",
+    ) as HTMLImageElement;
 
-  window.addEventListener("car-loaded", (async (e: CustomEvent<Car>) => {
-    const car = e.detail;
-    if (!card) return;
+    window.addEventListener("car-loaded", (async (e: CustomEvent<Car>) => {
+      const car = e.detail;
+      if (!card) return;
 
-    // Update fields
-    setText("val-make", car.make + " ");
-    setText("val-model", car.model);
-    setText("val-reg", car.registration);
-    setText("val-fuel", car.fuelType);
-    setText("val-year", car.yearOfManufacture.toString());
-    setText("val-co2", car.co2Emissions.toString());
-    setText("val-colour", car.colour);
-    setText(
-      "val-listprice",
-      new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "GBP",
-        maximumFractionDigits: 0,
-      }).format(car.originalListPrice),
-    );
+      // Update fields
+      setText("val-make", car.make + " ");
+      setText("val-model", car.model);
+      setText("val-reg", car.registration);
+      setText("val-fuel", car.fuelType);
+      setText("val-year", car.yearOfManufacture.toString());
+      setText("val-co2", car.co2Emissions.toString());
+      setText("val-colour", car.colour);
+      setText(
+        "val-listprice",
+        new Intl.NumberFormat("en-GB", {
+          style: "currency",
+          currency: "GBP",
+          maximumFractionDigits: 0,
+        }).format(car.originalListPrice),
+      );
 
-    card.classList.remove("hidden");
+      card.classList.remove("hidden");
 
-    // Reset image state
-    if (imageWrapper) imageWrapper.classList.add("hidden");
-    if (imagePlaceholder) imagePlaceholder.classList.remove("hidden");
+      // Reset image state
+      if (imageWrapper) imageWrapper.classList.add("hidden");
+      if (imagePlaceholder) imagePlaceholder.classList.remove("hidden");
 
-    // Fetch Image
-    if (imageWrapper && vehicleImage) {
-      const imageUrl = await fetchCarImage(car.make, car.model);
-      if (imageUrl) {
-        vehicleImage.src = imageUrl;
-        if (imagePlaceholder) imagePlaceholder.classList.add("hidden");
-        imageWrapper.classList.remove("hidden");
-      } else {
-        if (imagePlaceholder) {
-          // Keep placeholder
+      // Fetch Image
+      if (imageWrapper && vehicleImage) {
+        const imageUrl = await fetchCarImage(car.make, car.model);
+        if (imageUrl) {
+          vehicleImage.src = imageUrl;
+          if (imagePlaceholder) imagePlaceholder.classList.add("hidden");
+          imageWrapper.classList.remove("hidden");
+        } else {
+          if (imagePlaceholder) {
+            // Keep placeholder
+          }
         }
       }
-    }
-  }) as unknown as EventListener);
+    }) as unknown as EventListener);
 
-  function setText(id: string, text: string) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = text;
-  }
-</script>
+    function setText(id: string, text: string) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
+  </script>
+</div>

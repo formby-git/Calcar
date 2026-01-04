@@ -9,7 +9,7 @@ import MarketMetadata from "./MarketMetadata.astro";
     <h3
         class="text-sm font-grotesk font-bold uppercase tracking-widest text-swiss-black mb-4 flex items-center gap-2"
     >
-        <span>📉</span> Value Projection (15 Years)
+        <div class="w-3 h-3 bg-swiss-blue"></div> Value Projection (15 Years)
     </h3>
     <div class="relative w-full h-64">
         <canvas id="depreciationChart"></canvas>
@@ -136,10 +136,10 @@ import MarketMetadata from "./MarketMetadata.astro";
                 labels[i] === targetAge ? 8 : 4,
             );
             dataset.pointBackgroundColor = projectedData.map((_, i) =>
-                labels[i] === targetAge ? "#F59E0B" : "#ffffff",
-            ); // Amber-500 for highlight
+                labels[i] === targetAge ? "#0047FF" : "#ffffff",
+            );
             dataset.pointBorderColor = projectedData.map((_, i) =>
-                labels[i] === targetAge ? "#D97706" : "#4F46E5",
+                labels[i] === targetAge ? "#000000" : "#0047FF",
             );
 
             chartInstance.update();
@@ -153,7 +153,7 @@ import MarketMetadata from "./MarketMetadata.astro";
                         {
                             label: "Estimated Value",
                             data: projectedData,
-                            borderColor: "#4F46E5", // Indigo-600
+                            borderColor: "#0047FF", // Swiss Blue
                             backgroundColor: (context) => {
                                 const ctx = context.chart.ctx;
                                 const gradient = ctx.createLinearGradient(
@@ -164,12 +164,9 @@ import MarketMetadata from "./MarketMetadata.astro";
                                 );
                                 gradient.addColorStop(
                                     0,
-                                    "rgba(79, 70, 229, 0.2)",
+                                    "rgba(0, 71, 255, 0.15)",
                                 );
-                                gradient.addColorStop(
-                                    1,
-                                    "rgba(79, 70, 229, 0)",
-                                );
+                                gradient.addColorStop(1, "rgba(0, 71, 255, 0)");
                                 return gradient;
                             },
                             borderWidth: 3,
@@ -184,14 +181,14 @@ import MarketMetadata from "./MarketMetadata.astro";
                             pointBackgroundColor: (ctx) => {
                                 const idx = ctx.dataIndex;
                                 return labels[idx] === targetAge
-                                    ? "#F59E0B"
+                                    ? "#0047FF"
                                     : "#ffffff";
                             },
                             pointBorderColor: (ctx) => {
                                 const idx = ctx.dataIndex;
                                 return labels[idx] === targetAge
-                                    ? "#D97706"
-                                    : "#4F46E5";
+                                    ? "#000000"
+                                    : "#0047FF";
                             },
                             pointBorderWidth: 2,
                             pointHoverRadius: 10,
@@ -199,17 +196,17 @@ import MarketMetadata from "./MarketMetadata.astro";
                         {
                             label: "Historical Market Average (2022)",
                             data: historicalData,
-                            borderColor: "#10B981", // Emerald-500
-                            backgroundColor: "rgba(16, 185, 129, 0.1)", // Light Emerald
+                            borderColor: "#000000", // Black
+                            backgroundColor: "transparent",
                             borderWidth: 2,
                             borderDash: [5, 5], // Dashed line
                             fill: false,
                             tension: 0.1,
                             spanGaps: true, // Connect lines over null values
                             pointBackgroundColor: "#ffffff",
-                            pointBorderColor: "#10B981",
+                            pointBorderColor: "#000000",
                             pointBorderWidth: 2,
-                            pointRadius: 4,
+                            pointRadius: 3,
                         },
                     ],
                 },

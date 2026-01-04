@@ -6,7 +6,9 @@ import DepreciationChart from "./DepreciationChart.astro";
   id="tco-section"
   class="bg-swiss-white p-0 mt-0 hidden transition-all duration-500 ease-in-out"
 >
-  <div class="border-b border-gray-200 p-4 bg-swiss-black text-white">
+  <div
+    class="border-b border-gray-200 px-6 md:px-8 py-4 bg-swiss-black text-white"
+  >
     <h2 class="text-3xl font-grotesk font-bold uppercase tracking-tighter">
       Financial Analysis
     </h2>
@@ -14,7 +16,7 @@ import DepreciationChart from "./DepreciationChart.astro";
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
     <!-- Inputs Column (Left) -->
-    <div class="p-6 border-r-0 lg:border-r border-gray-200 space-y-8">
+    <div class="p-6 md:p-8 space-y-8">
       <!-- Price Input -->
       <div class="relative">
         <label
@@ -89,7 +91,13 @@ import DepreciationChart from "./DepreciationChart.astro";
             <option value="72">6 Years (72 Months)</option>
             <option value="84">7 Years (84 Months)</option>
             <option value="96">8 Years (96 Months)</option>
+            <option value="108">9 Years (108 Months)</option>
             <option value="120">10 Years (120 Months)</option>
+            <option value="132">11 Years (132 Months)</option>
+            <option value="144">12 Years (144 Months)</option>
+            <option value="156">13 Years (156 Months)</option>
+            <option value="168">14 Years (168 Months)</option>
+            <option value="180">15 Years (180 Months)</option>
           </select>
           <div
             class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-swiss-black font-bold"
@@ -126,7 +134,7 @@ import DepreciationChart from "./DepreciationChart.astro";
     </div>
 
     <!-- Results Column (Right) -->
-    <div class="bg-gray-50 p-6 flex flex-col justify-between">
+    <div class="bg-gray-50 p-6 md:p-8 flex flex-col justify-between">
       <div class="space-y-6">
         <div
           class="flex justify-between items-baseline text-sm border-b border-gray-200 pb-4"
@@ -193,14 +201,11 @@ import DepreciationChart from "./DepreciationChart.astro";
     id="modifier-badges"
     class="border-t border-gray-200 mt-0 max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out bg-swiss-white"
   >
-    <div class="p-8">
+    <div class="p-6 md:p-8">
       <h3
         class="text-sm font-bold text-swiss-black mb-6 uppercase tracking-widest flex items-center gap-2"
       >
-        <span
-          class="bg-swiss-black text-white w-4 h-4 flex items-center justify-center text-sm rounded-full"
-          >!</span
-        >
+        <div class="w-3 h-3 bg-swiss-blue"></div>
         Active Depreciation Factors
       </h3>
       <div class="flex flex-wrap gap-4" id="modifier-list"></div>

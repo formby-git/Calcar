@@ -36,15 +36,17 @@
   >
   </div>
 
-  <div
-    class="mt-6 flex justify-between items-center bg-gray-50 border border-gray-200 p-2"
-  >
-    <p class="text-sm text-gray-700 font-sans tracking-tight">System Ready</p>
+  <div class="mt-6 flex items-center justify-between px-1">
+    <p class="text-sm text-swiss-black/60 font-sans italic">No registration?</p>
     <button
       id="lucky-btn"
-      class="text-swiss-black hover:text-swiss-blue hover:underline text-sm font-bold tracking-wider font-sans"
+      class="text-swiss-black hover:text-swiss-blue hover:underline text-sm font-bold tracking-wider font-sans flex items-center gap-1 group"
     >
-      [Feeling Lucky?]
+      <span>Try a random vehicle</span>
+      <span
+        class="inline-block transform transition-transform group-hover:translate-x-1"
+        >→</span
+      >
     </button>
   </div>
 </div>
@@ -114,7 +116,9 @@
         errorMsg.classList.remove("hidden");
       }
     } finally {
-      if (luckyBtn) luckyBtn.textContent = "[Feeling Lucky?]";
+      if (luckyBtn)
+        luckyBtn.innerHTML =
+          '<span>Try a random vehicle</span><span class="inline-block transform transition-transform group-hover:translate-x-1">→</span>';
     }
   });
 </script>
