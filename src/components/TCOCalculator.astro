@@ -4,153 +4,180 @@ import DepreciationChart from "./DepreciationChart.astro";
 
 <div
   id="tco-section"
-  class="bg-white p-6 md:p-8 rounded-xl shadow-lg border border-slate-200 hidden transition-all duration-500 ease-in-out"
+  class="bg-swiss-white border-2 border-swiss-black p-0 mt-16 hidden transition-all duration-500 ease-in-out"
 >
-  <div class="flex items-center justify-between mb-4 border-b pb-2">
-    <h2 class="text-lg font-semibold text-slate-900">Cost Calculator</h2>
+  <div class="border-b-2 border-swiss-black p-4 bg-swiss-black text-white">
+    <h2 class="text-3xl font-grotesk font-bold uppercase tracking-tighter">
+      Financial Analysis
+    </h2>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-    <!-- Inputs -->
-    <div class="space-y-4">
-      <div>
-        <label class="block text-sm text-slate-700 mb-1"
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+    <!-- Inputs Column (Left) -->
+    <div class="p-6 border-r-0 lg:border-r-2 border-swiss-black space-y-8">
+      <!-- Price Input -->
+      <div class="relative">
+        <label
+          class="absolute -top-3 left-0 bg-swiss-white px-1 text-sm font-bold uppercase tracking-widest text-swiss-black z-10"
           >Purchase Price (£)</label
         >
         <input
           type="number"
           id="input-price"
-          class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500"
-          placeholder="e.g. 5000"
+          id="input-price"
+          class="w-full px-4 py-3 border-2 border-swiss-black focus:bg-swiss-blue/5 text-2xl font-mono text-swiss-black text-right bg-transparent transition-colors placeholder:text-gray-400 focus:outline-none rounded-none"
+          placeholder="5000"
           min="0"
           max="10000000"
         />
       </div>
 
+      <!-- Term Selection -->
       <div>
-        <label class="block text-sm text-slate-700 mb-1">Ownership Term</label>
+        <label
+          class="block text-sm font-bold uppercase tracking-widest text-swiss-black mb-4"
+          >Ownership Term</label
+        >
 
         <!-- Quick Term Buttons -->
-        <div id="term-buttons" class="flex gap-2">
+        <div
+          id="term-buttons"
+          class="grid grid-cols-5 gap-[-1px] border-2 border-swiss-black"
+        >
           <button
             type="button"
             data-value="12"
-            class="term-btn flex-1 py-2 text-sm border rounded bg-white border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors"
-            >1 Year</button
+            class="term-btn py-3 text-sm border-r border-gray-300 last:border-r-0 bg-white text-swiss-black hover:bg-swiss-blue hover:text-white transition-all duration-0 font-bold font-mono uppercase"
+            >1Y</button
           >
           <button
             type="button"
             data-value="24"
-            class="term-btn flex-1 py-2 text-sm border rounded bg-white border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors"
-            >2 Years</button
+            class="term-btn py-3 text-sm border-r border-gray-300 last:border-r-0 bg-white text-swiss-black hover:bg-swiss-blue hover:text-white transition-all duration-0 font-bold font-mono uppercase"
+            >2Y</button
           >
           <button
             type="button"
             data-value="36"
-            class="term-btn flex-1 py-2 text-sm border rounded bg-blue-600 border-blue-600 text-white shadow-sm transition-colors"
-            >3 Years</button
+            class="term-btn py-3 text-sm border-r border-gray-300 last:border-r-0 bg-swiss-black text-white font-bold font-mono uppercase"
+            >3Y</button
           >
           <button
             type="button"
             data-value="48"
-            class="term-btn flex-1 py-2 text-sm border rounded bg-white border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors"
-            >4 Years</button
+            class="term-btn py-3 text-sm border-r border-gray-300 last:border-r-0 bg-white text-swiss-black hover:bg-swiss-blue hover:text-white transition-all duration-0 font-bold font-mono uppercase"
+            >4Y</button
           >
           <button
             type="button"
             id="btn-custom-term"
-            class="term-btn flex-1 py-2 text-sm border rounded bg-white border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors"
-            >More</button
+            class="term-btn py-3 text-sm bg-white text-swiss-black hover:bg-swiss-blue hover:text-white transition-all duration-0 font-bold font-mono uppercase"
+            >...</button
           >
         </div>
 
-        <!-- Custom Term Dropdown (hidden by default) -->
-        <div id="custom-term-container" class="hidden mt-2 relative">
+        <!-- Custom Term Dropdown -->
+        <div
+          id="custom-term-container"
+          class="hidden mt-4 relative border-2 border-swiss-black"
+        >
           <select
             id="input-term"
-            class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500 appearance-none"
+            class="w-full px-4 py-2 bg-transparent text-lg font-mono focus:outline-none appearance-none rounded-none text-swiss-black"
           >
             <option value="60" selected>5 Years (60 Months)</option>
             <option value="72">6 Years (72 Months)</option>
             <option value="84">7 Years (84 Months)</option>
             <option value="96">8 Years (96 Months)</option>
-            <option value="108">9 Years (108 Months)</option>
             <option value="120">10 Years (120 Months)</option>
-            <option value="132">11 Years (132 Months)</option>
-            <option value="144">12 Years (144 Months)</option>
-            <option value="156">13 Years (156 Months)</option>
-            <option value="168">14 Years (168 Months)</option>
-            <option value="180">15 Years (180 Months)</option>
           </select>
           <div
-            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500"
+            class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-swiss-black font-bold"
           >
-            <svg
-              class="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"></path>
-            </svg>
+            ▼
           </div>
         </div>
       </div>
 
-      <div>
-        <label class="block text-sm text-slate-700 mb-1"
-          >Estimated Resale Value (£)</label
+      <!-- Resale Input -->
+      <div class="relative">
+        <label
+          class="absolute -top-3 left-0 bg-swiss-white px-1 text-sm font-bold uppercase tracking-widest text-swiss-black z-10"
+          >Est. Resale (£)</label
         >
         <input
           type="number"
           id="input-resale"
-          class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 focus:ring-blue-500"
-          placeholder="e.g. 2000"
+          id="input-resale"
+          class="w-full px-4 py-3 border-2 border-swiss-black focus:bg-swiss-blue/5 text-2xl font-mono text-swiss-black text-right bg-transparent transition-colors placeholder:text-gray-400 focus:outline-none rounded-none"
+          placeholder="2000"
           min="0"
           max="10000000"
         />
       </div>
 
-      <!-- Reset Button -->
-      <div class="pt-1">
-        <button
-          id="btn-reset-prices"
-          type="button"
-          class="text-xs text-slate-400 hover:text-slate-600 underline-offset-2 hover:underline transition-colors"
-        >
-          ↻ Reset to original values
-        </button>
-      </div>
+      <button
+        id="btn-reset-prices"
+        type="button"
+        class="text-sm text-swiss-black hover:text-swiss-blue uppercase tracking-widest font-bold underline flex items-center gap-1 group"
+      >
+        [ Reset Data ]
+      </button>
     </div>
 
-    <!-- Results -->
-    <div
-      class="bg-slate-50 p-4 rounded border border-slate-100 flex flex-col justify-center space-y-4"
-    >
-      <div class="flex justify-between items-center text-sm">
-        <span class="text-slate-500">Total Depreciation</span>
-        <span class="font-medium" id="res-depreciation">-</span>
-      </div>
-      <div class="flex justify-between items-center text-sm">
-        <span class="text-slate-500">Total Road Tax (VED)</span>
-        <span class="font-medium" id="res-tax">-</span>
-      </div>
-      <div class="pt-4 border-t border-slate-200 mt-2">
+    <!-- Results Column (Right) -->
+    <div class="bg-gray-50 p-6 flex flex-col justify-between">
+      <div class="space-y-6">
         <div
-          class="flex justify-between items-center text-xl font-bold text-slate-900"
+          class="flex justify-between items-baseline text-sm border-b-2 border-gray-200 pb-4"
         >
-          <span>Monthly Cost</span>
-          <span id="res-monthly">£0 / mo</span>
+          <span
+            class="text-swiss-black font-bold uppercase tracking-widest font-grotesk"
+            >Depreciation Loss</span
+          >
+          <span class="font-mono text-xl text-swiss-black" id="res-depreciation"
+            >-</span
+          >
         </div>
         <div
-          class="flex justify-between items-center text-sm text-slate-500 mt-1"
+          class="flex justify-between items-baseline text-sm border-b-2 border-gray-200 pb-4"
         >
-          <span>Total Cost</span>
-          <span id="res-total">£0</span>
+          <span
+            class="text-swiss-black font-bold uppercase tracking-widest font-grotesk"
+            >Road Tax (VED)</span
+          >
+          <span class="font-mono text-xl text-swiss-black" id="res-tax">-</span>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <div
+          class="bg-swiss-blue text-white p-5 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+        >
+          <span
+            class="text-sm font-bold uppercase tracking-widest block mb-2 opacity-100"
+            >Monthly Cost</span
+          >
+          <span
+            id="res-monthly"
+            id="res-monthly"
+            class="text-4xl md:text-5xl font-grotesk font-bold leading-none block tracking-tight text-right w-full"
+            >£0</span
+          >
+          <span class="text-sm font-mono opacity-100 block text-right mt-1"
+            >PER_MONTH</span
+          >
+        </div>
+
+        <div class="flex justify-between items-baseline pt-8 mt-4">
+          <span
+            class="text-sm text-swiss-black font-bold uppercase tracking-widest"
+            >Total Ownership Cost</span
+          >
+          <span
+            id="res-total"
+            class="font-mono font-bold text-2xl text-swiss-black">£0</span
+          >
         </div>
       </div>
     </div>
@@ -159,15 +186,19 @@ import DepreciationChart from "./DepreciationChart.astro";
   <!-- Depreciation Insights (Always visible if applicable) -->
   <div
     id="modifier-badges"
-    class="border-t border-slate-200 mt-0 max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out"
+    class="border-t-2 border-swiss-black mt-0 max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out bg-swiss-white"
   >
-    <div class="pt-6">
+    <div class="p-8">
       <h3
-        class="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2"
+        class="text-sm font-bold text-swiss-black mb-6 uppercase tracking-widest flex items-center gap-2"
       >
-        <span>📊</span> Depreciation Factors
+        <span
+          class="bg-swiss-black text-white w-4 h-4 flex items-center justify-center text-xs rounded-full"
+          >!</span
+        >
+        Active Depreciation Factors
       </h3>
-      <div class="flex flex-wrap gap-2" id="modifier-list"></div>
+      <div class="flex flex-wrap gap-4" id="modifier-list"></div>
     </div>
   </div>
 
@@ -244,31 +275,21 @@ import DepreciationChart from "./DepreciationChart.astro";
 
   function updateTermButtonStyles(activeBtn: HTMLButtonElement) {
     termButtons.forEach((btn) => {
-      btn.classList.remove(
-        "bg-blue-600",
-        "border-blue-600",
-        "text-white",
-        "shadow-sm",
-      );
+      btn.classList.remove("bg-swiss-black", "text-white");
       btn.classList.add(
         "bg-white",
-        "border-slate-300",
-        "text-slate-600",
-        "hover:bg-slate-50",
+        "text-swiss-black",
+        "hover:bg-swiss-blue",
+        "hover:text-white",
       );
     });
     activeBtn.classList.remove(
       "bg-white",
-      "border-slate-300",
-      "text-slate-600",
-      "hover:bg-slate-50",
+      "text-swiss-black",
+      "hover:bg-swiss-blue",
+      "hover:text-white",
     );
-    activeBtn.classList.add(
-      "bg-blue-600",
-      "border-blue-600",
-      "text-white",
-      "shadow-sm",
-    );
+    activeBtn.classList.add("bg-swiss-black", "text-white");
   }
 
   // Dropdown change handler
@@ -328,8 +349,7 @@ import DepreciationChart from "./DepreciationChart.astro";
       resDepreciation.textContent = formatCurrency(depreciation);
     if (resTax) resTax.textContent = formatCurrency(totalTax);
     if (resTotal) resTotal.textContent = formatCurrency(totalCost);
-    if (resMonthly)
-      resMonthly.textContent = `${formatCurrency(monthlyCost)} / mo`;
+    if (resMonthly) resMonthly.textContent = `${formatCurrency(monthlyCost)}`;
   }
 
   function formatCurrency(val: number) {
@@ -390,12 +410,13 @@ import DepreciationChart from "./DepreciationChart.astro";
     // Create badges
     modifiers.forEach((mod) => {
       const badge = document.createElement("div");
+      // Editorial style tags: Minimalist outlines with colored text
       badge.className = mod.isPositive
-        ? "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200"
-        : "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200";
+        ? "flex items-center gap-2 px-3 py-2 border-l-4 border-l-green-600 bg-gray-100 text-swiss-black rounded-none text-sm font-mono font-bold uppercase shadow-sm"
+        : "flex items-center gap-2 px-3 py-2 border-l-4 border-l-orange-600 bg-gray-100 text-swiss-black rounded-none text-sm font-mono font-bold uppercase shadow-sm";
 
       const icon = document.createElement("span");
-      icon.textContent = mod.isPositive ? "↑" : "↓";
+      icon.textContent = mod.isPositive ? "(+)" : "(-)";
       badge.appendChild(icon);
 
       const label = document.createElement("span");

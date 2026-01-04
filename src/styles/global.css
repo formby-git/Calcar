@@ -1,6 +1,41 @@
 @import "tailwindcss";
 
+@theme {
+  --color-swiss-white: #ffffff;
+  --color-swiss-black: #000000;
+  --color-swiss-blue: #0057ff;
+
+  --font-grotesk: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  /* Override border radius globally for brutalism */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-full: 9999px;
+}
+
 @layer base {
+  body {
+    background-color: var(--color-swiss-white);
+    color: var(--color-swiss-black);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-grotesk);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
 
   button,
   [role="button"],
@@ -8,7 +43,6 @@
     cursor: pointer;
   }
 
-  /* Remove number input arrows/spinners */
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -17,5 +51,6 @@
 
   input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
   }
 }

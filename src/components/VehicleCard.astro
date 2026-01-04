@@ -2,110 +2,114 @@
 
 ---
 
-<div id="vehicle-card" class="relative hidden mb-8">
-  <div
-    class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden p-6 md:p-8"
-  >
-    <!-- Header: Make, Model & Registration -->
+<div id="vehicle-card" class="relative hidden mb-16 animate-fade-in">
+  <div class="border-y-2 border-swiss-black bg-swiss-white py-6">
+    <!-- Header: Poster Style -->
     <div
-      class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
+      class="grid grid-cols-1 md:grid-cols-12 gap-0 border-b-2 border-swiss-black pb-8 mb-8"
     >
-      <div>
-        <div class="text-3xl font-extrabold text-slate-900 leading-tight">
-          <span id="val-make"></span>
-          <span id="val-model" class="text-blue-600"></span>
-        </div>
+      <div class="md:col-span-8">
+        <h2
+          class="text-5xl md:text-6xl font-grotesk font-bold text-swiss-black leading-[0.85] tracking-tighter uppercase"
+        >
+          <span id="val-make"></span><br />
+          <span
+            id="val-model"
+            class="text-stroke text-transparent stroke-swiss-black stroke-2"
+            style="-webkit-text-stroke: 2px black; color: transparent;"></span>
+        </h2>
       </div>
-
-      <!-- Registration Plate -->
       <div
-        class="bg-[#FCD116] border-2 border-black rounded px-4 py-1 shadow-sm inline-block"
+        class="md:col-span-4 flex flex-col justify-between items-end text-right mt-4 md:mt-0"
       >
-        <span
-          id="val-reg"
-          class="font-mono text-xl md:text-2xl font-bold text-black tracking-widest uppercase"
-        ></span>
+        <div
+          class="bg-swiss-blue text-white px-3 py-1 font-mono text-lg font-bold uppercase tracking-widest transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+        >
+          <span id="val-reg"></span>
+        </div>
+        <p class="font-mono text-sm mt-4">SPECIFICATION_SHEET_01</p>
       </div>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <!-- Col 1: Image (Takes up 2/3) -->
-      <div class="md:col-span-2">
+    <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+      <!-- Image Area -->
+      <div class="relative">
+        <div
+          class="absolute top-0 left-0 w-full h-full border-2 border-swiss-black translate-x-3 translate-y-3 -z-10 bg-gray-100"
+        >
+        </div>
         <div
           id="image-wrapper"
-          class="bg-slate-100 rounded-lg overflow-hidden hidden"
+          class="hidden border-2 border-swiss-black bg-white aspect-video relative z-10"
         >
           <img
             id="vehicle-image"
-            class="w-full h-auto object-contain"
+            class="w-full h-full object-cover grayscale contrast-125"
             src=""
             alt="Vehicle Preview"
           />
         </div>
-        <!-- Fallback/Loading state for image area -->
+        <!-- Fallback -->
         <div
           id="image-placeholder"
-          class="h-64 md:h-80 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex items-center justify-center"
+          class="aspect-video bg-gray-100 border-2 border-swiss-black flex items-center justify-center text-swiss-black font-mono text-sm border-dashed"
         >
-          <p class="text-slate-400">Loading image...</p>
+          [NO_VISUAL_DATA]
         </div>
       </div>
 
-      <!-- Col 2: Specs List -->
-      <div class="md:col-span-1 flex flex-col justify-center space-y-6">
-        <div>
-          <p
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+      <!-- Specs List (Helvetica Table) -->
+      <div class="flex flex-col border-t-2 border-swiss-black">
+        <div
+          class="grid grid-cols-2 py-4 border-b border-swiss-black items-center px-2"
+        >
+          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
+            >Year</span
           >
-            Year
-          </p>
-          <p class="font-medium text-lg text-slate-700" id="val-year">-</p>
+          <span class="font-mono text-lg text-right" id="val-year">-</span>
         </div>
-        <div class="w-full h-px bg-slate-100"></div>
 
-        <div>
-          <p
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+        <div
+          class="grid grid-cols-2 py-4 border-b border-swiss-black items-center px-2"
+        >
+          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
+            >Colour</span
           >
-            Colour
-          </p>
-          <p class="font-medium text-lg text-slate-700" id="val-colour">-</p>
+          <span class="font-mono text-lg text-right uppercase" id="val-colour"
+            >-</span
+          >
         </div>
-        <div class="w-full h-px bg-slate-100"></div>
 
-        <div>
-          <p
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+        <div
+          class="grid grid-cols-2 py-4 border-b border-swiss-black items-center px-2"
+        >
+          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
+            >Fuel Source</span
           >
-            Fuel Type
-          </p>
-          <p class="font-medium text-lg text-slate-700" id="val-fuel">-</p>
+          <span class="font-mono text-lg text-right uppercase" id="val-fuel"
+            >-</span
+          >
         </div>
-        <div class="w-full h-px bg-slate-100"></div>
 
-        <div>
-          <p
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+        <div
+          class="grid grid-cols-2 py-4 border-b border-swiss-black items-center px-2"
+        >
+          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
+            >CO2 Output</span
           >
-            CO2 Emissions
-          </p>
-          <div class="flex items-center gap-2">
-            <p class="font-medium text-lg text-slate-700" id="val-co2">-</p>
-            <span
-              class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-mono"
-              >g/km</span
-            >
-          </div>
+          <span class="font-mono text-lg text-right" id="val-co2">-</span>
         </div>
-        <div class="w-full h-px bg-slate-100"></div>
 
-        <div>
-          <p
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1"
+        <div
+          class="grid grid-cols-2 py-4 border-b-2 border-swiss-black items-center px-2"
+        >
+          <span class="text-sm font-bold font-grotesk uppercase tracking-widest"
+            >List Price</span
           >
-            Original List Price
-          </p>
-          <p class="font-medium text-lg text-slate-700" id="val-listprice">-</p>
+          <span
+            class="font-mono text-lg text-right font-bold"
+            id="val-listprice">-</span
+          >
         </div>
       </div>
     </div>
@@ -159,8 +163,7 @@
         imageWrapper.classList.remove("hidden");
       } else {
         if (imagePlaceholder) {
-          const tempP = imagePlaceholder.querySelector("p");
-          if (tempP) tempP.textContent = "No image found";
+          // Keep placeholder
         }
       }
     }
