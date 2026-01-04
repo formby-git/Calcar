@@ -20,7 +20,6 @@
       placeholder="ENTER REG"
       class="flex-1 px-4 py-3 bg-white text-xl font-mono text-swiss-black placeholder:text-gray-400 focus:outline-none focus:bg-swiss-blue/5 uppercase tracking-wider rounded-none"
       maxlength="8"
-      value="ABC1234"
     />
     <button
       id="lookup-btn"
@@ -35,37 +34,14 @@
     class="text-white bg-red-600 font-mono text-sm mt-4 p-2 hidden border border-swiss-black"
   >
   </div>
-
-  <div class="mt-6 flex items-center justify-between px-1">
-    <p class="text-sm text-swiss-black/60 font-sans italic">No registration?</p>
-    <button
-      id="lucky-btn"
-      class="text-swiss-black hover:text-swiss-blue hover:underline text-sm font-bold tracking-wider font-sans flex items-center gap-1 group"
-    >
-      <span>Try a random vehicle</span>
-      <span
-        class="inline-block transform transition-transform group-hover:translate-x-1"
-        >→</span
-      >
-    </button>
-  </div>
 </div>
 
 <script>
-  import { getCarByRegistration, getRandomCar } from "../utils/carService";
-
   const input = document.getElementById("reg-input") as HTMLInputElement;
   const btn = document.getElementById("lookup-btn");
-  const luckyBtn = document.getElementById("lucky-btn");
   const errorMsg = document.getElementById("error-msg");
 
-  const loadCar = (car: any) => {
-    if (car) {
-      window.dispatchEvent(new CustomEvent("car-loaded", { detail: car }));
-    }
-  };
-
-  btn?.addEventListener("click", async () => {
+  btn?.addEventListener("click", () => {
     const reg = input.value.trim().toUpperCase();
     if (!reg) return;
 
@@ -83,42 +59,10 @@
     if (btn) btn.textContent = "Loading...";
     if (errorMsg) errorMsg.classList.add("hidden");
 
-    try {
-      const car = await getCarByRegistration(reg);
-      if (car) {
-        loadCar(car);
-      } else {
-        if (errorMsg) {
-          errorMsg.textContent = "Vehicle not found";
-          errorMsg.classList.remove("hidden");
-        }
-      }
-    } catch (e) {
-      if (errorMsg) {
-        errorMsg.textContent = "Error fetching details";
-        errorMsg.classList.remove("hidden");
-      }
-    } finally {
-      if (btn) btn.innerHTML = "<span>Analyze</span><span>→</span>";
-    }
-  });
+    // sanitize reg
+    const cleanReg = reg.replace(/\s/g, "");
 
-  luckyBtn?.addEventListener("click", async () => {
-    if (luckyBtn) luckyBtn.textContent = "Finding...";
-    if (errorMsg) errorMsg.classList.add("hidden");
-
-    try {
-      const car = await getRandomCar();
-      loadCar(car);
-    } catch (e) {
-      if (errorMsg) {
-        errorMsg.textContent = "Error picking random car";
-        errorMsg.classList.remove("hidden");
-      }
-    } finally {
-      if (luckyBtn)
-        luckyBtn.innerHTML =
-          '<span>Try a random vehicle</span><span class="inline-block transform transition-transform group-hover:translate-x-1">→</span>';
-    }
+    // Redirect to analysis page
+    window.location.href = `/analyse/uk/${cleanReg}`;
   });
 </script>

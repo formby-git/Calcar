@@ -1,0 +1,50 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import VehicleCard from "../../../components/VehicleCard.astro";
+import TCOCalculator from "../../../components/TCOCalculator.astro";
+import carsData from "../../../data/cars.json";
+
+export async function getStaticPaths() {
+    const cars = carsData;
+    return cars.map((car) => ({
+        params: {
+            country: "uk",
+            registration: car.registration.replace(/\s/g, "").toUpperCase(),
+        },
+        props: { car },
+    }));
+}
+
+const { car } = Astro.props;
+---
+
+<Layout title={`Calcar - ${car.make} ${car.model} (${car.registration})`}>
+    <div class="min-h-screen pb-20">
+        <!-- Header / Navigation -->
+
+        <!-- Content Wrapper -->
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Components listen for car-loaded event, so we pass the car data and emit it -->
+            <div id="analysis-container">
+                <VehicleCard />
+                <TCOCalculator />
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script define:vars={{ car }}>
+    // Initialize existing components with the car data
+    // We wait for DOMContentLoaded to ensure components are mounted (though strictly script runs after parser)
+    document.addEventListener("DOMContentLoaded", () => {
+        // Small delay to ensure listeners in components are attached if they are not using 'DOMContentLoaded' themselves
+        // VehicleCard and TCOCalculator add listeners immediately in their script tags, which run deferred in Astro usually,
+        // but to be safe we can dispatch.
+
+        // We need to ensure the components are visible. They default to hidden.
+        // The components reveal themselves when they receive the event.
+
+        // Dispatch event
+        window.dispatchEvent(new CustomEvent("car-loaded", { detail: car }));
+    });
+</script>

@@ -1,8 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import RegistrationForm from "../components/RegistrationForm.astro";
-import VehicleCard from "../components/VehicleCard.astro";
-import TCOCalculator from "../components/TCOCalculator.astro";
 ---
 
 <Layout title="Calcar - Smart Car Ownership">
@@ -17,22 +15,27 @@ import TCOCalculator from "../components/TCOCalculator.astro";
 		class="min-h-[80vh] flex flex-col justify-center transition-all duration-700 ease-in-out"
 		data-state="initial"
 	>
-		<!-- Brutalist Hero -->
 		<div
 			id="hero-content"
 			class="mb-16 text-center transition-all duration-500 delay-100 px-4"
 		>
 			<h1
-				class="text-5xl md:text-7xl font-bold tracking-tighter mb-8 text-swiss-black leading-[0.8]"
+				class="text-4xl md:text-6xl font-bold tracking-tighter mb-8 text-swiss-black leading-[1.1] max-w-4xl mx-auto"
 			>
-				TRUE<br />COST.
+				Find out the true cost of owning a
+				<span
+					id="hero-car-model"
+					class="text-swiss-blue inline-block transition-opacity duration-300 min-w-[200px]"
+					>Volkswagen Golf</span
+				>
+				over
+				<span
+					id="hero-term"
+					class="text-swiss-blue inline-block transition-opacity duration-300 min-w-[50px]"
+					>3</span
+				>
+				years
 			</h1>
-			<p
-				class="text-lg md:text-xl text-swiss-black max-w-md mx-auto font-mono uppercase tracking-wide border-t border-swiss-black pt-6"
-			>
-				Analysis. Depreciation. Truth.<br />
-				The definitive UK car TCO tool.
-			</p>
 		</div>
 
 		<div
@@ -40,14 +43,6 @@ import TCOCalculator from "../components/TCOCalculator.astro";
 		>
 			<RegistrationForm />
 		</div>
-	</div>
-
-	<div
-		id="results-container"
-		class="opacity-0 translate-y-20 transition-all duration-700 delay-300 hidden"
-	>
-		<VehicleCard />
-		<TCOCalculator />
 	</div>
 </Layout>
 
@@ -57,41 +52,65 @@ import TCOCalculator from "../components/TCOCalculator.astro";
 	const resultsContainer = document.getElementById("results-container");
 	const heroContent = document.getElementById("hero-content");
 
-	// Listen for the custom event from RegistrationForm
-	window.addEventListener("car-loaded", () => {
-		// Transition state
-		wrapper?.setAttribute("data-state", "results");
+	// Landing Page Animation Logic
+	const heroModel = document.getElementById("hero-car-model");
+	const heroTerm = document.getElementById("hero-term");
+	const regInput = document.getElementById("reg-input") as HTMLInputElement;
 
-		// 1. Fade out background
-		if (background) {
-			background.style.opacity = "0";
-			setTimeout(() => {
-				background.style.display = "none";
-			}, 700);
-		}
+	const featuredCars = [
+		{ model: "Volkswagen Golf GTI", reg: "LN68 JKL" },
+		{ model: "Tesla Model 3", reg: "GH23 STU" },
+		{ model: "Ford Fiesta ST", reg: "QR13 HIJ" },
+		{ model: "Mercedes C-Class", reg: "EF16 PQR" },
+		{ model: "Nissan Qashqai", reg: "EF70 QRS" },
+		{ model: "Porsche Taycan", reg: "IJ21 VWX" },
+		{ model: "Land Rover Discovery", reg: "OP67 RST" },
+	];
 
-		// 2. Move wrapper to top
-		if (wrapper) {
-			wrapper.classList.remove("min-h-[80vh]", "justify-center");
-			wrapper.classList.add("mt-8", "mb-8");
-		}
+	const ownershipTerms = [1, 2, 3, 4, 5];
 
-		// 3. Fade out hero content slightly or adjust it
-		if (heroContent) {
-			heroContent.classList.remove("mb-10");
-			heroContent.classList.add("mb-6");
-		}
+	let currentIndex = 0;
 
-		// 4. Show results
-		if (resultsContainer) {
-			resultsContainer.classList.remove("hidden");
-			// Small delay to allow layout to settle before fading in results
-			requestAnimationFrame(() => {
-				resultsContainer.classList.remove(
-					"opacity-0",
-					"translate-y-20",
-				);
-			});
-		}
+	// Initial set (if input is empty)
+	if (regInput && !regInput.value) {
+		regInput.value = featuredCars[0].reg;
+	}
+
+	const cycleHero = () => {
+		// Only cycle if user hasn't interacted with the input (optional check, but safer to just cycle as requested)
+		// The prompt implies it should just cycle: "swap it out every 3 seconds as well"
+		// To avoid annoying the user if they are typing, we could check focus, but the prompt says user can "just tap Analyse", implying they wait for a suggestion.
+		// Let's check focus to be polite, or just do it. I'll check focus.
+		if (document.activeElement === regInput) return;
+
+		currentIndex = (currentIndex + 1) % featuredCars.length;
+		const nextCar = featuredCars[currentIndex];
+		const nextTerm =
+			ownershipTerms[Math.floor(Math.random() * ownershipTerms.length)];
+
+		// Animate Out
+		if (heroModel) heroModel.style.opacity = "0";
+		if (heroTerm) heroTerm.style.opacity = "0";
+		if (regInput) regInput.style.opacity = "0.5";
+
+		setTimeout(() => {
+			// Update
+			if (heroModel) heroModel.textContent = nextCar.model;
+			if (heroTerm) heroTerm.textContent = nextTerm.toString();
+			if (regInput) regInput.value = nextCar.reg;
+
+			// Animate In
+			if (heroModel) heroModel.style.opacity = "1";
+			if (heroTerm) heroTerm.style.opacity = "1";
+			if (regInput) regInput.style.opacity = "1";
+		}, 300);
+	};
+
+	const intervalId = setInterval(cycleHero, 3000);
+
+	// Stop cycling when user interacts
+	regInput?.addEventListener("focus", () => {
+		clearInterval(intervalId);
+		if (regInput) regInput.style.opacity = "1";
 	});
 </script>
