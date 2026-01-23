@@ -1,5 +1,7 @@
 import carsData from '../data/cars.json';
 
+import { fetchVehicleDetails } from './dvla';
+
 export interface Car {
     registration: string;
     make: string;
@@ -13,13 +15,17 @@ export interface Car {
 }
 
 export const getCarByRegistration = async (registration: string): Promise<Car | null> => {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-
     const formattedReg = registration.replace(/\s/g, '').toUpperCase();
-    const car = carsData.find(c => c.registration.replace(/\s/g, '').toUpperCase() === formattedReg);
 
-    return car || null;
+    // 1. Try local data first
+    const car = carsData.find(c => c.registration.replace(/\s/g, '').toUpperCase() === formattedReg);
+    if (car) return car;
+
+    // 2. Fallback to DVLA API
+    console.log(`Car ${formattedReg} not found locally, fetching from DVLA...`);
+    const dvlaCar = await fetchVehicleDetails(formattedReg);
+
+    return dvlaCar;
 };
 
 export const getAllCars = async (): Promise<Car[]> => {

@@ -2,20 +2,19 @@
 import Layout from "../../../layouts/Layout.astro";
 import VehicleCard from "../../../components/VehicleCard.astro";
 import TCOCalculator from "../../../components/TCOCalculator.astro";
-import carsData from "../../../data/cars.json";
+import { getCarByRegistration } from "../../../utils/carService";
 
-export async function getStaticPaths() {
-    const cars = carsData;
-    return cars.map((car) => ({
-        params: {
-            country: "uk",
-            registration: car.registration.replace(/\s/g, "").toUpperCase(),
-        },
-        props: { car },
-    }));
+const { registration } = Astro.params;
+
+if (!registration) {
+    return Astro.redirect("/404");
 }
 
-const { car } = Astro.props;
+const car = await getCarByRegistration(registration);
+
+if (!car) {
+    return Astro.redirect("/404");
+}
 ---
 
 <Layout title={`Calcar - ${car.make} ${car.model} (${car.registration})`}>
