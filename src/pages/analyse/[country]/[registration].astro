@@ -10,7 +10,12 @@ if (!registration) {
     return Astro.redirect("/404");
 }
 
-const car = await getCarByRegistration(registration);
+let apiKey = import.meta.env.DVLA_API_KEY;
+if (Astro.locals && (Astro.locals as any).runtime?.env?.DVLA_API_KEY) {
+    apiKey = (Astro.locals as any).runtime.env.DVLA_API_KEY;
+}
+
+const car = await getCarByRegistration(registration, apiKey);
 
 if (!car) {
     return Astro.redirect("/404");

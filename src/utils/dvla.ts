@@ -14,10 +14,11 @@ interface DvlaResponse {
     // We will map what we can.
 }
 
-export async function fetchVehicleDetails(registration: string): Promise<Car | null> {
-    const apiKey = import.meta.env.DVLA_API_KEY;
+export async function fetchVehicleDetails(registration: string, apiKey?: string): Promise<Car | null> {
+    // If no key passed, try environment (logic moved to caller largely, but keep fallback)
+    const effectiveKey = apiKey || import.meta.env.DVLA_API_KEY;
 
-    if (!apiKey) {
+    if (!effectiveKey) {
         console.error("DVLA_API_KEY is not set.");
         return null;
     }
@@ -26,7 +27,7 @@ export async function fetchVehicleDetails(registration: string): Promise<Car | n
         const response = await fetch(DVLA_API_URL, {
             method: 'POST',
             headers: {
-                'x-api-key': apiKey,
+                'x-api-key': effectiveKey,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

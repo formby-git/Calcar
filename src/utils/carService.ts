@@ -14,7 +14,7 @@ export interface Car {
     originalListPrice: number;
 }
 
-export const getCarByRegistration = async (registration: string): Promise<Car | null> => {
+export const getCarByRegistration = async (registration: string, apiKey?: string): Promise<Car | null> => {
     const formattedReg = registration.replace(/\s/g, '').toUpperCase();
 
     // 1. Try local data first
@@ -23,7 +23,7 @@ export const getCarByRegistration = async (registration: string): Promise<Car | 
 
     // 2. Fallback to DVLA API
     console.log(`Car ${formattedReg} not found locally, fetching from DVLA...`);
-    const dvlaCar = await fetchVehicleDetails(formattedReg);
+    const dvlaCar = await fetchVehicleDetails(formattedReg, apiKey);
 
     return dvlaCar;
 };
