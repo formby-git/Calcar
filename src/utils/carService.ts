@@ -12,6 +12,8 @@ export interface Car {
     colour: string;
     basicPrice: number;
     originalListPrice: number;
+    variant?: string;
+    title?: string;
 }
 
 export const getCarByRegistration = async (registration: string, apiKey?: string): Promise<Car | null> => {

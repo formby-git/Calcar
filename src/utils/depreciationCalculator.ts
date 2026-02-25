@@ -11,12 +11,32 @@ interface CurveData {
 
 interface DepreciationCurves {
     curves: { [key: string]: CurveData };
+    specialModifiers: { [make: string]: number; global: number };
     generatedAt: string;
     minDataPoints: number;
     totalCurves: number;
 }
 
-const curves = (depreciationData as DepreciationCurves).curves;
+const data = (depreciationData as DepreciationCurves);
+const curves = data.curves;
+const specialModifiers = data.specialModifiers;
+
+const SPECIAL_VARIANT_KEYWORDS = [
+    'AMG', 'RS', 'M3', 'M4', 'M5', 'GT', 'COSWORTH', 'S3', 'S4', 'S5',
+    'MUSTANG', 'F150', 'ECONOLINE', 'M SPORT', 'R TYPE', 'TYPE R', 'GTI',
+    'CUPRA', 'ABARTH', 'VXR', 'ST', 'JOHN COOPER WORKS', 'JCW', 'QUADRIFOGLIO'
+];
+
+export function isSpecialVariant(car: Car): boolean {
+    const combined = `${car.make} ${car.model} ${car.variant || ''} ${car.title || ''}`.toUpperCase();
+    return SPECIAL_VARIANT_KEYWORDS.some(keyword => {
+        if (keyword.length <= 2) {
+            const regex = new RegExp(`\\b${keyword}\\b`);
+            return regex.test(combined);
+        }
+        return combined.includes(keyword);
+    });
+}
 
 /**
  * Information about which curve was used for the calculation
@@ -26,13 +46,14 @@ export interface CurveSource {
     key: string;
     rate: number;
     dataPoints: number;
+    appliedSpecialModifier: boolean;
 }
 
 /**
  * Find the best available depreciation curve for a car
  * Uses hierarchical lookup at make+fuel level (model excluded due to data quality)
  */
-export function findBestCurve(make: string, model: string, fuelType: string): CurveSource {
+export function findBestCurve(make: string, model: string, fuelType: string, isSpecial: boolean = false): CurveSource {
     const normMake = make.toLowerCase();
     const normFuel = fuelType.toLowerCase();
 
@@ -44,25 +65,41 @@ export function findBestCurve(make: string, model: string, fuelType: string): Cu
         { key: 'global', level: 'global' },
     ];
 
+    let selectedCurve: CurveSource | null = null;
+
     for (const { key, level } of candidates) {
         const curve = curves[key];
         if (curve) {
-            return {
+            selectedCurve = {
                 level,
                 key,
                 rate: curve.rate,
-                dataPoints: curve.dataPoints
+                dataPoints: curve.dataPoints,
+                appliedSpecialModifier: false
             };
+            break;
         }
     }
 
     // Absolute fallback (should never happen if global exists)
-    return {
-        level: 'global',
-        key: 'fallback',
-        rate: 0.15,
-        dataPoints: 0
-    };
+    if (!selectedCurve) {
+        selectedCurve = {
+            level: 'global',
+            key: 'fallback',
+            rate: 0.15,
+            dataPoints: 0,
+            appliedSpecialModifier: false
+        };
+    }
+
+    // Apply special variant modifier if applicable
+    if (isSpecial) {
+        const modifier = specialModifiers[normMake] || specialModifiers['global'] || 1.0;
+        selectedCurve.rate = selectedCurve.rate * modifier;
+        selectedCurve.appliedSpecialModifier = true;
+    }
+
+    return selectedCurve;
 }
 
 /**
@@ -74,7 +111,8 @@ export function findBestCurve(make: string, model: string, fuelType: string): Cu
  * the steep early depreciation years.
  */
 export function calculateResidualFactor(car: Car, ownershipYears: number): number {
-    const curveSource = findBestCurve(car.make, car.model, car.fuelType);
+    const isSpecial = isSpecialVariant(car);
+    const curveSource = findBestCurve(car.make, car.model, car.fuelType, isSpecial);
     const baseRate = curveSource.rate;
 
     // Calculate car's current age
@@ -138,7 +176,8 @@ export function calculateResaleValue(
  * Get curve source info for UI display
  */
 export function getCurveSource(car: Car): CurveSource {
-    return findBestCurve(car.make, car.model, car.fuelType);
+    const isSpecial = isSpecialVariant(car);
+    return findBestCurve(car.make, car.model, car.fuelType, isSpecial);
 }
 
 /**
@@ -146,17 +185,24 @@ export function getCurveSource(car: Car): CurveSource {
  */
 export function formatCurveSource(source: CurveSource): string {
     const parts = source.key.split('|');
+    let baseStr = '';
 
     switch (source.level) {
         case 'make|fuel':
-            return `${capitalise(parts[0])} (${parts[1]})`;
+            baseStr = `${capitalise(parts[0])} (${parts[1]})`;
+            break;
         case 'make':
-            return `${capitalise(parts[0])} (all fuel types)`;
+            baseStr = `${capitalise(parts[0])} (all fuel types)`;
+            break;
         case 'fuel':
-            return `${capitalise(parts[0])} vehicles (average)`;
+            baseStr = `${capitalise(parts[0])} vehicles (average)`;
+            break;
         case 'global':
-            return 'UK market average';
+            baseStr = 'UK market average';
+            break;
     }
+
+    return source.appliedSpecialModifier ? `${baseStr} (+ Special Variant Modifier)` : baseStr;
 }
 
 function capitalise(str: string): string {

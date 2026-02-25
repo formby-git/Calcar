@@ -1,60 +1,60 @@
 {
   "curves": {
-    "abarth|petrol": {
-      "rate": 0.124,
-      "dataPoints": 1023
-    },
     "alfa romeo|petrol": {
-      "rate": 0.124,
-      "dataPoints": 1056
+      "rate": 0.139,
+      "dataPoints": 895
     },
     "alfa romeo|diesel": {
       "rate": 0.146,
       "dataPoints": 343
     },
     "aston martin|petrol": {
-      "rate": 0.118,
-      "dataPoints": 326
+      "rate": 0.119,
+      "dataPoints": 323
     },
     "audi|diesel": {
-      "rate": 0.14,
-      "dataPoints": 10631
+      "rate": 0.141,
+      "dataPoints": 10528
     },
     "audi|petrol": {
-      "rate": 0.167,
-      "dataPoints": 16734
+      "rate": 0.175,
+      "dataPoints": 15283
     },
     "audi|petrol plug-in hybrid": {
       "rate": 0.151,
       "dataPoints": 516
     },
     "audi|electric": {
-      "rate": 0.209,
-      "dataPoints": 579
+      "rate": 0.127,
+      "dataPoints": 530
     },
     "bmw|diesel": {
-      "rate": 0.098,
-      "dataPoints": 10235
+      "rate": 0.087,
+      "dataPoints": 7230
     },
     "bmw|petrol": {
-      "rate": 0.209,
-      "dataPoints": 13010
+      "rate": 0.215,
+      "dataPoints": 8969
     },
     "bmw|diesel hybrid": {
-      "rate": 0.179,
-      "dataPoints": 3063
+      "rate": 0.174,
+      "dataPoints": 2690
+    },
+    "bmw|petrol hybrid": {
+      "rate": 0.03,
+      "dataPoints": 785
     },
     "bmw|petrol plug-in hybrid": {
-      "rate": 0.158,
-      "dataPoints": 1839
+      "rate": 0.168,
+      "dataPoints": 1569
     },
     "bmw|electric": {
-      "rate": 0.251,
-      "dataPoints": 442
+      "rate": 0.248,
+      "dataPoints": 325
     },
     "bentley|petrol": {
-      "rate": 0.12,
-      "dataPoints": 589
+      "rate": 0.114,
+      "dataPoints": 405
     },
     "citroen|diesel": {
       "rate": 0.081,
@@ -63,10 +63,6 @@
     "citroen|petrol": {
       "rate": 0.189,
       "dataPoints": 7517
-    },
-    "cupra|petrol": {
-      "rate": 0.074,
-      "dataPoints": 574
     },
     "ds automobiles|petrol": {
       "rate": 0.169,
@@ -101,28 +97,28 @@
       "dataPoints": 391
     },
     "ford|petrol": {
-      "rate": 0.187,
-      "dataPoints": 20960
+      "rate": 0.171,
+      "dataPoints": 14039
     },
     "ford|diesel": {
-      "rate": 0.202,
-      "dataPoints": 12714
+      "rate": 0.199,
+      "dataPoints": 10759
     },
     "ford|petrol hybrid": {
-      "rate": 0.086,
-      "dataPoints": 631
+      "rate": 0.088,
+      "dataPoints": 464
     },
     "ford|petrol plug-in hybrid": {
-      "rate": 0.08,
-      "dataPoints": 523
+      "rate": 0.076,
+      "dataPoints": 327
     },
     "honda|diesel": {
       "rate": 0.07,
       "dataPoints": 786
     },
     "honda|petrol": {
-      "rate": 0.048,
-      "dataPoints": 3998
+      "rate": 0.118,
+      "dataPoints": 3914
     },
     "honda|petrol hybrid": {
       "rate": 0.057,
@@ -141,8 +137,8 @@
       "dataPoints": 380
     },
     "hyundai|petrol": {
-      "rate": 0.173,
-      "dataPoints": 7443
+      "rate": 0.174,
+      "dataPoints": 7395
     },
     "hyundai|diesel": {
       "rate": 0.237,
@@ -153,8 +149,8 @@
       "dataPoints": 764
     },
     "jaguar|petrol": {
-      "rate": 0.163,
-      "dataPoints": 2070
+      "rate": 0.166,
+      "dataPoints": 1801
     },
     "jaguar|diesel": {
       "rate": 0.165,
@@ -173,24 +169,20 @@
       "dataPoints": 1391
     },
     "kia|petrol": {
-      "rate": 0.087,
-      "dataPoints": 8718
+      "rate": 0.084,
+      "dataPoints": 7565
     },
     "kia|diesel": {
-      "rate": 0.269,
-      "dataPoints": 2697
+      "rate": 0.285,
+      "dataPoints": 2160
     },
     "kia|diesel hybrid": {
-      "rate": 0.134,
-      "dataPoints": 462
-    },
-    "kia|electric": {
-      "rate": 0.136,
-      "dataPoints": 176
+      "rate": 0.141,
+      "dataPoints": 361
     },
     "kia|petrol hybrid": {
       "rate": 0.062,
-      "dataPoints": 1872
+      "dataPoints": 1742
     },
     "kia|petrol plug-in hybrid": {
       "rate": 0.077,
@@ -213,20 +205,20 @@
       "dataPoints": 794
     },
     "lexus|petrol hybrid": {
-      "rate": 0.158,
-      "dataPoints": 1913
+      "rate": 0.153,
+      "dataPoints": 1816
     },
     "mg|petrol": {
-      "rate": 0.113,
-      "dataPoints": 5121
+      "rate": 0.112,
+      "dataPoints": 5108
     },
     "mg|electric": {
       "rate": 0.097,
       "dataPoints": 559
     },
     "mini|petrol": {
-      "rate": 0.112,
-      "dataPoints": 7719
+      "rate": 0.12,
+      "dataPoints": 7063
     },
     "mini|diesel": {
       "rate": 0.213,
@@ -245,48 +237,44 @@
       "dataPoints": 137
     },
     "maserati|petrol": {
-      "rate": 0.117,
-      "dataPoints": 514
+      "rate": 0.155,
+      "dataPoints": 452
     },
     "mazda|petrol": {
-      "rate": 0.114,
-      "dataPoints": 9441
+      "rate": 0.113,
+      "dataPoints": 8580
     },
     "mazda|diesel": {
-      "rate": 0.19,
-      "dataPoints": 1165
+      "rate": 0.192,
+      "dataPoints": 1151
     },
     "mclaren|petrol": {
-      "rate": 0.164,
-      "dataPoints": 310
+      "rate": 0.128,
+      "dataPoints": 298
     },
     "mercedes-benz|petrol": {
-      "rate": 0.113,
-      "dataPoints": 19135
+      "rate": 0.168,
+      "dataPoints": 14209
     },
     "mercedes-benz|diesel": {
-      "rate": 0.218,
-      "dataPoints": 22904
+      "rate": 0.228,
+      "dataPoints": 15360
     },
     "mercedes-benz|petrol plug-in hybrid": {
-      "rate": 0.191,
-      "dataPoints": 938
+      "rate": 0.196,
+      "dataPoints": 780
     },
     "mercedes-benz|electric": {
-      "rate": 0.115,
-      "dataPoints": 841
-    },
-    "mercedes-benz|diesel hybrid": {
-      "rate": 0.165,
-      "dataPoints": 263
+      "rate": 0.131,
+      "dataPoints": 469
     },
     "mercedes-benz|petrol hybrid": {
-      "rate": 0.081,
-      "dataPoints": 766
+      "rate": 0.049,
+      "dataPoints": 629
     },
     "mercedes-benz|diesel plug-in hybrid": {
-      "rate": 0.188,
-      "dataPoints": 298
+      "rate": 0.182,
+      "dataPoints": 196
     },
     "mitsubishi|petrol": {
       "rate": 0.079,
@@ -301,8 +289,8 @@
       "dataPoints": 1137
     },
     "nissan|petrol": {
-      "rate": 0.136,
-      "dataPoints": 11402
+      "rate": 0.145,
+      "dataPoints": 11265
     },
     "nissan|electric": {
       "rate": 0.142,
@@ -313,24 +301,16 @@
       "dataPoints": 6599
     },
     "peugeot|petrol": {
-      "rate": 0.146,
-      "dataPoints": 7312
+      "rate": 0.154,
+      "dataPoints": 5992
     },
     "peugeot|diesel": {
-      "rate": 0.11,
-      "dataPoints": 3864
-    },
-    "peugeot|petrol plug-in hybrid": {
-      "rate": 0.099,
-      "dataPoints": 92
-    },
-    "peugeot|electric": {
-      "rate": 0.07,
-      "dataPoints": 385
+      "rate": 0.103,
+      "dataPoints": 2909
     },
     "porsche|petrol": {
-      "rate": 0.171,
-      "dataPoints": 3088
+      "rate": 0.17,
+      "dataPoints": 3071
     },
     "porsche|petrol plug-in hybrid": {
       "rate": 0.106,
@@ -341,24 +321,24 @@
       "dataPoints": 301
     },
     "renault|petrol": {
-      "rate": 0.142,
-      "dataPoints": 5591
+      "rate": 0.146,
+      "dataPoints": 5053
     },
     "renault|diesel": {
       "rate": 0.169,
-      "dataPoints": 2610
+      "dataPoints": 2420
     },
     "renault|electric": {
-      "rate": 0.124,
-      "dataPoints": 1193
+      "rate": 0.126,
+      "dataPoints": 939
     },
     "seat|diesel": {
       "rate": 0.18,
       "dataPoints": 2265
     },
     "seat|petrol": {
-      "rate": 0.134,
-      "dataPoints": 7993
+      "rate": 0.138,
+      "dataPoints": 7797
     },
     "skoda|petrol": {
       "rate": 0.162,
@@ -381,8 +361,8 @@
       "dataPoints": 185
     },
     "subaru|petrol": {
-      "rate": 0.179,
-      "dataPoints": 349
+      "rate": 0.17,
+      "dataPoints": 334
     },
     "subaru|petrol hybrid": {
       "rate": 0.123,
@@ -414,7 +394,7 @@
     },
     "vauxhall|petrol": {
       "rate": 0.18,
-      "dataPoints": 18646
+      "dataPoints": 18621
     },
     "vauxhall|diesel": {
       "rate": 0.238,
@@ -425,12 +405,12 @@
       "dataPoints": 332
     },
     "volkswagen|diesel": {
-      "rate": 0.187,
-      "dataPoints": 9433
+      "rate": 0.183,
+      "dataPoints": 8861
     },
     "volkswagen|petrol": {
-      "rate": 0.125,
-      "dataPoints": 16341
+      "rate": 0.129,
+      "dataPoints": 15310
     },
     "volkswagen|petrol plug-in hybrid": {
       "rate": 0.147,
@@ -464,37 +444,29 @@
       "rate": 0.119,
       "dataPoints": 1515
     },
-    "abarth": {
-      "rate": 0.124,
-      "dataPoints": 1023
-    },
     "alfa romeo": {
-      "rate": 0.134,
-      "dataPoints": 1419
+      "rate": 0.147,
+      "dataPoints": 1258
     },
     "aston martin": {
-      "rate": 0.118,
-      "dataPoints": 326
+      "rate": 0.119,
+      "dataPoints": 323
     },
     "audi": {
       "rate": 0.162,
-      "dataPoints": 28485
+      "dataPoints": 26882
     },
     "bmw": {
-      "rate": 0.185,
-      "dataPoints": 29447
+      "rate": 0.181,
+      "dataPoints": 21568
     },
     "bentley": {
-      "rate": 0.119,
-      "dataPoints": 643
+      "rate": 0.114,
+      "dataPoints": 459
     },
     "citroen": {
       "rate": 0.175,
       "dataPoints": 10281
-    },
-    "cupra": {
-      "rate": 0.069,
-      "dataPoints": 701
     },
     "ds automobiles": {
       "rate": 0.176,
@@ -513,32 +485,32 @@
       "dataPoints": 4542
     },
     "ford": {
-      "rate": 0.202,
-      "dataPoints": 34933
+      "rate": 0.215,
+      "dataPoints": 25589
     },
     "honda": {
-      "rate": 0.129,
-      "dataPoints": 6390
+      "rate": 0.132,
+      "dataPoints": 6306
     },
     "hyundai": {
       "rate": 0.142,
-      "dataPoints": 13314
+      "dataPoints": 13266
     },
     "isuzu": {
       "rate": 0.094,
       "dataPoints": 764
     },
     "jaguar": {
-      "rate": 0.188,
-      "dataPoints": 6910
+      "rate": 0.186,
+      "dataPoints": 6641
     },
     "jeep": {
       "rate": 0.189,
       "dataPoints": 2132
     },
     "kia": {
-      "rate": 0.103,
-      "dataPoints": 14303
+      "rate": 0.096,
+      "dataPoints": 12359
     },
     "lamborghini": {
       "rate": 0.068,
@@ -549,56 +521,56 @@
       "dataPoints": 19949
     },
     "lexus": {
-      "rate": 0.151,
-      "dataPoints": 2008
+      "rate": 0.147,
+      "dataPoints": 1911
     },
     "mg": {
-      "rate": 0.12,
-      "dataPoints": 5908
+      "rate": 0.119,
+      "dataPoints": 5895
     },
     "mini": {
-      "rate": 0.11,
-      "dataPoints": 8833
+      "rate": 0.117,
+      "dataPoints": 8177
     },
     "maserati": {
-      "rate": 0.132,
-      "dataPoints": 651
+      "rate": 0.169,
+      "dataPoints": 589
     },
     "mazda": {
       "rate": 0.133,
-      "dataPoints": 10820
+      "dataPoints": 9847
     },
     "mclaren": {
-      "rate": 0.164,
-      "dataPoints": 310
+      "rate": 0.128,
+      "dataPoints": 298
     },
     "mercedes-benz": {
-      "rate": 0.169,
-      "dataPoints": 45145
+      "rate": 0.192,
+      "dataPoints": 31860
     },
     "mitsubishi": {
       "rate": 0.131,
       "dataPoints": 5262
     },
     "nissan": {
-      "rate": 0.114,
-      "dataPoints": 19197
+      "rate": 0.118,
+      "dataPoints": 19060
     },
     "peugeot": {
-      "rate": 0.142,
-      "dataPoints": 11653
+      "rate": 0.141,
+      "dataPoints": 9001
     },
     "porsche": {
-      "rate": 0.166,
-      "dataPoints": 3870
+      "rate": 0.165,
+      "dataPoints": 3853
     },
     "renault": {
-      "rate": 0.161,
-      "dataPoints": 9632
+      "rate": 0.168,
+      "dataPoints": 8621
     },
     "seat": {
-      "rate": 0.133,
-      "dataPoints": 10485
+      "rate": 0.136,
+      "dataPoints": 10288
     },
     "skoda": {
       "rate": 0.158,
@@ -613,8 +585,8 @@
       "dataPoints": 709
     },
     "subaru": {
-      "rate": 0.157,
-      "dataPoints": 567
+      "rate": 0.155,
+      "dataPoints": 552
     },
     "suzuki": {
       "rate": 0.141,
@@ -630,55 +602,72 @@
     },
     "vauxhall": {
       "rate": 0.187,
-      "dataPoints": 24012
+      "dataPoints": 23987
     },
     "volkswagen": {
       "rate": 0.129,
-      "dataPoints": 27538
+      "dataPoints": 25935
     },
     "volvo": {
       "rate": 0.122,
       "dataPoints": 13301
     },
     "petrol": {
-      "rate": 0.172,
-      "dataPoints": 237920
+      "rate": 0.171,
+      "dataPoints": 212189
     },
     "diesel": {
-      "rate": 0.197,
-      "dataPoints": 130784
+      "rate": 0.196,
+      "dataPoints": 115907
     },
     "petrol hybrid": {
       "rate": 0.125,
-      "dataPoints": 24465
+      "dataPoints": 23838
     },
     "petrol plug-in hybrid": {
-      "rate": 0.085,
-      "dataPoints": 10647
+      "rate": 0.086,
+      "dataPoints": 9868
     },
     "electric": {
-      "rate": 0.111,
-      "dataPoints": 10111
+      "rate": 0.093,
+      "dataPoints": 8737
     },
     "diesel plug-in hybrid": {
-      "rate": 0.178,
-      "dataPoints": 331
+      "rate": 0.172,
+      "dataPoints": 229
     },
     "diesel hybrid": {
-      "rate": 0.181,
-      "dataPoints": 5526
+      "rate": 0.18,
+      "dataPoints": 5006
     },
     "bi fuel": {
       "rate": 0.083,
       "dataPoints": 117
     },
     "global": {
-      "rate": 0.165,
-      "dataPoints": 419904
+      "rate": 0.163,
+      "dataPoints": 375894
     }
   },
-  "generatedAt": "2026-01-04",
+  "specialModifiers": {
+    "global": 0.82,
+    "alfa romeo": 0.7,
+    "audi": 0.99,
+    "bmw": 1.06,
+    "bentley": 1.2,
+    "ford": 0.76,
+    "jaguar": 0.72,
+    "kia": 1.43,
+    "mini": 0.96,
+    "mazda": 1.07,
+    "mercedes-benz": 0.64,
+    "peugeot": 0.91,
+    "renault": 0.74,
+    "seat": 0.83,
+    "volkswagen": 0.89
+  },
+  "generatedAt": "2026-02-25",
   "minDataPoints": 50,
-  "totalCurves": 169,
-  "note": "Curves at make|fuel level only. Model-specific curves excluded due to generation change data quality issues."
+  "totalCurves": 162,
+  "note": "Standard curves exclude Special Variants (RS, AMG, etc) to prevent erratic bumps on older models. Special Variants apply the corresponding multiplier to the standard base rate."
 }
