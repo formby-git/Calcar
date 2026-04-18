@@ -24,4 +24,7 @@ pnpm-debug.log*
 .idea/
 
 # huge files
-all_car_adverts.csv 
+all_car_adverts.csv
+
+# wrangler artifacts
+.wrangler/
