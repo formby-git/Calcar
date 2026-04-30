@@ -10,10 +10,9 @@ if (!registration) {
     return Astro.redirect("/404");
 }
 
-let apiKey = import.meta.env.DVLA_API_KEY;
-if (Astro.locals && (Astro.locals as any).runtime?.env?.DVLA_API_KEY) {
-    apiKey = (Astro.locals as any).runtime.env.DVLA_API_KEY;
-}
+import { env } from "cloudflare:workers";
+let apiKey = import.meta.env.DVLA_API_KEY || (env && env.DVLA_API_KEY);
+
 
 const car = await getCarByRegistration(registration, apiKey);
 
