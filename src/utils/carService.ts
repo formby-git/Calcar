@@ -16,6 +16,15 @@ export interface Car {
     title?: string;
 }
 
+/**
+ * Fetches vehicle details by registration plate.
+ * It first searches the local static database (`cars.json`). 
+ * If not found, it falls back to querying the official DVLA API.
+ * 
+ * @param {string} registration - The UK vehicle registration plate.
+ * @param {string} [apiKey] - Optional DVLA API Key. If not provided, it attempts to read from the environment.
+ * @returns {Promise<Car | null>} A Promise resolving to the Car object, or null if the vehicle is not found in either source.
+ */
 export const getCarByRegistration = async (registration: string, apiKey?: string): Promise<Car | null> => {
     const formattedReg = registration.replace(/\s/g, '').toUpperCase();
 

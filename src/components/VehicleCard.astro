@@ -1,5 +1,15 @@
 ---
-
+/**
+ * VehicleCard Component
+ * 
+ * Displays the core specifications and image of a vehicle.
+ * 
+ * Data Flow:
+ * This component does NOT accept Astro props. Instead, it relies on a Vanilla JS
+ * event-driven architecture. The parent page dispatches a `car-loaded` CustomEvent
+ * on the `window` object containing the `Car` data. The `<script>` tag in this component
+ * listens for that event and populates the DOM elements.
+ */
 ---
 
 <div id="vehicle-card" class="relative hidden mb-0 animate-fade-in">

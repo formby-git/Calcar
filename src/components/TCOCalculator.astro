@@ -1,4 +1,16 @@
 ---
+/**
+ * TCOCalculator Component
+ * 
+ * Provides an interactive Total Cost of Ownership calculator, allowing users
+ * to adjust purchase price and ownership terms to see depreciation and tax forecasts.
+ * 
+ * Data Flow:
+ * This component does NOT accept Astro props. Instead, it relies on a Vanilla JS
+ * event-driven architecture. The parent page dispatches a `car-loaded` CustomEvent
+ * on the `window` object containing the `Car` data. The `<script>` tag in this component
+ * listens for that event and populates the DOM elements.
+ */
 import DepreciationChart from "./DepreciationChart.astro";
 ---
 
