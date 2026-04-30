@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "bundle-worker": "esbuild dist/server/entry.mjs --bundle --outfile=dist/client/_worker.js --format=esm --platform=browser --external:cloudflare:* --external:node:*",
+    "build": "astro build && npm run bundle-worker",
     "preview": "astro preview",
     "astro": "astro"
   },
