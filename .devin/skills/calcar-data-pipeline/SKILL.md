@@ -1,11 +1,19 @@
 ---
-description: Explanation of how offline market data is processed into depreciation modifiers.
+name: calcar-data-pipeline
+description: How offline market data is processed into depreciation modifiers. Read before touching depreciation logic or the scripts/ pipeline.
+allowed-tools:
+  - read
+  - grep
+  - glob
+  - exec
+triggers:
+  - user
+  - model
 ---
 
 # Calcar Data Pipeline
 
-> **Instructions for Agents:**
-> The live Calcar web app does *not* do machine learning or live Autotrader scraping. Read this file to understand how the depreciation curve modifiers are generated offline via the scripts in the `/scripts` directory.
+> The live Calcar web app does *not* do machine learning or live Autotrader scraping. Read this to understand how the depreciation curve modifiers are generated offline via the scripts in the `/scripts` directory.
 
 ## Overview
 
@@ -37,9 +45,13 @@ The offline pipeline lives in the `scripts/` folder. These scripts are run local
 - They output a report showing the delta between our *predicted* depreciation and the *actual* historical depreciation.
 - **Goal:** Keep the delta under +/- 5% for mainstream vehicles.
 
+## Generated Artifacts (committed)
+- `src/data/depreciation_curves.json` — curve rates + special modifiers consumed by the live app.
+- `src/data/market_stats.json` / `market_stats_original.json` — aggregated market snapshots used by the verify scripts.
+
 ## How to Update the Model
 If a user requests an update to the depreciation model:
 1. Ensure you have the latest `market_stats.json` or raw CSV.
 2. Run `analyse_curve_shapes.ts` to see current market trends.
 3. Update the logic in `src/utils/depreciationCalculator.ts`.
-4. Run `npx ts-node scripts/verify_modifiers.ts` to prove your new logic matches reality.
+4. Run `npx ts-node scripts/verify_modifiers.ts` to prove your new logic matches reality. (Or invoke `/verify-depreciation`.)

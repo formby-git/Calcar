@@ -21,7 +21,8 @@ The codebase is split into the live web application and an offline data science 
 - **`/src/components/`**: Reusable UI components. The primary dashboard consists of `VehicleCard.astro` and `TCOCalculator.astro`.
 - **`/src/utils/`**: Core business logic, including `taxCalculator.ts` (VED rules) and `depreciationCalculator.ts` (depreciation curve modeling).
 - **`/scripts/`**: Offline TypeScript and Python scripts used to ingest raw market data (e.g., Autotrader CSVs), analyze depreciation trends, and generate the modifiers used by the live app.
-- **`/.agent/workflows/`**: Crucial guidelines, architecture notes, and best practices. **Read these before contributing.**
+- **`/AGENTS.md`**: Always-on project rules for AI coding agents (Devin CLI, etc.).
+- **`/.devin/skills/`**: Invokable skills with architecture notes, best practices, and workflows. **Read the relevant skill before contributing.** See `AGENTS.md` for the full list.
 
 ## 🛠️ Local Development
 
@@ -55,9 +56,12 @@ This builds the site using Astro, and the custom `bundle-worker` script uses `es
 
 ## 📚 Documentation for Agents & Developers
 
-If you are an AI assistant or a new developer working on this codebase, please review the files in the `/.agent/workflows/` directory:
-- `project-notes.md`: Historical context and changelog.
-- `best-practices.md`: UI guidelines and maintenance rules.
-- `architecture.md`: In-depth flow of the SSR application.
-- `data-pipeline.md`: Explanation of how market data is processed into depreciation modifiers.
-- `future-considerations.md`: A backlog of technical debt and deferred features.
+If you are an AI assistant or a new developer working on this codebase, read `AGENTS.md` at the repo root first, then invoke the relevant Devin skills in `/.devin/skills/`:
+- `/calcar-changelog`: Historical context and changelog.
+- `/calcar-best-practices`: UI guidelines and maintenance rules.
+- `/calcar-architecture`: In-depth flow of the SSR application.
+- `/calcar-data-pipeline`: Explanation of how market data is processed into depreciation modifiers.
+- `/calcar-future-work`: A backlog of technical debt and deferred features.
+- `/verify-depreciation`: Run the verifier scripts and check the ±5% target.
+- `/ship`: Build + commit + push to main.
+- `/explain-route [reg]`: Trace a registration plate through the app.

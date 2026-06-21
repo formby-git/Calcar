@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Exec(npm run)",
+      "Exec(npm run build)",
+      "Exec(npm run dev)",
+      "Exec(npx ts-node)",
+      "Exec(npx tsx)",
+      "Exec(npx astro)",
+      "Exec(git status)",
+      "Exec(git diff)",
+      "Exec(git log)",
+      "Exec(git add)",
+      "Exec(git commit)",
+      "Exec(git pull)",
+      "Exec(git push origin main)",
+      "Exec(git rebase)",
+      "Exec(node --version)",
+      "Exec(npm --version)"
+    ],
+    "deny": [
+      "Exec(sudo)",
+      "Exec(rm -rf)",
+      "Exec(git push --force)",
+      "Exec(git rebase -i)"
+    ]
+  }
+}

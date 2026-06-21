@@ -1,11 +1,19 @@
 ---
-description: A log of future considerations, technical debt, and potential features to address later.
+name: calcar-future-work
+description: Backlog of technical debt and deferred features for Calcar. Read when planning work, and append new items when deferring a feature.
+allowed-tools:
+  - read
+  - edit
+  - grep
+  - glob
+triggers:
+  - user
+  - model
 ---
 
 # Future Considerations
 
-> **Instructions:**
-> When adding a new item, please record:
+> When adding a new item, record:
 > - **Date Added**: When this was raised.
 > - **Context**: What feature or task triggered this thought.
 > - **Why**: The reasoning behind deferring it or why it is important.

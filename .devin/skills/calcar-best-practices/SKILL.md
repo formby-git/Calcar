@@ -1,22 +1,24 @@
 ---
-description: Consistency guidelines, maintenance rules, and design standards for Calcar.
+name: calcar-best-practices
+description: Consistency guidelines, maintenance rules, and design standards for Calcar. Apply when doing UI work or touching the accuracy check.
+allowed-tools:
+  - read
+  - grep
+  - glob
+triggers:
+  - user
+  - model
 ---
 
 # Best Practices & Consistency
 
-> **Instructions:**
-> These are non-negotiable standards to maintain the quality and consistency of Calcar.
-> Read these whenever starting a related task.
-
----
+> Non-negotiable standards to maintain the quality and consistency of Calcar. Read these whenever starting a UI or accuracy-related task.
 
 ## Maintenance Rules
 
 ### Accuracy Check Integrity
 - **Context**: The `MarketMetadata` component compares our model against real market snapshots.
 - **Rule**: When modifying or testing, always verify you are comparing the EXACT same age transition (e.g., Year 3 to Year 4) in both the market data and our model. A mismatch invalidates the verification.
-
----
 
 ## Design Standards
 

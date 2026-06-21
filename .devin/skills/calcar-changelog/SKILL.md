@@ -1,14 +1,22 @@
 ---
-description: Project context and change history for Calcar - UK Car TCO Calculator
+name: calcar-changelog
+description: Project context, design preferences, and change history for Calcar. Read at the start of a task involving code changes; append to Change History when done.
+allowed-tools:
+  - read
+  - edit
+  - grep
+  - glob
+triggers:
+  - user
+  - model
 ---
 
 # Calcar Project Notes
 
-> **Instructions for Antigravity:**
-> 1. Read this file at the START of any task involving code changes.
-> 2. Follow the design preferences below and [Best Practices](file:///Users/formby/Documents/Calcar/.agent/workflows/best-practices.md).
+> 1. Read this at the START of any task involving code changes.
+> 2. Follow the design preferences below and the `/calcar-best-practices` skill.
 > 3. Update the "Change History" section AFTER completing any significant changes.
-> 4. Record deferred features in [Future Considerations](file:///Users/formby/Documents/Calcar/.agent/workflows/future-considerations.md).
+> 4. Record deferred features via the `/calcar-future-work` skill.
 
 ---
 
@@ -63,14 +71,7 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - Self-hosted licensed image library
 - Manufacturer press images
 
----
-
-## Guidelines & Considerations
-
-> **See [Best Practices](file:///Users/formby/Documents/Calcar/.agent/workflows/best-practices.md) for consistency and maintenance rules.**
-> **See [Future Considerations](file:///Users/formby/Documents/Calcar/.agent/workflows/future-considerations.md) for deferred features.**
-
-- When running the @[/project-notes] workflow, verify if any new guidelines or deferred items need to be added to these files.
+### 2025-12-21: Depreciation Model (Basic + Pro)
 **Request:** Implement more accurate depreciation with age curve, fuel type, and brand adjustments.
 
 **Changes made:**
@@ -117,12 +118,10 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
 - **EV Supplement Threshold**: Implemented new £50,000 threshold for Expensive Car Supplement for EVs registered on/after 1 April 2025 (Standard threshold remains £40,000).
 - **Refactoring**: Simplified `calculateTotalVED` signature, removing `isNewPurchase` argument in favor of inferring age from `yearOfManufacture`.
 
-
 ### 2025-12-26: Calculator UI Refactor
 **Request:** Simplify calculator by unifying Standard/Pro modes into a single UI.
 
 **Changes made:**
-- **Unified UI**: All inputs always visible and editable.
 - **Unified UI**: All inputs always visible and editable.
 - **Depreciation Toggle**: Clean toggle switch that only changes depreciation model (no UI changes).
 - **Term Selector**: Quick buttons (2-5 years) + "Custom" option that reveals full dropdown.
@@ -172,7 +171,7 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - Simplified "Total Ownership Cost" label to "Total Cost".
 
 **Guidelines Updated:**
-- Reorganized documentation into [Best Practices](file:///Users/formby/Documents/Calcar/.agent/workflows/best-practices.md) and [Future Considerations](file:///Users/formby/Documents/Calcar/.agent/workflows/future-considerations.md).
+- Reorganized documentation into the `/calcar-best-practices` and `/calcar-future-work` skills.
 
 ### 2026-01-04: Internal Depreciation Curves Page
 **Request:** Add an internal-only page to view all generated depreciation curves, secured by a basic PIN.

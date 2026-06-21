@@ -1,11 +1,18 @@
 ---
-description: In-depth flow of the SSR application and Cloudflare Worker architecture.
+name: calcar-architecture
+description: SSR flow, routing, and Cloudflare Worker build architecture for the Calcar web app. Read before modifying core logic, routing, or components.
+allowed-tools:
+  - read
+  - grep
+  - glob
+triggers:
+  - user
+  - model
 ---
 
 # Calcar Architecture & SSR Flow
 
-> **Instructions for Agents:**
-> Read this file to understand the routing, server-side rendering, and data passing architecture of the Calcar web app before attempting to modify core logic or components.
+> Read this to understand the routing, server-side rendering, and data passing architecture of the Calcar web app before attempting to modify core logic or components.
 
 ## 1. Web Application Flow (Astro SSR)
 
