@@ -183,3 +183,18 @@ A Total Cost of Ownership (TCO) calculator for cars in the UK. Users enter a reg
   - Filterable table (by make/fuel).
   - Client-side sorting (A-Z, High-Low, Low-High).
   - Visualization of "global", "diesel", "petrol", etc. rates.
+
+### 2026-06-21: Phase 1 Dependency Upgrades
+**Request:** Check project for outdated deps and upgrade, ensuring Cloudflare hosting compatibility.
+
+**Changes made:**
+- **astro** 6.1.8 → 6.4.8 (minor)
+- **@astrojs/cloudflare** 13.1.10 → 13.7.0 — adds immutable `Cache-Control` for `/_astro/*` via generated `_headers` file (perf win, no output-structure change)
+- **tailwindcss** / **@tailwindcss/vite** 4.2.2 → 4.3.1 (minor)
+- **@astrojs/check** 0.9.8 → 0.9.9 (patch)
+- **@types/node** 25.6.0 → 26.0.0
+- **csv-parse** 6.2.1 → 7.0.0 — scripts-only; none of the v7-renamed options (`relax`→`relax_quotes`, `skip_records_with_*`, etc.) are used, so no code changes needed
+- **Deferred to Phase 2:** TypeScript 5.9.3 → 6.0.3 (breaking default changes — `types: []` default, `rootDir` default — need tsconfig review)
+- **Deferred indefinitely:** Astro 7 / adapter 14 / Vite 8 (still alpha/beta, would break the custom `bundle-worker` esbuild step)
+- **Verification:** `npm run build` green, `_worker.js` bundles at 653.4 KB, `dist/server/entry.mjs` + `dist/client/_worker.js` structure unchanged, scripts typecheck clean against csv-parse v7.
+- **Security:** 8 transitive vulns remain (esbuild Windows-only dev server, yaml in language-server) — all dev-only, not exploitable in Cloudflare runtime; `npm audit fix --force` would require breaking downgrades (Astro 5.x, check 0.9.2).
